@@ -75,7 +75,11 @@ a{color:inherit}
 /* THE LOCKED CODE */
 .locked-card{background:linear-gradient(135deg,rgba(124,58,237,.12),rgba(168,85,247,.06));border:2px solid rgba(124,58,237,.3);border-radius:16px;padding:32px 24px;margin:28px 0;text-align:center;position:relative;overflow:hidden}
 .locked-card h3{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:#a78bfa;margin-bottom:16px}
-.locked-code{font-size:64px;font-weight:900;color:#fff;letter-spacing:12px;filter:blur(12px);user-select:none;margin-bottom:4px;line-height:1.2}
+.locked-code{font-size:64px;font-weight:900;letter-spacing:16px;user-select:none;margin-bottom:4px;line-height:1.2;display:flex;justify-content:center;gap:12px}
+.locked-code .digit{width:56px;height:72px;background:rgba(124,58,237,.25);border-radius:10px;display:inline-flex;align-items:center;justify-content:center;color:transparent;text-shadow:none;position:relative;overflow:hidden}
+.locked-code .digit::after{content:"?";color:rgba(255,255,255,.15);font-size:36px;font-weight:900;position:absolute}
+@keyframes code-shimmer{0%{transform:translateX(-100%)}100%{transform:translateX(100%)}}
+.locked-code .digit::before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(124,58,237,.15),transparent);animation:code-shimmer 2.5s infinite}
 .locked-sub{font-size:13px;color:#7878a0;margin-bottom:20px}
 .lock-icon{font-size:32px;margin-bottom:12px}
 
@@ -366,7 +370,7 @@ document.getElementById('energyWarning').innerHTML=`⚠️ Your wealth frequency
 
 // Blurred code (seeded)
 const c1=(lp+dd)%10, c2=(mm+lp)%10, c3=(yyyy%10+lp)%10;
-document.getElementById('blurredCode').textContent=`${c1}${c2}${c3}`;
+document.getElementById('blurredCode').innerHTML=`<span class="digit">${c1}</span><span class="digit">${c2}</span><span class="digit">${c3}</span>`;
 
 window.scrollTo(0,0);
 }
