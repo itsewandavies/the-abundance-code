@@ -441,8 +441,8 @@ const months=['','January','February','March','April','May','June','July','Augus
 
 // === STEP 1 VALIDATION ===
 const mm=document.getElementById('month'),dd=document.getElementById('day'),yy=document.getElementById('year'),s1btn=document.getElementById('step1Btn');
-function checkS1(){s1btn.disabled=!(mm.value&&dd.value&&yy.value&&yy.value>=1930&&yy.value<=2010)}
-mm.addEventListener('change',checkS1);dd.addEventListener('change',checkS1);yy.addEventListener('input',checkS1);
+function checkS1(){const y=parseInt(yy.value,10);s1btn.disabled=!(mm.value&&dd.value&&y>=1930&&y<=2010)}
+mm.addEventListener('change',checkS1);dd.addEventListener('change',checkS1);yy.addEventListener('input',checkS1);yy.addEventListener('change',checkS1);yy.addEventListener('keyup',checkS1);
 s1btn.addEventListener('click',()=>{
 answers.mm=+mm.value;answers.dd=+dd.value;answers.yyyy=+yy.value;
 lp=getLifePath(answers.mm,answers.dd,answers.yyyy);
