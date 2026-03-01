@@ -482,7 +482,7 @@ return{w,l,o};
 
 // === NAVIGATION ===
 function goStep(n){
-document.querySelectorAll('.step').forEach(s=>s.classList.remove('active'));
+document.querySelectorAll('.step').forEach(s=>{s.classList.remove('active');s.style.display='none';});
 const pcts={1:0,2:11,3:22,4:33,5:44,6:55,7:66,8:77,9:88};
 document.getElementById('progressBar').style.width=(pcts[n]||0)+'%';
 
