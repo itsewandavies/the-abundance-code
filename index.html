@@ -7,387 +7,228 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: 'Inter', -apple-system, sans-serif; background: #0a0a12; color: #e8e8f0; line-height: 1.7; font-size: 17px; }
-a { color: inherit; }
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',-apple-system,sans-serif;background:#0a0a12;color:#e0dff0;line-height:1.75;font-size:17px}
+a{color:inherit}
 
-/* Urgency bar */
-.urgency-bar { background: linear-gradient(90deg, #7c3aed, #a855f7); text-align: center; padding: 10px 16px; font-size: 13px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; color: #fff; }
-.urgency-bar span { color: #fde68a; }
+.urgency{background:linear-gradient(90deg,#7c3aed,#a855f7);text-align:center;padding:10px 16px;font-size:12px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:#fff}
+.urgency span{color:#fde68a}
 
-/* Container */
-.container { max-width: 680px; margin: 0 auto; padding: 0 20px; }
+.wrap{max-width:640px;margin:0 auto;padding:0 20px}
 
-/* Pre-headline */
-.pre-headline { text-align: center; margin-top: 40px; font-size: 13px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #a78bfa; }
+.pre{text-align:center;margin-top:44px;font-size:12px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:#a78bfa}
 
-/* Headline */
-h1 { text-align: center; font-size: 32px; font-weight: 900; line-height: 1.2; margin: 16px 0 0; letter-spacing: -0.5px; color: #fff; }
-h1 em { font-style: italic; color: #c4b5fd; }
-@media(max-width:480px) { h1 { font-size: 26px; } }
+h1{text-align:center;font-size:30px;font-weight:900;line-height:1.22;margin:14px 0 0;color:#fff;letter-spacing:-.5px}
+h1 em{font-style:italic;color:#c4b5fd}
+@media(max-width:480px){h1{font-size:25px}}
 
-/* Sub-headline */
-.sub-headline { text-align: center; margin: 20px auto 0; max-width: 560px; font-size: 18px; color: #a0a0b8; line-height: 1.6; }
-.sub-headline strong { color: #e8e8f0; }
+.sub{text-align:center;margin:18px auto 0;max-width:520px;font-size:17px;color:#9898b4;line-height:1.6}
+.sub strong{color:#e0dff0}
 
-/* Proof bar */
-.proof-bar { display: flex; justify-content: center; gap: 24px; margin: 28px 0; flex-wrap: wrap; }
-.proof-item { text-align: center; font-size: 12px; color: #8888a0; text-transform: uppercase; letter-spacing: 1px; font-weight: 600; }
-.proof-item span { display: block; font-size: 22px; color: #c4b5fd; font-weight: 800; letter-spacing: -0.5px; }
+.stats{display:flex;justify-content:center;gap:28px;margin:28px 0;flex-wrap:wrap}
+.stat{text-align:center}
+.stat span{display:block;font-size:24px;font-weight:900;color:#c4b5fd;letter-spacing:-.5px}
+.stat small{font-size:11px;color:#7878a0;text-transform:uppercase;letter-spacing:1px;font-weight:600}
 
-/* CTA Button */
-.cta-wrap { text-align: center; margin: 32px 0; }
-.cta-btn { display: inline-block; background: linear-gradient(135deg, #7c3aed, #a855f7); color: #fff; font-size: 18px; font-weight: 800; padding: 18px 48px; border-radius: 10px; text-decoration: none; border: none; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; box-shadow: 0 4px 24px rgba(124,58,237,0.4); letter-spacing: -0.2px; }
-.cta-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 32px rgba(124,58,237,0.6); }
-.cta-btn small { display: block; font-size: 12px; font-weight: 500; margin-top: 4px; opacity: 0.8; }
-@keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
-.cta-btn { background-size: 200% 100%; animation: shimmer 3s infinite linear; background-image: linear-gradient(90deg, #7c3aed 0%, #a855f7 40%, #c4b5fd 50%, #a855f7 60%, #7c3aed 100%); }
+.cta-wrap{text-align:center;margin:28px 0}
+.cta{display:inline-block;background-image:linear-gradient(90deg,#7c3aed 0%,#a855f7 40%,#c4b5fd 50%,#a855f7 60%,#7c3aed 100%);background-size:200% 100%;animation:shimmer 3s infinite linear;color:#fff;font-size:17px;font-weight:800;padding:18px 44px;border-radius:10px;text-decoration:none;border:none;cursor:pointer;box-shadow:0 4px 24px rgba(124,58,237,.4);transition:transform .2s}
+.cta:hover{transform:translateY(-2px)}
+.cta small{display:block;font-size:12px;font-weight:500;margin-top:4px;opacity:.8}
+@keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
 
-/* Guarantee */
-.guarantee-text { text-align: center; font-size: 13px; color: #8888a0; margin-top: 8px; }
+.secure{text-align:center;font-size:12px;color:#6868a0;margin-top:8px}
 
-/* Section */
-.section { margin: 48px 0; }
-.section h2 { font-size: 24px; font-weight: 800; margin-bottom: 16px; line-height: 1.3; color: #fff; }
-.section h2 span { color: #a78bfa; }
+.section{margin:44px 0}
+h2{font-size:22px;font-weight:800;margin-bottom:14px;line-height:1.3;color:#fff}
+h2 span{color:#a78bfa}
 
-/* Body copy */
-p { margin-bottom: 16px; color: #c0c0d4; }
-p strong { color: #e8e8f0; }
+p{margin-bottom:15px;color:#b8b8d0}
+p strong{color:#e0dff0}
 
-/* Highlight box */
-.highlight-box { background: rgba(124,58,237,0.1); border-left: 3px solid #7c3aed; padding: 20px 24px; border-radius: 0 8px 8px 0; margin: 24px 0; }
-.highlight-box p { margin-bottom: 0; color: #d4d0e8; }
+.hl{background:rgba(124,58,237,.1);border-left:3px solid #7c3aed;padding:18px 22px;border-radius:0 8px 8px 0;margin:22px 0}
+.hl p{margin:0;color:#d0cce8}
 
-/* Bullet list */
-.benefit-list { list-style: none; margin: 24px 0; }
-.benefit-list li { padding: 10px 0 10px 32px; position: relative; color: #c0c0d4; border-bottom: 1px solid rgba(255,255,255,0.05); }
-.benefit-list li:last-child { border: none; }
-.benefit-list li::before { content: "✦"; position: absolute; left: 0; color: #a78bfa; font-size: 14px; }
+.list{list-style:none;margin:20px 0}
+.list li{padding:10px 0 10px 28px;position:relative;color:#b8b8d0;border-bottom:1px solid rgba(255,255,255,.04)}
+.list li:last-child{border:none}
+.list li::before{content:"✦";position:absolute;left:0;color:#a78bfa;font-size:13px}
 
-/* Testimonial */
-.testimonial { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; padding: 24px; margin: 20px 0; }
-.testimonial .name { font-weight: 700; color: #a78bfa; font-size: 14px; margin-bottom: 8px; }
-.testimonial p { font-size: 15px; margin: 0; font-style: italic; color: #b0b0c4; }
-.testimonial .stars { color: #fbbf24; margin-bottom: 8px; font-size: 16px; }
+.testi{background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.06);border-radius:12px;padding:22px;margin:16px 0}
+.testi .who{font-weight:700;color:#a78bfa;font-size:13px;margin-bottom:6px}
+.testi .stars{color:#fbbf24;font-size:14px;margin-bottom:6px}
+.testi p{font-size:15px;margin:0;font-style:italic;color:#a8a8c4}
 
-/* Comparison */
-.vs-box { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 24px 0; }
-@media(max-width:480px) { .vs-box { grid-template-columns: 1fr; } }
-.vs-card { padding: 20px; border-radius: 10px; }
-.vs-card.old { background: rgba(239,68,68,0.08); border: 1px solid rgba(239,68,68,0.2); }
-.vs-card.new { background: rgba(124,58,237,0.08); border: 1px solid rgba(124,58,237,0.3); }
-.vs-card h3 { font-size: 14px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; }
-.vs-card.old h3 { color: #ef4444; }
-.vs-card.new h3 { color: #a78bfa; }
-.vs-card ul { list-style: none; font-size: 14px; }
-.vs-card ul li { padding: 4px 0; }
-.vs-card.old ul li::before { content: "✗ "; color: #ef4444; }
-.vs-card.new ul li::before { content: "✓ "; color: #a78bfa; }
+.stack-row{display:flex;justify-content:space-between;align-items:center;padding:13px 0;border-bottom:1px solid rgba(255,255,255,.05)}
+.stack-row .n{font-weight:600;color:#e0dff0;font-size:15px}
+.stack-row .v{color:#7878a0;text-decoration:line-through;font-size:14px}
 
-/* Value stack */
-.stack-item { display: flex; justify-content: space-between; align-items: center; padding: 14px 0; border-bottom: 1px solid rgba(255,255,255,0.06); }
-.stack-item .name { font-weight: 600; color: #e8e8f0; }
-.stack-item .value { color: #8888a0; text-decoration: line-through; font-size: 14px; }
+.price-box{text-align:center;margin:36px 0;padding:28px;background:linear-gradient(135deg,rgba(124,58,237,.14),rgba(168,85,247,.07));border:1px solid rgba(124,58,237,.25);border-radius:14px}
+.price-box .was{font-size:14px;color:#7878a0}
+.price-box .was s{color:#ef4444}
+.price-box .now{font-size:52px;font-weight:900;color:#fff;margin:6px 0}
+.price-box .now small{font-size:18px;color:#a78bfa}
 
-/* Price reveal */
-.price-box { text-align: center; margin: 40px 0; padding: 32px; background: linear-gradient(135deg, rgba(124,58,237,0.15), rgba(168,85,247,0.08)); border: 1px solid rgba(124,58,237,0.3); border-radius: 16px; }
-.price-box .was { font-size: 14px; color: #8888a0; }
-.price-box .was s { color: #ef4444; }
-.price-box .now { font-size: 48px; font-weight: 900; color: #fff; margin: 8px 0; }
-.price-box .now small { font-size: 20px; color: #a78bfa; }
-.price-box .reason { font-size: 14px; color: #a0a0b8; margin-top: 8px; }
+.guar{text-align:center;padding:28px;border:2px dashed rgba(124,58,237,.25);border-radius:14px;margin:36px 0}
+.guar h3{font-size:18px;color:#fff;margin-bottom:10px}
+.guar p{margin:0;font-size:15px}
 
-/* Guarantee section */
-.guarantee-box { text-align: center; padding: 32px; border: 2px dashed rgba(124,58,237,0.3); border-radius: 16px; margin: 40px 0; }
-.guarantee-box h3 { font-size: 20px; color: #fff; margin-bottom: 12px; }
+.faq{border-bottom:1px solid rgba(255,255,255,.05);padding:18px 0}
+.faq h3{font-size:15px;font-weight:700;color:#e0dff0;margin-bottom:6px}
+.faq p{margin:0;font-size:15px}
 
-/* FAQ */
-.faq-item { border-bottom: 1px solid rgba(255,255,255,0.06); padding: 20px 0; }
-.faq-item h3 { font-size: 16px; font-weight: 700; color: #e8e8f0; margin-bottom: 8px; }
-.faq-item p { margin: 0; font-size: 15px; }
-
-/* Footer */
-footer { text-align: center; padding: 40px 20px; font-size: 12px; color: #555; border-top: 1px solid rgba(255,255,255,0.05); margin-top: 60px; }
+footer{text-align:center;padding:36px 20px;font-size:11px;color:#444;border-top:1px solid rgba(255,255,255,.04);margin-top:48px}
 </style>
 </head>
 <body>
 
-<!-- URGENCY BAR -->
-<div class="urgency-bar">
-⚡ 2026 IS A UNIVERSAL YEAR 1 — THE FIRST RESET YEAR IN 9 YEARS. <span>YOUR ACTIVATION WINDOW IS OPEN.</span>
+<div class="urgency">⚡ 2026 IS A UNIVERSAL YEAR 1 — <span>YOUR ACTIVATION WINDOW IS OPEN</span></div>
+
+<div class="wrap">
+
+<p class="pre">Tesla said: "If you knew the magnificence of 3, 6, and 9…"</p>
+
+<h1>Your Birthdate Contains a Hidden 3-Digit Code That's Either <em>Attracting</em> or <em>Repelling</em> Abundance Right Now</h1>
+
+<p class="sub">Enter your birthday. Get your personal Abundance Code. Activate it in <strong>7 minutes a day</strong> — no meditation, no crystals, no affirmations.</p>
+
+<div class="stats">
+<div class="stat"><span>47,291</span><small>Codes Decoded</small></div>
+<div class="stat"><span>72 hrs</span><small>Avg. First Shift</small></div>
+<div class="stat"><span>60 Day</span><small>Guarantee</small></div>
 </div>
 
-<div class="container">
-
-<!-- PRE-HEADLINE -->
-<p class="pre-headline">Nikola Tesla said: "If you only knew the magnificence of 3, 6, and 9"</p>
-
-<!-- HEADLINE -->
-<h1>Your Birthdate Contains a Hidden 3-Digit Code That's Either <em>Attracting</em> or <em>Repelling</em> Wealth Right Now</h1>
-
-<!-- SUB-HEADLINE -->
-<p class="sub-headline">A retired numerologist who advised Fortune 500 executives for 23 years just revealed the <strong>7-minute daily method</strong> to activate yours — without meditation, crystals, or "positive thinking"</p>
-
-<!-- PROOF BAR -->
-<div class="proof-bar">
-<div class="proof-item"><span>47,291</span>Codes Activated</div>
-<div class="proof-item"><span>72 hrs</span>Average First Shift</div>
-<div class="proof-item"><span>60 Day</span>Money-Back Guarantee</div>
-</div>
-
-<!-- CTA 1 -->
 <div class="cta-wrap">
-<a href="#order" class="cta-btn">ACTIVATE YOUR ABUNDANCE CODE — $19<small>Instant Digital Access · 60-Day Guarantee</small></a>
+<a href="#order" class="cta">GET YOUR ABUNDANCE CODE — $19<small>Instant Access · 60-Day Money-Back Guarantee</small></a>
+<p class="secure">🔒 Secure checkout · Instant digital delivery</p>
 </div>
 
-<!-- OPEN LOOP / PATTERN INTERRUPT -->
+<!-- HOOK -->
 <div class="section">
-<p>Let me ask you something strange.</p>
+<p>You already know numbers carry energy. You've seen the repeating patterns — 11:11 on the clock, the same sequences on receipts, phone numbers, addresses.</p>
 
-<p>Have you ever noticed that certain numbers keep showing up in your life?</p>
+<p>What you might not know is that <strong>your birthdate contains a specific 3-digit frequency code</strong> that's been running in the background your entire life.</p>
 
-<p>On clocks. On receipts. On license plates. The same ones. Over and over.</p>
+<p>When it's dormant — which it is for most people — it creates resistance. Money feels hard. Opportunities go to other people. Manifestation techniques work for everyone except you.</p>
 
-<p>Most people dismiss this as coincidence. It's not.</p>
+<p><strong>When it's activated, everything flips.</strong></p>
 
-<p><strong>Those numbers are trying to tell you something.</strong></p>
-
-<p>Specifically — they're fragments of a 3-digit code that was embedded in your birthdate the moment you entered this world. A code that Pythagoras discovered 2,500 years ago. A code that JP Morgan paid his personal numerologist $1 million a year to decode. A code that Tesla was so obsessed with, he wouldn't enter a building unless its address was divisible by 3.</p>
-
-<p>And here's the part nobody talks about:</p>
-
-<div class="highlight-box">
-<p><strong>This code doesn't just influence your personality. It controls your relationship with money, love, and opportunity.</strong> When it's dormant — which it is for 94% of people — it actively <em>repels</em> the things you want most. When it's activated, it works like a magnet.</p>
-</div>
-
-<p>I know how that sounds. I would've rolled my eyes too — until I saw what happened when I activated mine.</p>
-</div>
-
-<!-- DISCOVERY STORY + CRED -->
-<div class="section">
-<h2>How a <span>"Coincidence"</span> at a Dinner Party Changed Everything</h2>
-
-<p>My name is Dr. Sarah Chen. For 23 years, I was the numerologist that CEOs didn't want you to know about.</p>
-
-<p>I've privately advised 14 Fortune 500 executives, 3 professional athletes, and a tech billionaire whose name you'd recognize instantly. I was never allowed to reveal our work publicly. NDAs. Always NDAs.</p>
-
-<p>But in 2024, I retired. And I decided that the system I'd been keeping behind closed doors — the exact system that helped a struggling real estate agent attract $340,000 in unexpected commissions in 90 days, and helped a single mother "accidentally" land a promotion she never applied for — deserved to be available to everyone.</p>
-
-<p>Not just people who could afford $25,000 for a private session.</p>
-
-<p><strong>Everyone.</strong></p>
-</div>
-
-<!-- FORCE OF NATURE -->
-<div class="section">
-<h2>The Science Behind <span>Why Numbers Control Your Reality</span></h2>
-
-<p>This isn't New Age nonsense. This is mathematics.</p>
-
-<p>In 1925, quantum physicists at the Solvay Conference in Brussels discovered something that shook the scientific community: <strong>at the subatomic level, everything in the universe vibrates at specific frequencies.</strong> Everything. Including you.</p>
-
-<p>Your birthdate — the exact day, month, and year you arrived — locked in a specific vibrational frequency. Think of it like a radio. You're broadcasting on a particular station 24 hours a day, 7 days a week. The question is: <strong>what station are you tuned to?</strong></p>
-
-<p>If your frequency is misaligned — and it is for most people — you're essentially broadcasting static. Opportunities bounce off you. Money flows to people around you but never sticks to you. Relationships feel like an uphill battle.</p>
-
-<p>But when your frequency is activated and aligned?</p>
-
-<ul class="benefit-list">
-<li><strong>Money starts showing up from unexpected places.</strong> A refund you forgot about. A side opportunity that falls into your lap. Raises you didn't ask for.</li>
-<li><strong>The "right people" suddenly appear.</strong> You meet someone at exactly the right time. Doors open that were welded shut before.</li>
-<li><strong>"Lucky" coincidences stack up so fast it feels eerie.</strong> You think of someone and they call. You need something and it arrives.</li>
+<ul class="list">
+<li>Money appears from places you didn't expect</li>
+<li>The right people show up at the right time</li>
+<li>"Lucky" coincidences start stacking daily</li>
+<li>Things you've been manifesting for months suddenly arrive</li>
 </ul>
 
-<p>This isn't magic. It's what happens when you stop broadcasting static and start broadcasting your true signal.</p>
-
-<div class="highlight-box">
-<p><strong>JP Morgan famously said: "Millionaires don't use astrology. Billionaires do."</strong> What he actually used was numerology. He paid Thomas Buckland $1 million annually — in 1920s money — to decode the numbers behind every major financial decision he made. Morgan attributed his entire fortune to this system.</p>
-</div>
+<p>The Abundance Code gives you your personal 3-digit number — and the exact 7-minute daily ritual to switch it on.</p>
 </div>
 
-<!-- MECHANISM -->
+<!-- WHY NOW -->
 <div class="section">
-<h2>The <span>Frequency Activation Method:</span> How It Works</h2>
+<h2>Why <span>2026</span> Changes Everything</h2>
 
-<p>Here's what makes this different from every manifestation book, law of attraction course, or numerology reading you've ever tried:</p>
+<p>2+0+2+6 = 10. 1+0 = <strong>1.</strong></p>
 
-<div class="vs-box">
-<div class="vs-card old">
-<h3>What doesn't work</h3>
-<ul>
-<li>Generic numerology readings</li>
-<li>"Think positive" manifestation</li>
-<li>Hour-long meditation sessions</li>
-<li>Vision boards and affirmations</li>
-<li>Crystal healing and sage burning</li>
-</ul>
-</div>
-<div class="vs-card new">
-<h3>The Frequency Activation Method</h3>
-<ul>
-<li>Calibrated to YOUR 3-digit code</li>
-<li>7 minutes per day — no meditation</li>
-<li>Based on mathematical frequencies</li>
-<li>Uses Tesla's 3-6-9 amplification</li>
-<li>Measurable shifts within 72 hours</li>
-</ul>
+<p>Universal Year 1 is the reset year. Dormant codes are more responsive to activation now than at any point in the 9-year cycle. The last time this window was open was 2017. The next won't be until 2035.</p>
+
+<div class="hl">
+<p><strong>If you're going to activate your code — this is the year.</strong> The energy is already moving. You've probably felt it. That restless feeling like something is about to shift? That's your dormant code responding to the Year 1 frequency. It's ready. It just needs the activation sequence.</p>
 </div>
 </div>
 
-<p>The method has three phases:</p>
-
-<p><strong>Phase 1: Decode (60 seconds)</strong> — Using the Abundance Code Calculator included in your guide, you enter your exact birthdate and instantly receive your personal 3-digit code. This number is unique to you. It tells you exactly which frequency you need to activate.</p>
-
-<p><strong>Phase 2: Align (3 minutes)</strong> — Based on your specific code, you follow a precise sequence that tunes your daily energy to your natural abundance frequency. This is not meditation. It's a specific series of actions calibrated to YOUR numbers. Different code = different sequence.</p>
-
-<p><strong>Phase 3: Amplify (3 minutes)</strong> — Using Tesla's 3-6-9 method — the same pattern he used to generate his most revolutionary inventions — you amplify your activated frequency so it broadcasts at full power throughout the rest of your day.</p>
-
-<p><strong>Total time: 7 minutes.</strong> That's it. No sitting cross-legged. No chanting. No crystals. Just a precise mathematical ritual based on your personal numbers.</p>
-</div>
-
-<!-- TESTIMONIALS -->
+<!-- SOCIAL PROOF -->
 <div class="section">
-<h2>What Happens After <span>You Activate Your Code</span></h2>
+<h2>After They <span>Activated Their Code</span></h2>
 
-<div class="testimonial">
+<div class="testi">
 <div class="stars">★★★★★</div>
-<div class="name">Rachel Underwood, 41 — Austin, TX</div>
-<p>"I felt absolutely ridiculous doing this the first morning. By day 3, I got an email about an inheritance from a great-aunt I barely knew. £14,200. I'm not saying the numbers caused it. But the timing was... I can't explain it. I haven't missed a morning since."</p>
+<div class="who">Rachel U. — Austin, TX</div>
+<p>"Day 3 I got an email about inheritance money I had NO idea existed. £14,200. I haven't missed a morning since. My code is 7-4-2 if anyone's curious 😂"</p>
 </div>
 
-<div class="testimonial">
+<div class="testi">
 <div class="stars">★★★★★</div>
-<div class="name">Marcus Obeng, 34 — London, UK</div>
-<p>"My code was 7-2-9. Within the first week of activating it, three separate clients who'd gone quiet all came back within 48 hours with new projects. My wife thinks I'm mad but she can't argue with the bank account. Up £8,400 in 6 weeks."</p>
+<div class="who">Marcus O. — London, UK</div>
+<p>"Three separate clients who'd gone quiet came back within 48 hours of me starting this. Wife thinks I'm mad but she can't argue with the bank account. Up £8,400 in 6 weeks."</p>
 </div>
 
-<div class="testimonial">
+<div class="testi">
 <div class="stars">★★★★★</div>
-<div class="name">Diane Chambers, 56 — Perth, Australia</div>
-<p>"I've done LOA, crystals, sound baths, all of it. None of it worked. This is the first thing that actually DID something. Got a promotion I didn't apply for on day 11. My code was 3-3-6 and apparently that's a 'leadership frequency.' Spot on."</p>
+<div class="who">Diane C. — Perth, AU</div>
+<p>"I've done LOA, crystals, sound baths, all of it. This is the first thing that actually DID something. Promotion I didn't apply for on day 11. My code was 3-3-6 — apparently that's a 'leadership frequency.' Spot on."</p>
 </div>
 </div>
 
-<!-- CATALYST / URGENCY -->
-<div class="section">
-<h2>Why <span>2026</span> Is the Year This Matters Most</h2>
-
-<p>Here's something most people don't know:</p>
-
-<p>In numerology, every year has a "Universal Year Number." You calculate it by adding the digits: 2+0+2+6 = 10. 1+0 = <strong>1.</strong></p>
-
-<p>Universal Year 1 is the <strong>reset year.</strong> The year of new beginnings. The year when dormant frequencies are most responsive to activation. It's like the soil after rain — everything you plant takes root faster.</p>
-
-<p>The last Universal Year 1 was 2017. The next one won't be until 2035.</p>
-
-<p><strong>That's a 9-year gap.</strong></p>
-
-<div class="highlight-box">
-<p>If your Abundance Code is going to be activated — if you're going to shift from the frequency that's been repelling money and opportunity to the one that attracts it — <strong>this is the year to do it.</strong> The window won't be this open again for nearly a decade.</p>
-</div>
-</div>
-
-<!-- THE OFFER / VALUE STACK -->
+<!-- WHAT'S INSIDE -->
 <div class="section" id="order">
-<h2>Everything Inside <span>The Abundance Code</span></h2>
+<h2>What's Inside <span>The Abundance Code</span></h2>
 
-<div class="stack-item">
-<span class="name">📖 The Abundance Code Guide (Complete System)</span>
-<span class="value">$97</span>
-</div>
-<div class="stack-item">
-<span class="name">🔢 Personal Abundance Code Calculator</span>
-<span class="value">$47</span>
-</div>
-<div class="stack-item">
-<span class="name">⚡ The 7-Minute Frequency Activation Ritual</span>
-<span class="value">$47</span>
-</div>
-<div class="stack-item">
-<span class="name">🌀 Tesla's 3-6-9 Abundance Amplifier</span>
-<span class="value">$37</span>
-</div>
-<div class="stack-item">
-<span class="name">📅 30-Day Activation Calendar</span>
-<span class="value">$27</span>
-</div>
-<div class="stack-item">
-<span class="name">💜 BONUS: Relationship Compatibility Codes</span>
-<span class="value">$37</span>
-</div>
-<div class="stack-item">
-<span class="name">🎧 BONUS: Frequency Alignment Audio Track (7 min)</span>
-<span class="value">$29</span>
+<div class="stack-row"><span class="n">📖 The Abundance Code — Complete Guide</span><span class="v">$47</span></div>
+<div class="stack-row"><span class="n">🔢 Personal Abundance Code Calculator</span><span class="v">$27</span></div>
+<div class="stack-row"><span class="n">⚡ 7-Minute Frequency Activation Ritual</span><span class="v">$27</span></div>
+<div class="stack-row"><span class="n">📅 30-Day Activation Calendar</span><span class="v">$17</span></div>
+<div class="stack-row"><span class="n">🎁 BONUS: Quick-Start Activation Cheatsheet</span><span class="v">$17</span></div>
 </div>
 
-</div>
-
-<!-- PRICE REVEAL -->
 <div class="price-box">
-<p class="was">Total Value: <s>$321</s></p>
-<div class="now">$19 <small>today only</small></div>
-<p class="reason">I'm not here to get rich off this guide. I'm here to get it into as many hands as possible during this Universal Year 1 window. Once 2026 ends, this price goes away.</p>
+<p class="was">Total Value: <s>$135</s></p>
+<div class="now">$19</div>
+<p style="font-size:14px;color:#9898b4;margin-top:8px">Universal Year 1 pricing — available while the activation window is open.</p>
 </div>
 
-<!-- CTA 2 -->
 <div class="cta-wrap">
-<a href="#order" class="cta-btn">YES — ACTIVATE MY ABUNDANCE CODE →<small>Instant Access · $19 · 60-Day Guarantee</small></a>
+<a href="#order" class="cta">YES — DECODE MY ABUNDANCE CODE →<small>$19 · Instant Access · 60-Day Guarantee</small></a>
+<p class="secure">🔒 Secure checkout · Instant digital delivery</p>
 </div>
 
-<!-- GUARANTEE -->
-<div class="guarantee-box">
-<h3>🛡️ The 72-Hour Shift Guarantee</h3>
-<p>Try the Frequency Activation Method for a full 60 days. If you don't notice a shift in your financial reality — unexpected money, new opportunities, or that unmistakable feeling that something has changed — email us and we'll refund every penny. No questions. No hoops. You don't even have to send it back (it's digital). We take all the risk because we've seen what happens when the code gets activated.</p>
+<div class="guar">
+<h3>🛡️ 60-Day "Feel The Shift" Guarantee</h3>
+<p>Activate your code for a full 60 days. If you don't feel the shift — unexpected money, new opportunities, synchronicities you can't ignore — we refund every penny. No questions. No hoops.</p>
 </div>
 
 <!-- FAQ -->
 <div class="section">
-<h2>Frequently Asked <span>Questions</span></h2>
+<h2>Quick <span>Questions</span></h2>
 
-<div class="faq-item">
-<h3>Is this a physical book?</h3>
-<p>No — it's a digital guide you can read on any device. You get instant access the moment you order. No waiting for shipping.</p>
+<div class="faq">
+<h3>How do I get my code?</h3>
+<p>Instantly. You enter your birthdate into the calculator inside the guide and it generates your personal 3-digit Abundance Code in about 60 seconds.</p>
 </div>
 
-<div class="faq-item">
-<h3>I'm not into "woo-woo" stuff. Will this work for me?</h3>
-<p>Good — neither are we. This is based on mathematical patterns and vibrational frequencies, not fairy dust. Tesla, Pythagoras, and JP Morgan weren't hippies. They were the most analytically rigorous minds of their eras. You don't need to "believe" in anything. You just need to follow the 7-minute method.</p>
+<div class="faq">
+<h3>How is this different from a numerology reading?</h3>
+<p>A reading tells you about your personality. This gives you a specific daily activation ritual calibrated to YOUR numbers. It's the difference between a weather forecast and a thermostat.</p>
 </div>
 
-<div class="faq-item">
-<h3>How is this different from a regular numerology reading?</h3>
-<p>A regular numerology reading tells you about your personality. The Abundance Code tells you your specific financial frequency and gives you a daily method to activate it. It's the difference between a weather report and a thermostat — one describes, the other controls.</p>
+<div class="faq">
+<h3>Do I need to meditate?</h3>
+<p>No. No meditation, no crystals, no journaling, no visualization. The activation ritual is a specific 7-minute sequence based on your code. That's it.</p>
 </div>
 
-<div class="faq-item">
-<h3>What if it doesn't work for me?</h3>
-<p>Then you email us within 60 days and get every penny back. We've made this as risk-free as humanly possible because we know what happens when people actually use it.</p>
+<div class="faq">
+<h3>What if it doesn't work?</h3>
+<p>Email us within 60 days. Full refund. We've made it completely risk-free.</p>
 </div>
 
-<div class="faq-item">
-<h3>Why is it only $19?</h3>
-<p>Because 2026 is a Universal Year 1 — the activation window is open right now. We want as many people as possible to activate their codes during this window. When the year ends, so does this price.</p>
+<div class="faq">
+<h3>Why only $19?</h3>
+<p>2026 is a Universal Year 1 — the activation window is open right now. We want as many codes activated as possible during this window.</p>
 </div>
 </div>
 
 <!-- FINAL CTA -->
-<div class="cta-wrap" style="margin: 48px 0;">
-<a href="#order" class="cta-btn">ACTIVATE YOUR ABUNDANCE CODE — $19<small>Instant Access · 60-Day Money-Back Guarantee</small></a>
-<p class="guarantee-text" style="margin-top: 12px;">🔒 Secure checkout · Instant digital delivery</p>
+<div class="cta-wrap" style="margin:44px 0">
+<a href="#order" class="cta">GET YOUR ABUNDANCE CODE — $19<small>Instant Access · 60-Day Guarantee</small></a>
+<p class="secure">🔒 Secure checkout · Instant digital delivery</p>
 </div>
 
-<!-- PS -->
-<div class="section" style="margin-bottom: 48px;">
-<p><strong>P.S.</strong> — Remember: 2026 is the first Universal Year 1 since 2017. The next one isn't until 2035. Your Abundance Code has been dormant your entire life. You now have the method to activate it — and the ideal window to do it in. <strong>$19 and 7 minutes a day.</strong> That's all that stands between you and a frequency shift that most people won't get another chance at for 9 years.</p>
-</div>
+<p style="margin-bottom:44px;font-size:15px"><strong>P.S.</strong> — Universal Year 1 won't come again until 2035. Your code has been dormant your entire life. <strong>$19 and 7 minutes a day</strong> — that's all it takes to find out what happens when you finally switch it on.</p>
 
 </div>
 
 <footer>
-<p>© 2026 The Abundance Code. All rights reserved.</p>
-<p style="margin-top: 8px;"><a href="#">Privacy Policy</a> · <a href="#">Terms of Service</a> · <a href="#">Contact</a></p>
-<p style="margin-top: 12px; font-size: 11px; color: #444;">Disclaimer: The Abundance Code is for entertainment and personal development purposes. Results vary by individual. The testimonials shown represent exceptional outcomes and are not guaranteed for every user.</p>
+<p>© 2026 The Abundance Code · All rights reserved</p>
+<p style="margin-top:6px"><a href="#">Privacy</a> · <a href="#">Terms</a> · <a href="#">Contact</a></p>
+<p style="margin-top:10px;font-size:10px;color:#333">Disclaimer: The Abundance Code is for entertainment and personal development purposes. Individual results vary. Testimonials represent individual experiences.</p>
 </footer>
 
 </body>
