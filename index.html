@@ -39,7 +39,9 @@ h2 em{font-style:italic;color:#c4b5fd}
 
 /* Date form */
 .date-form{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:20px}
-.date-form select,.date-form input[type="number"]{background:#12122a;border:2px solid rgba(124,58,237,.2);color:#e0dff0;font-family:'Inter',sans-serif;font-size:16px;font-weight:600;padding:14px 16px;border-radius:10px;appearance:none;-webkit-appearance:none;text-align:center;outline:none;transition:border .2s}
+.date-form select,.date-form input[type="number"]{background:#12122a;border:2px solid rgba(124,58,237,.2);color:#e0dff0;font-family:'Inter',sans-serif;font-size:16px;font-weight:600;padding:14px 16px;border-radius:10px;text-align:center;outline:none;transition:border .2s}
+.date-form select option{background:#fff;color:#000}
+.date-form input[type="number"]{appearance:none;-webkit-appearance:none}
 .date-form select:focus,.date-form input:focus{border-color:#7c3aed}
 .date-form select{width:130px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%238888a8' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center}
 .date-form input[type="number"]{width:100px}
@@ -165,6 +167,7 @@ footer{text-align:center;padding:32px 20px;font-size:11px;color:#333;border-top:
 </select>
 <select id="day" aria-label="Day">
 <option value="" disabled selected>Day</option>
+<option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option><option value="11">11</option><option value="12">12</option><option value="13">13</option><option value="14">14</option><option value="15">15</option><option value="16">16</option><option value="17">17</option><option value="18">18</option><option value="19">19</option><option value="20">20</option><option value="21">21</option><option value="22">22</option><option value="23">23</option><option value="24">24</option><option value="25">25</option><option value="26">26</option><option value="27">27</option><option value="28">28</option><option value="29">29</option><option value="30">30</option><option value="31">31</option>
 </select>
 <input type="number" id="year" placeholder="Year" min="1930" max="2010" aria-label="Year">
 </div>
@@ -434,9 +437,7 @@ const answers = {};
 let lp = 0;
 const months=['','January','February','March','April','May','June','July','August','September','October','November','December'];
 
-// === DAYS DROPDOWN ===
-const daySelect=document.getElementById('day');
-for(let i=1;i<=31;i++){const o=document.createElement('option');o.value=i;o.textContent=i;daySelect.appendChild(o)}
+// === DAYS (hardcoded in HTML) ===
 
 // === STEP 1 VALIDATION ===
 const mm=document.getElementById('month'),dd=document.getElementById('day'),yy=document.getElementById('year'),s1btn=document.getElementById('step1Btn');
