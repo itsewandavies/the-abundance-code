@@ -5,171 +5,297 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>The Abundance Code — Free Reading</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Inter',-apple-system,sans-serif;background:#0a0a12;color:#e0dff0;line-height:1.7;font-size:17px;min-height:100vh;overflow-x:hidden}
+:root{--bg-deep:#0a0a2e;--bg-mid:#0d0d3a;--violet:#7c3aed;--violet-light:#a855f7;--gold:#f5c542;--gold-dark:#d4a017;--glass:rgba(255,255,255,.06);--glass-border:rgba(255,255,255,.1);--text:#e0dff0;--text-dim:#8888a8;--text-dimmer:#5858a0;--danger:#ef4444;--pink:#ec4899;--amber:#f59e0b}
+body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg-deep);color:var(--text);line-height:1.7;font-size:17px;min-height:100vh;overflow-x:hidden}
 a{color:inherit}
 
+/* Stars background */
+body::before,body::after{content:'';position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0}
+body::before{background:radial-gradient(1px 1px at 10% 20%,rgba(255,255,255,.4),transparent),radial-gradient(1px 1px at 30% 70%,rgba(255,255,255,.3),transparent),radial-gradient(1.5px 1.5px at 50% 10%,rgba(255,255,255,.5),transparent),radial-gradient(1px 1px at 70% 40%,rgba(255,255,255,.3),transparent),radial-gradient(1px 1px at 90% 80%,rgba(255,255,255,.4),transparent),radial-gradient(1.5px 1.5px at 15% 90%,rgba(255,255,255,.3),transparent),radial-gradient(1px 1px at 85% 15%,rgba(255,255,255,.35),transparent),radial-gradient(1px 1px at 45% 55%,rgba(255,255,255,.25),transparent),radial-gradient(1.5px 1.5px at 60% 85%,rgba(255,255,255,.4),transparent),radial-gradient(1px 1px at 25% 45%,rgba(255,255,255,.3),transparent),radial-gradient(1px 1px at 75% 65%,rgba(255,255,255,.35),transparent),radial-gradient(1px 1px at 5% 55%,rgba(255,255,255,.25),transparent),radial-gradient(1.5px 1.5px at 95% 35%,rgba(255,255,255,.4),transparent),radial-gradient(1px 1px at 40% 95%,rgba(255,255,255,.3),transparent),radial-gradient(1px 1px at 55% 30%,rgba(255,255,255,.2),transparent);animation:twinkle 8s ease-in-out infinite alternate}
+body::after{background:radial-gradient(1px 1px at 20% 50%,rgba(167,139,250,.4),transparent),radial-gradient(1px 1px at 80% 20%,rgba(167,139,250,.3),transparent),radial-gradient(1.5px 1.5px at 65% 75%,rgba(245,197,66,.3),transparent),radial-gradient(1px 1px at 35% 15%,rgba(167,139,250,.25),transparent),radial-gradient(1px 1px at 50% 90%,rgba(245,197,66,.2),transparent);animation:twinkle 12s ease-in-out infinite alternate-reverse}
+@keyframes twinkle{0%{opacity:.6}100%{opacity:1}}
+
 /* Progress bar */
-.progress{position:fixed;top:0;left:0;right:0;height:3px;background:#1a1a2e;z-index:100}
-.progress-fill{height:100%;background:linear-gradient(90deg,#7c3aed,#a855f7);transition:width .5s ease;width:0%}
+.progress{position:fixed;top:0;left:0;right:0;height:4px;background:rgba(255,255,255,.05);z-index:1000}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--violet),var(--violet-light),var(--gold));transition:width .6s cubic-bezier(.4,0,.2,1);width:0%;box-shadow:0 0 12px rgba(124,58,237,.6),0 0 30px rgba(124,58,237,.3)}
 
 /* Step container */
-.step{display:none;min-height:100vh;flex-direction:column;align-items:center;justify-content:center;padding:40px 20px;text-align:center;animation:fadeIn .4s ease}
+.step{display:none;min-height:100vh;min-height:100dvh;flex-direction:column;align-items:center;justify-content:center;padding:50px 20px 40px;text-align:center;position:relative;z-index:1}
 .step.active{display:flex}
-@keyframes fadeIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.step.slide-in{animation:slideIn .5s cubic-bezier(.4,0,.2,1) forwards}
+@keyframes slideIn{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
 
 .wrap{max-width:520px;width:100%}
 
-/* Common elements */
-.badge{display:inline-block;background:rgba(124,58,237,.12);color:#a78bfa;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:6px 16px;border-radius:20px;margin-bottom:20px}
-.step-count{font-size:12px;color:#5858a0;margin-bottom:12px;font-weight:600}
+/* Frosted glass card */
+.glass{background:rgba(255,255,255,.04);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid var(--glass-border);border-radius:20px;padding:28px 24px}
 
-h2{font-size:26px;font-weight:900;color:#fff;line-height:1.25;margin-bottom:8px;letter-spacing:-.3px}
-h2 em{font-style:italic;color:#c4b5fd}
-@media(max-width:480px){h2{font-size:22px}}
-.q-sub{font-size:15px;color:#8888a8;margin-bottom:28px;max-width:420px;margin-left:auto;margin-right:auto}
+/* Common */
+.badge{display:inline-block;background:rgba(124,58,237,.15);color:#c4b5fd;font-size:11px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;padding:8px 18px;border-radius:24px;margin-bottom:24px;border:1px solid rgba(124,58,237,.2)}
+.step-count{font-size:12px;color:var(--text-dimmer);margin-bottom:14px;font-weight:600;letter-spacing:1px;text-transform:uppercase}
+
+h2{font-size:30px;font-weight:900;color:#fff;line-height:1.2;margin-bottom:10px;letter-spacing:-.5px}
+h2 em{font-style:italic;background:linear-gradient(135deg,#c4b5fd,var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+@media(max-width:480px){h2{font-size:26px}}
+.q-sub{font-size:15px;color:var(--text-dim);margin-bottom:32px;max-width:420px;margin-left:auto;margin-right:auto}
 
 /* Option buttons */
-.options{display:flex;flex-direction:column;gap:10px;width:100%;max-width:400px;margin:0 auto}
-.opt{background:#12122a;border:2px solid rgba(124,58,237,.15);color:#e0dff0;font-family:'Inter',sans-serif;font-size:16px;font-weight:600;padding:16px 20px;border-radius:12px;cursor:pointer;transition:all .2s;text-align:left;display:flex;align-items:center;gap:12px}
-.opt:hover{border-color:#7c3aed;background:#16162e}
-.opt.selected{border-color:#7c3aed;background:rgba(124,58,237,.12)}
-.opt .emoji{font-size:22px;flex-shrink:0}
+.options{display:flex;flex-direction:column;gap:12px;width:100%;max-width:420px;margin:0 auto}
+.opt{background:rgba(255,255,255,.04);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:2px solid rgba(255,255,255,.08);color:var(--text);font-family:'Inter',sans-serif;font-size:16px;font-weight:600;padding:18px 22px;border-radius:16px;cursor:pointer;transition:all .25s cubic-bezier(.4,0,.2,1);text-align:left;display:flex;align-items:center;gap:14px}
+.opt:hover{border-color:rgba(124,58,237,.4);background:rgba(124,58,237,.08);transform:translateY(-1px)}
+.opt:active{transform:scale(.98)}
+.opt.selected{border-color:var(--violet);background:rgba(124,58,237,.15);box-shadow:0 0 20px rgba(124,58,237,.2);transform:scale(1.02)}
+.opt .emoji{font-size:24px;flex-shrink:0}
 
-/* Date form */
-.date-form{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:20px}
-.date-form select,.date-form input[type="number"]{background:#12122a;border:2px solid rgba(124,58,237,.2);color:#e0dff0;font-family:'Inter',sans-serif;font-size:16px;font-weight:600;padding:14px 16px;border-radius:10px;text-align:center;outline:none;transition:border .2s}
-.date-form select option{background:#fff;color:#000}
-.date-form input[type="number"]{appearance:none;-webkit-appearance:none}
-.date-form select:focus,.date-form input:focus{border-color:#7c3aed}
-.date-form select{width:130px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%238888a8' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center}
-.date-form input[type="number"]{width:100px}
-.date-form input::-webkit-outer-spin-button,.date-form input::-webkit-inner-spin-button{-webkit-appearance:none}
+/* Icon card grid (step 3) */
+.icon-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;max-width:420px;margin:0 auto}
+.icon-card{background:rgba(255,255,255,.04);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:2px solid rgba(255,255,255,.08);border-radius:20px;padding:24px 16px;cursor:pointer;transition:all .25s cubic-bezier(.4,0,.2,1);text-align:center}
+.icon-card:hover{border-color:rgba(124,58,237,.4);background:rgba(124,58,237,.08);transform:translateY(-2px)}
+.icon-card:active{transform:scale(.96)}
+.icon-card.selected{border-color:var(--violet);background:rgba(124,58,237,.15);box-shadow:0 0 25px rgba(124,58,237,.25)}
+.icon-card .ic-icon{font-size:40px;margin-bottom:10px;display:block}
+.icon-card .ic-title{font-size:15px;font-weight:700;color:#fff}
+.icon-card .ic-sub{font-size:12px;color:var(--text-dim);margin-top:4px}
+
+/* Date picker */
+.date-picker{display:flex;gap:12px;justify-content:center;margin-bottom:24px;flex-wrap:wrap}
+.date-col{display:flex;flex-direction:column;align-items:center;gap:6px}
+.date-col label{font-size:11px;color:var(--text-dimmer);font-weight:600;text-transform:uppercase;letter-spacing:1px}
+.date-select{background:rgba(255,255,255,.06);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:2px solid rgba(255,255,255,.1);color:var(--text);font-family:'Inter',sans-serif;font-size:18px;font-weight:700;padding:16px 20px;border-radius:14px;text-align:center;outline:none;transition:all .25s;-webkit-appearance:none;appearance:none;cursor:pointer}
+.date-select:focus{border-color:var(--violet);box-shadow:0 0 20px rgba(124,58,237,.2)}
+.date-select option{background:#1a1a3e;color:#fff}
+select.date-select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%238888a8' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:36px}
+.month-sel{width:150px}
+.day-sel{width:90px}
+.year-input{width:100px;-moz-appearance:textfield}
+.year-input::-webkit-outer-spin-button,.year-input::-webkit-inner-spin-button{-webkit-appearance:none}
+.cosmic-ring{width:200px;height:200px;margin:0 auto 30px;border-radius:50%;border:2px solid rgba(124,58,237,.15);display:flex;align-items:center;justify-content:center;position:relative;animation:cosmicSpin 20s linear infinite}
+.cosmic-ring::before{content:'';position:absolute;inset:-6px;border-radius:50%;border:1px solid rgba(167,139,250,.1);animation:cosmicSpin 30s linear infinite reverse}
+.cosmic-ring::after{content:'✦';position:absolute;top:-4px;left:50%;transform:translateX(-50%);font-size:10px;color:var(--violet-light);animation:cosmicSpin 20s linear infinite reverse}
+@keyframes cosmicSpin{to{transform:rotate(360deg)}}
+.cosmic-ring .cr-inner{font-size:48px;opacity:.4}
 
 /* Next button */
-.next-btn{background:linear-gradient(90deg,#7c3aed,#a855f7);color:#fff;font-size:17px;font-weight:800;padding:16px 44px;border-radius:10px;border:none;cursor:pointer;transition:transform .2s,box-shadow .2s;box-shadow:0 4px 24px rgba(124,58,237,.4);margin-top:20px;width:100%;max-width:400px}
-.next-btn:hover{transform:translateY(-2px)}
-.next-btn:disabled{opacity:.4;cursor:not-allowed;transform:none}
+.next-btn{background:linear-gradient(135deg,var(--violet),var(--violet-light));color:#fff;font-size:17px;font-weight:800;padding:18px 44px;border-radius:14px;border:none;cursor:pointer;transition:all .25s cubic-bezier(.4,0,.2,1);box-shadow:0 4px 24px rgba(124,58,237,.4),0 0 60px rgba(124,58,237,.1);margin-top:24px;width:100%;max-width:420px;letter-spacing:.3px}
+.next-btn:hover{transform:translateY(-2px);box-shadow:0 6px 30px rgba(124,58,237,.5)}
+.next-btn:active{transform:scale(.98)}
+.next-btn:disabled{opacity:.3;cursor:not-allowed;transform:none;box-shadow:none}
 
-/* Mid-quiz reveal cards */
-.reveal-card{background:linear-gradient(135deg,rgba(124,58,237,.12),rgba(168,85,247,.06));border:1px solid rgba(124,58,237,.25);border-radius:16px;padding:28px 24px;margin:20px auto;max-width:420px;text-align:center}
-.reveal-card .big-num{font-size:64px;font-weight:900;color:#c4b5fd;line-height:1;margin:8px 0}
-.reveal-card p{color:#b0b0c8;font-size:15px;margin:0}
-.reveal-card p strong{color:#e0dff0}
-.reveal-card .tag{display:inline-block;background:rgba(124,58,237,.2);color:#c4b5fd;font-size:12px;font-weight:700;padding:4px 12px;border-radius:12px;margin-top:12px}
+/* Slider */
+.slider-wrap{max-width:400px;margin:0 auto;padding:10px 0}
+.slider-label-top{font-size:48px;font-weight:900;color:#fff;margin-bottom:4px}
+.slider-label-desc{font-size:16px;color:var(--violet-light);font-weight:600;margin-bottom:24px;min-height:24px;transition:all .3s}
+.slider-track{position:relative;width:100%;height:48px;display:flex;align-items:center}
+input[type="range"]{-webkit-appearance:none;appearance:none;width:100%;height:8px;border-radius:4px;background:linear-gradient(90deg,rgba(124,58,237,.3),var(--violet),var(--gold));outline:none;cursor:pointer}
+input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--violet),var(--violet-light));border:3px solid #fff;box-shadow:0 0 20px rgba(124,58,237,.5);cursor:pointer;transition:transform .2s}
+input[type="range"]::-webkit-slider-thumb:active{transform:scale(1.15)}
+input[type="range"]::-moz-range-thumb{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--violet),var(--violet-light));border:3px solid #fff;box-shadow:0 0 20px rgba(124,58,237,.5);cursor:pointer}
+.slider-labels{display:flex;justify-content:space-between;font-size:11px;color:var(--text-dimmer);margin-top:8px;font-weight:600}
 
-/* Energy bar tease */
-.energy-tease{width:100%;max-width:400px;margin:20px auto;text-align:left}
-.energy-row{margin:12px 0}
-.energy-row .label{display:flex;justify-content:space-between;font-size:13px;font-weight:600;margin-bottom:4px}
-.energy-row .label span:last-child{color:#a78bfa}
-.bar-bg{height:8px;border-radius:4px;background:#1a1a2e;overflow:hidden}
-.bar-fill{height:100%;border-radius:4px;transition:width 1.5s ease-out;width:0%}
-.energy-warn{font-size:14px;color:#ef4444;margin-top:16px;font-weight:600}
+/* Reveal card */
+.reveal-card{background:rgba(255,255,255,.04);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid var(--glass-border);border-radius:24px;padding:36px 28px;margin:20px auto;max-width:440px;text-align:center}
 
-/* Trust elements */
-.s1-proof{font-size:12px;color:#5858a0;margin-top:16px}
-.s1-proof span{color:#a78bfa;font-weight:700}
-.trust-row{display:flex;gap:16px;justify-content:center;margin-top:20px;flex-wrap:wrap}
-.trust-row div{font-size:11px;color:#5858a0;text-transform:uppercase;letter-spacing:.5px}
+/* Life path reveal */
+.lp-number{font-size:140px;font-weight:900;line-height:1;background:linear-gradient(180deg,#c4b5fd,var(--violet));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:lpPulse 3s ease-in-out infinite;margin:10px 0 16px}
+@keyframes lpPulse{0%,100%{filter:drop-shadow(0 0 20px rgba(167,139,250,.4))}50%{filter:drop-shadow(0 0 40px rgba(167,139,250,.7))}}
+.lp-subtitle{font-size:20px;font-weight:800;color:#fff;margin-bottom:6px}
+.lp-tag{display:inline-block;background:rgba(124,58,237,.2);color:#c4b5fd;font-size:12px;font-weight:700;padding:6px 16px;border-radius:14px;margin:12px 0 16px;border:1px solid rgba(124,58,237,.2)}
+.lp-desc{font-size:15px;color:var(--text-dim);line-height:1.7}
+.lp-desc strong{color:var(--text)}
+.trait-cards{display:flex;flex-direction:column;gap:10px;margin-top:20px}
+.trait-card-anim{opacity:0;transform:translateY(20px);transition:all .4s cubic-bezier(.4,0,.2,1)}
+.trait-card-anim.visible{opacity:1;transform:translateY(0)}
+.trait-card-anim .tc{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);border-radius:12px;padding:14px 18px;text-align:left}
+.trait-card-anim .tc h4{font-size:11px;font-weight:700;color:var(--violet-light);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px}
+.trait-card-anim .tc p{font-size:14px;margin:0;color:#9898b4}
 
-/* === DECODING ANIMATION === */
+/* Energy gauges */
+.gauges-row{display:flex;justify-content:center;gap:24px;flex-wrap:wrap;margin:20px 0}
+.gauge{position:relative;width:110px;height:110px}
+.gauge svg{width:100%;height:100%;transform:rotate(-90deg)}
+.gauge-bg{fill:none;stroke:rgba(255,255,255,.06);stroke-width:8}
+.gauge-fill{fill:none;stroke-width:8;stroke-linecap:round;transition:stroke-dashoffset 1.5s cubic-bezier(.4,0,.2,1)}
+.gauge-label{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.gauge-pct{font-size:22px;font-weight:900;color:#fff}
+.gauge-name{font-size:10px;font-weight:600;color:var(--text-dim);text-transform:uppercase;letter-spacing:.5px;margin-top:2px}
+.gauge.pulse-low .gauge-fill{animation:pulseLow 2s ease-in-out infinite}
+@keyframes pulseLow{0%,100%{opacity:1}50%{opacity:.5}}
+
+/* Chart containers */
+.chart-container{position:relative;width:100%;max-width:380px;margin:20px auto;aspect-ratio:1/1}
+.chart-container-wide{position:relative;width:100%;max-width:440px;margin:20px auto;height:260px}
+
+/* Energy warn */
+.energy-warn{font-size:14px;color:var(--danger);margin-top:16px;font-weight:600}
+
+/* Trust */
+.s1-proof{font-size:12px;color:var(--text-dimmer);margin-top:20px}
+.s1-proof span{color:var(--violet-light);font-weight:700}
+.trust-row{display:flex;gap:16px;justify-content:center;margin-top:16px;flex-wrap:wrap}
+.trust-row div{font-size:11px;color:var(--text-dimmer);text-transform:uppercase;letter-spacing:.5px}
+
+/* Decode */
 #stepDecode{display:none}
-.decode-visual{width:180px;height:180px;border-radius:50%;border:3px solid #7c3aed;display:flex;align-items:center;justify-content:center;margin:0 auto 24px;position:relative}
-@keyframes pulse-ring{0%,100%{box-shadow:0 0 0 0 rgba(124,58,237,.3)}50%{box-shadow:0 0 0 20px rgba(124,58,237,0)}}
-.decode-visual{animation:pulse-ring 2s infinite}
-.decode-number{font-size:44px;font-weight:900;color:#c4b5fd;font-variant-numeric:tabular-nums}
-.decode-status{font-size:14px;color:#8888a8;margin-bottom:6px}
-.decode-detail{font-size:12px;color:#5858a0}
-.decode-bar{width:260px;height:4px;background:#1a1a2e;border-radius:4px;margin:18px auto 0;overflow:hidden}
-.decode-bar-fill{height:100%;background:linear-gradient(90deg,#7c3aed,#a855f7);border-radius:4px;width:0%;transition:width .3s}
+.decode-outer{position:relative;width:200px;height:200px;margin:0 auto 30px}
+.decode-ring{position:absolute;inset:0;border-radius:50%;border:2px solid var(--violet);animation:decodeSpin1 3s linear infinite}
+.decode-ring2{position:absolute;inset:-12px;border-radius:50%;border:1px solid rgba(167,139,250,.2);animation:decodeSpin1 5s linear infinite reverse}
+.decode-ring3{position:absolute;inset:-24px;border-radius:50%;border:1px dashed rgba(167,139,250,.1);animation:decodeSpin1 8s linear infinite}
+@keyframes decodeSpin1{to{transform:rotate(360deg)}}
+.decode-particles{position:absolute;inset:-20px}
+.decode-particle{position:absolute;width:4px;height:4px;border-radius:50%;background:var(--violet-light)}
+.dp1{top:0;left:50%;animation:orbit1 2s linear infinite}
+.dp2{top:50%;right:0;animation:orbit2 2.5s linear infinite}
+.dp3{bottom:0;left:50%;animation:orbit3 3s linear infinite}
+@keyframes orbit1{0%{transform:translate(-50%,0)}25%{transform:translate(80px,80px)}50%{transform:translate(0,160px)}75%{transform:translate(-80px,80px)}100%{transform:translate(-50%,0)}}
+@keyframes orbit2{0%{transform:translate(0,-50%)}25%{transform:translate(-80px,60px)}50%{transform:translate(-160px,0)}75%{transform:translate(-80px,-60px)}100%{transform:translate(0,-50%)}}
+@keyframes orbit3{0%{transform:translate(-50%,0)}25%{transform:translate(-80px,-80px)}50%{transform:translate(0,-160px)}75%{transform:translate(80px,-80px)}100%{transform:translate(-50%,0)}}
+.decode-center{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;border-radius:50%;background:rgba(124,58,237,.1)}
+.decode-number{font-size:48px;font-weight:900;color:#c4b5fd;font-variant-numeric:tabular-nums}
+.decode-status{font-size:15px;color:var(--text-dim);margin-bottom:6px;font-weight:600}
+.decode-detail{font-size:12px;color:var(--text-dimmer)}
+.decode-bar{width:280px;height:4px;background:rgba(255,255,255,.06);border-radius:4px;margin:20px auto 0;overflow:hidden}
+.decode-bar-fill{height:100%;background:linear-gradient(90deg,var(--violet),var(--violet-light),var(--gold));border-radius:4px;width:0%;transition:width .3s}
+/* Decode phase visuals */
+.decode-phase{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .5s}
+.decode-phase.active{opacity:1}
+.number-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:4px;width:120px}
+.number-grid span{font-size:14px;font-weight:700;color:var(--violet-light);opacity:.3;transition:opacity .1s}
+.number-grid span.flash{opacity:1;color:var(--gold)}
+.radar-sweep{width:160px;height:160px;border-radius:50%;border:2px solid rgba(124,58,237,.3);position:relative;overflow:hidden}
+.radar-sweep::after{content:'';position:absolute;top:0;left:50%;width:50%;height:50%;background:conic-gradient(from 0deg,transparent,rgba(124,58,237,.4));transform-origin:bottom left;animation:radarSweep 2s linear infinite}
+@keyframes radarSweep{to{transform:rotate(360deg)}}
+.code-lock-anim{display:flex;gap:12px;font-size:48px;font-weight:900;color:var(--gold)}
+.code-digit{opacity:.3;transition:all .3s}
+.code-digit.locked{opacity:1;text-shadow:0 0 20px rgba(245,197,66,.5)}
 
-/* === RESULTS PAGE === */
-#stepResults{display:none;padding:0 0 60px}
-.results-header{text-align:center;padding:36px 20px 28px;border-bottom:1px solid rgba(255,255,255,.04)}
-.results-header h1{font-size:24px;font-weight:900;color:#fff;margin-bottom:6px}
-.results-header p{color:#8888a8;font-size:14px}
+/* Results */
+#stepResults{display:none;position:relative;z-index:1}
+.results-header{text-align:center;padding:50px 20px 32px;background:linear-gradient(180deg,rgba(124,58,237,.08),transparent)}
+.results-header h1{font-size:28px;font-weight:900;color:#fff;margin-bottom:8px}
+.results-header p{color:var(--text-dim);font-size:14px}
 .r-wrap{max-width:640px;margin:0 auto;padding:0 20px}
 
-.result-card{background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.06);border-radius:14px;padding:24px;margin:20px 0}
-.result-card h3{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:#a78bfa;margin-bottom:12px}
-.result-card .big-num{font-size:56px;font-weight:900;color:#c4b5fd;line-height:1;margin-bottom:8px}
+.result-card{background:rgba(255,255,255,.03);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.06);border-radius:20px;padding:28px;margin:20px 0}
+.result-card h3{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--violet-light);margin-bottom:14px}
 .result-card p{margin-bottom:0;color:#b0b0c8;font-size:15px}
-.result-card p strong{color:#e0dff0}
+.result-card p strong{color:var(--text)}
+
+/* Result LP orb */
+.res-lp-orb{width:140px;height:140px;border-radius:50%;background:radial-gradient(circle at 40% 40%,rgba(167,139,250,.4),rgba(124,58,237,.15));border:2px solid rgba(167,139,250,.3);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;box-shadow:0 0 60px rgba(124,58,237,.3),0 0 120px rgba(124,58,237,.1);animation:orbPulse 4s ease-in-out infinite}
+@keyframes orbPulse{0%,100%{box-shadow:0 0 60px rgba(124,58,237,.3),0 0 120px rgba(124,58,237,.1)}50%{box-shadow:0 0 80px rgba(124,58,237,.5),0 0 160px rgba(124,58,237,.2)}}
+.res-lp-num{font-size:64px;font-weight:900;color:#c4b5fd}
 
 .trait-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}
 @media(max-width:480px){.trait-grid{grid-template-columns:1fr}}
-.trait{background:rgba(124,58,237,.06);border-radius:8px;padding:12px 14px}
-.trait h4{font-size:12px;font-weight:700;color:#a78bfa;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
+.trait{background:rgba(124,58,237,.06);border-radius:12px;padding:14px 16px}
+.trait h4{font-size:11px;font-weight:700;color:var(--violet-light);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
 .trait p{font-size:13px;margin:0;color:#9898b4}
 
-.freq-bar{height:8px;border-radius:4px;background:#1a1a2e;margin-top:12px;overflow:hidden}
-.freq-fill{height:100%;border-radius:4px;transition:width 1.5s ease-out}
+.freq-bar{height:10px;border-radius:5px;background:rgba(255,255,255,.06);margin-top:12px;overflow:hidden}
+.freq-fill{height:100%;border-radius:5px;transition:width 1.5s ease-out}
 
-/* Personalized insight */
-.insight-card{background:rgba(251,191,36,.06);border:1px solid rgba(251,191,36,.15);border-radius:14px;padding:24px;margin:20px 0}
-.insight-card h3{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:#fbbf24;margin-bottom:12px}
+.insight-card{background:rgba(245,197,66,.06);border:1px solid rgba(245,197,66,.15);border-radius:20px;padding:28px;margin:20px 0}
+.insight-card h3{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--gold);margin-bottom:14px}
 .insight-card p{color:#c8c4b0;font-size:15px;margin-bottom:0}
-.insight-card p strong{color:#e0dff0}
+.insight-card p strong{color:var(--text)}
 
 /* Locked code */
-.locked-card{background:linear-gradient(135deg,rgba(124,58,237,.12),rgba(168,85,247,.06));border:2px solid rgba(124,58,237,.3);border-radius:16px;padding:32px 24px;margin:28px 0;text-align:center;position:relative;overflow:hidden}
-.locked-card h3{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:#a78bfa;margin-bottom:16px}
-.locked-code{font-size:64px;font-weight:900;color:#fff;letter-spacing:12px;filter:blur(20px);user-select:none;margin-bottom:4px;line-height:1.2}
-.locked-sub{font-size:13px;color:#7878a0;margin-bottom:20px}
-.lock-icon{font-size:32px;margin-bottom:12px}
+.locked-card{background:linear-gradient(135deg,rgba(124,58,237,.12),rgba(168,85,247,.06));border:2px solid rgba(124,58,237,.3);border-radius:24px;padding:40px 28px;margin:32px 0;text-align:center;position:relative;overflow:hidden}
+.locked-card::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 30%,rgba(124,58,237,.15),transparent 60%);pointer-events:none}
+.lock-icon{font-size:40px;margin-bottom:16px;animation:lockPulse 2s ease-in-out infinite}
+@keyframes lockPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.1)}}
+.locked-code{font-size:72px;font-weight:900;color:#fff;letter-spacing:16px;filter:blur(22px);user-select:none;margin-bottom:8px;line-height:1.2;position:relative}
+.locked-sub{font-size:13px;color:#7878a0;margin-bottom:24px}
+.keyhole{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:36px;filter:none;animation:lockPulse 2s ease-in-out infinite}
 
-.unlock-btn{display:inline-block;background-image:linear-gradient(90deg,#7c3aed 0%,#a855f7 40%,#c4b5fd 50%,#a855f7 60%,#7c3aed 100%);background-size:200% 100%;animation:shimmer 3s infinite linear;color:#fff;font-size:18px;font-weight:800;padding:18px 44px;border-radius:10px;text-decoration:none;border:none;cursor:pointer;box-shadow:0 4px 24px rgba(124,58,237,.4)}
-.unlock-btn small{display:block;font-size:12px;font-weight:500;margin-top:4px;opacity:.8}
-@keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
+/* CTA button */
+.unlock-btn{display:inline-block;background:linear-gradient(135deg,var(--gold-dark),var(--gold),#ffe082,var(--gold),var(--gold-dark));background-size:300% 100%;animation:goldShimmer 4s ease infinite;color:#1a1a2e;font-size:20px;font-weight:900;padding:22px 48px;border-radius:16px;text-decoration:none;border:none;cursor:pointer;box-shadow:0 4px 30px rgba(245,197,66,.4),0 0 60px rgba(245,197,66,.1);letter-spacing:.3px;transition:all .25s}
+.unlock-btn:hover{transform:translateY(-2px);box-shadow:0 6px 40px rgba(245,197,66,.5)}
+.unlock-btn small{display:block;font-size:12px;font-weight:600;margin-top:6px;opacity:.7}
+@keyframes goldShimmer{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
 
-.locked-extras{margin-top:24px;text-align:left}
+/* Countdown */
+.countdown{font-size:18px;font-weight:800;color:var(--danger);margin:16px 0;animation:countPulse 1s ease-in-out infinite alternate}
+@keyframes countPulse{from{opacity:.8}to{opacity:1}}
+
+/* Locked extras */
+.locked-extras{margin-top:28px;text-align:left}
 .locked-extras p{font-size:14px;color:#9898b4;margin-bottom:8px}
 .locked-extras ul{list-style:none;margin:8px 0}
-.locked-extras li{font-size:14px;color:#b0b0c8;padding:6px 0 6px 22px;position:relative}
-.locked-extras li::before{content:"✦";position:absolute;left:0;color:#a78bfa;font-size:12px}
+.locked-extras li{font-size:14px;color:#b0b0c8;padding:8px 0 8px 24px;position:relative}
+.locked-extras li::before{content:"✦";position:absolute;left:0;color:var(--violet-light);font-size:12px}
 
-.also-locked{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:24px 0}
+/* Also locked grid */
+.also-locked{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:28px 0}
 @media(max-width:480px){.also-locked{grid-template-columns:1fr}}
-.also-card{background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.04);border-radius:10px;padding:16px;text-align:center;opacity:.55}
-.also-card .emoji{font-size:24px;margin-bottom:4px}
-.also-card h4{font-size:12px;color:#8888a8;font-weight:600}
-.also-card p{font-size:11px;color:#5858a0;margin:0}
+.also-card{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:16px;padding:24px 16px;text-align:center;position:relative;overflow:hidden}
+.also-card::after{content:'🔒';position:absolute;top:10px;right:10px;font-size:16px;opacity:.5}
+.also-card .emoji{font-size:32px;margin-bottom:8px;display:block;opacity:.4}
+.also-card h4{font-size:13px;color:var(--text-dim);font-weight:700}
+.also-card p{font-size:11px;color:var(--text-dimmer);margin:4px 0 0}
 
 .guarantee{text-align:center;font-size:13px;color:#6868a0;margin:16px 0}
 
-.ticker-item{background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.04);border-radius:10px;padding:14px 18px;margin:8px 0}
-.ticker-item .who{font-size:12px;font-weight:700;color:#a78bfa}
-.ticker-item p{font-size:14px;margin:4px 0 0;font-style:italic;color:#9898b4}
+/* Testimonial carousel */
+.carousel-wrap{overflow:hidden;margin:28px 0;position:relative}
+.carousel-track{display:flex;gap:16px;animation:scrollCarousel 20s linear infinite;width:max-content}
+.carousel-track:hover{animation-play-state:paused}
+.ticker-item{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:16px;padding:18px 22px;min-width:300px;flex-shrink:0}
+.ticker-item .who{font-size:12px;font-weight:700;color:var(--violet-light)}
+.ticker-item p{font-size:14px;margin:6px 0 0;font-style:italic;color:#9898b4}
+@keyframes scrollCarousel{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
 
-footer{text-align:center;padding:32px 20px;font-size:11px;color:#333;border-top:1px solid rgba(255,255,255,.03)}
+/* Social proof toast */
+.social-toast{position:fixed;bottom:20px;left:20px;background:rgba(20,20,50,.9);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(124,58,237,.2);border-radius:14px;padding:14px 20px;font-size:13px;color:var(--text);z-index:999;transform:translateY(120%);opacity:0;transition:all .4s cubic-bezier(.4,0,.2,1);max-width:320px;box-shadow:0 4px 20px rgba(0,0,0,.3)}
+.social-toast.show{transform:translateY(0);opacity:1}
+.social-toast .st-name{font-weight:700;color:var(--violet-light)}
+
+footer{text-align:center;padding:40px 20px;font-size:11px;color:#333;border-top:1px solid rgba(255,255,255,.03);position:relative;z-index:1}
 </style>
 </head>
 <body>
 
 <div class="progress"><div class="progress-fill" id="progressBar"></div></div>
 
-<!-- ============ STEP 1: BIRTHDATE ============ -->
-<div class="step active" id="step1">
+<!-- Social proof toast -->
+<div class="social-toast" id="socialToast">
+<span>🔓 <span class="st-name" id="toastName">Sarah from Austin</span> just unlocked her code <span id="toastTime">2 minutes ago</span></span>
+</div>
+
+<!-- STEP 1: BIRTHDATE -->
+<div class="step active slide-in" id="step1">
 <div class="wrap">
 <span class="badge">FREE ABUNDANCE CODE READING</span>
 <h2>Enter Your Birthdate to Begin Your <em>Free Reading</em></h2>
 <p class="q-sub">Your birthdate holds the key to your personal Abundance Code. This takes about 2 minutes.</p>
 
-<div class="date-form">
-<select id="month" aria-label="Month">
+<div class="cosmic-ring"><span class="cr-inner">✦</span></div>
+
+<div class="date-picker">
+<div class="date-col">
+<label>Month</label>
+<select class="date-select month-sel" id="month" aria-label="Month">
 <option value="" disabled selected>Month</option>
 <option value="1">January</option><option value="2">February</option><option value="3">March</option>
 <option value="4">April</option><option value="5">May</option><option value="6">June</option>
 <option value="7">July</option><option value="8">August</option><option value="9">September</option>
 <option value="10">October</option><option value="11">November</option><option value="12">December</option>
 </select>
-<select id="day" aria-label="Day">
+</div>
+<div class="date-col">
+<label>Day</label>
+<select class="date-select day-sel" id="day" aria-label="Day">
 <option value="" disabled selected>Day</option>
 <option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option><option value="11">11</option><option value="12">12</option><option value="13">13</option><option value="14">14</option><option value="15">15</option><option value="16">16</option><option value="17">17</option><option value="18">18</option><option value="19">19</option><option value="20">20</option><option value="21">21</option><option value="22">22</option><option value="23">23</option><option value="24">24</option><option value="25">25</option><option value="26">26</option><option value="27">27</option><option value="28">28</option><option value="29">29</option><option value="30">30</option><option value="31">31</option>
 </select>
-<input type="number" id="year" placeholder="Year" min="1930" max="2010" aria-label="Year">
+</div>
+<div class="date-col">
+<label>Year</label>
+<input type="number" class="date-select year-input" id="year" placeholder="Year" min="1930" max="2010" aria-label="Year">
+</div>
 </div>
 
 <button class="next-btn" id="step1Btn" disabled>CONTINUE →</button>
@@ -183,10 +309,10 @@ footer{text-align:center;padding:32px 20px;font-size:11px;color:#333;border-top:
 </div>
 </div>
 
-<!-- ============ STEP 2: GENDER ============ -->
+<!-- STEP 2: GENDER -->
 <div class="step" id="step2">
 <div class="wrap">
-<p class="step-count">Step 2 of 9</p>
+<p class="step-count">Step 2 of 11</p>
 <h2>What's your gender?</h2>
 <p class="q-sub">This affects how your frequency expresses in different life areas.</p>
 <div class="options">
@@ -197,25 +323,41 @@ footer{text-align:center;padding:32px 20px;font-size:11px;color:#333;border-top:
 </div>
 </div>
 
-<!-- ============ STEP 3: BLOCKED AREA ============ -->
+<!-- STEP 3: BLOCKED AREA (icon card grid) -->
 <div class="step" id="step3">
 <div class="wrap">
-<p class="step-count">Step 3 of 9</p>
+<p class="step-count">Step 3 of 11</p>
 <h2>What area of your life feels most <em>blocked</em> right now?</h2>
 <p class="q-sub">Be honest — this calibrates your reading.</p>
-<div class="options">
-<button class="opt" onclick="pick(this,'blocked','money')"><span class="emoji">💰</span> Money & Finances</button>
-<button class="opt" onclick="pick(this,'blocked','love')"><span class="emoji">❤️</span> Love & Relationships</button>
-<button class="opt" onclick="pick(this,'blocked','career')"><span class="emoji">🚀</span> Career & Purpose</button>
-<button class="opt" onclick="pick(this,'blocked','health')"><span class="emoji">⚡</span> Health & Energy</button>
+<div class="icon-grid">
+<div class="icon-card" onclick="pickCard(this,'blocked','money')">
+<span class="ic-icon">💰</span>
+<span class="ic-title">Money & Finances</span>
+<span class="ic-sub">Income, savings, debt</span>
+</div>
+<div class="icon-card" onclick="pickCard(this,'blocked','love')">
+<span class="ic-icon">❤️</span>
+<span class="ic-title">Love & Relationships</span>
+<span class="ic-sub">Romance, connection</span>
+</div>
+<div class="icon-card" onclick="pickCard(this,'blocked','career')">
+<span class="ic-icon">🚀</span>
+<span class="ic-title">Career & Purpose</span>
+<span class="ic-sub">Direction, fulfillment</span>
+</div>
+<div class="icon-card" onclick="pickCard(this,'blocked','health')">
+<span class="ic-icon">⚡</span>
+<span class="ic-title">Health & Energy</span>
+<span class="ic-sub">Vitality, wellness</span>
+</div>
 </div>
 </div>
 </div>
 
-<!-- ============ STEP 4: REPEATING NUMBERS ============ -->
+<!-- STEP 4: REPEATING NUMBERS -->
 <div class="step" id="step4">
 <div class="wrap">
-<p class="step-count">Step 4 of 9</p>
+<p class="step-count">Step 4 of 11</p>
 <h2>How often do you notice <em>repeating numbers</em>?</h2>
 <p class="q-sub">11:11 on clocks, same digits on receipts, license plates...</p>
 <div class="options">
@@ -226,28 +368,73 @@ footer{text-align:center;padding:32px 20px;font-size:11px;color:#333;border-top:
 </div>
 </div>
 
-<!-- ============ STEP 5: MID-QUIZ REVEAL #1 ============ -->
+<!-- STEP 4B: UNIVERSE SLIDER (NEW) -->
+<div class="step" id="step4b">
+<div class="wrap">
+<p class="step-count">Step 5 of 11</p>
+<h2>How strongly do you feel the universe is trying to <em>tell you something</em>?</h2>
+<p class="q-sub">Trust your instinct. There's no wrong answer.</p>
+
+<div class="slider-wrap">
+<div class="slider-label-top" id="sliderVal">5</div>
+<div class="slider-label-desc" id="sliderDesc">Open & curious</div>
+<div class="slider-track">
+<input type="range" id="universeSlider" min="1" max="10" value="5" step="1">
+</div>
+<div class="slider-labels"><span>1</span><span>5</span><span>10</span></div>
+</div>
+
+<button class="next-btn" onclick="answers.universe=+document.getElementById('universeSlider').value;goStep('5')">CONTINUE →</button>
+</div>
+</div>
+
+<!-- STEP 5: LIFE PATH REVEAL -->
 <div class="step" id="step5">
 <div class="wrap">
-<p class="step-count">Step 5 of 9</p>
+<p class="step-count">Step 6 of 11</p>
 
 <div class="reveal-card">
-<p style="font-size:12px;color:#a78bfa;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px">Your Life Path Number</p>
-<div class="big-num" id="revealLP"></div>
-<p id="revealLPtext"></p>
-<span class="tag" id="revealLPtag"></span>
+<p style="font-size:11px;color:var(--violet-light);font-weight:700;text-transform:uppercase;letter-spacing:2px;margin-bottom:4px">Your Life Path Number</p>
+<div class="lp-number" id="revealLP">0</div>
+<div class="lp-subtitle" id="revealLPtitle"></div>
+<span class="lp-tag" id="revealLPtag"></span>
+<p class="lp-desc" id="revealLPtext"></p>
 </div>
 
-<p style="font-size:14px;color:#7878a0;margin-top:16px" id="revealNumbers"></p>
+<div class="trait-cards" id="revealTraits"></div>
 
-<button class="next-btn" onclick="goStep(6)">CONTINUE MY READING →</button>
+<p style="font-size:14px;color:#7878a0;margin-top:20px" id="revealNumbers"></p>
+
+<button class="next-btn" onclick="goStep('5b')">CONTINUE MY READING →</button>
 </div>
 </div>
 
-<!-- ============ STEP 6: TRIED MANIFESTATION ============ -->
+<!-- STEP 5B: RADAR CHART INTERSTITIAL (NEW) -->
+<div class="step" id="step5b">
+<div class="wrap">
+<p class="step-count">Frequency Profile</p>
+<h2>Your Life Path <em id="radarLPnum"></em> Frequency Profile</h2>
+<p class="q-sub" id="radarSubtext">Shows significant untapped potential across all channels.</p>
+
+<div class="chart-container">
+<canvas id="radarChart"></canvas>
+</div>
+
+<div class="glass" style="margin-top:16px;padding:18px 22px">
+<p style="font-size:14px;color:var(--text-dim);margin:0">
+<span style="display:inline-block;width:12px;height:12px;background:rgba(239,68,68,.5);border-radius:3px;vertical-align:middle;margin-right:6px"></span> Current state &nbsp;&nbsp;
+<span style="display:inline-block;width:12px;height:12px;background:rgba(245,197,66,.5);border-radius:3px;vertical-align:middle;margin-right:6px"></span> After activation
+</p>
+</div>
+
+<button class="next-btn" onclick="goStep(6)">CONTINUE →</button>
+</div>
+</div>
+
+<!-- STEP 6: TRIED MANIFESTATION -->
 <div class="step" id="step6">
 <div class="wrap">
-<p class="step-count">Step 6 of 9</p>
+<p class="step-count">Step 7 of 11</p>
 <h2>Have you tried manifestation or LOA techniques before?</h2>
 <p class="q-sub">This helps us identify your specific activation pattern.</p>
 <div class="options">
@@ -258,10 +445,10 @@ footer{text-align:center;padding:32px 20px;font-size:11px;color:#333;border-top:
 </div>
 </div>
 
-<!-- ============ STEP 7: EMOTIONAL MIRROR ============ -->
+<!-- STEP 7: EMOTIONAL MIRROR -->
 <div class="step" id="step7">
 <div class="wrap">
-<p class="step-count">Step 7 of 9</p>
+<p class="step-count">Step 8 of 11</p>
 <h2>Which statement <em>resonates</em> most with you?</h2>
 <p class="q-sub">Go with your gut — there's no wrong answer.</p>
 <div class="options">
@@ -273,40 +460,63 @@ footer{text-align:center;padding:32px 20px;font-size:11px;color:#333;border-top:
 </div>
 </div>
 
-<!-- ============ STEP 8: MID-QUIZ REVEAL #2 — ENERGY TEASE ============ -->
+<!-- STEP 8: ENERGY SCAN (circular gauges) -->
 <div class="step" id="step8">
 <div class="wrap">
-<p class="step-count">Step 8 of 9</p>
+<p class="step-count">Step 9 of 11</p>
 
-<div class="reveal-card" style="border-color:rgba(251,191,36,.2);background:linear-gradient(135deg,rgba(251,191,36,.06),rgba(124,58,237,.06))">
-<p style="font-size:12px;color:#fbbf24;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:12px">⚠️ Early Energy Scan</p>
-<p>Based on your answers so far, your <strong>primary frequency channels</strong> are showing:</p>
+<div class="reveal-card" style="border-color:rgba(245,197,66,.15);background:rgba(245,197,66,.03)">
+<p style="font-size:11px;color:var(--gold);font-weight:700;text-transform:uppercase;letter-spacing:2px;margin-bottom:12px">⚠️ Early Energy Scan</p>
+<p style="font-size:15px;color:var(--text-dim)">Based on your answers, your <strong style="color:#fff">primary frequency channels</strong> are showing:</p>
 </div>
 
-<div class="energy-tease">
-<div class="energy-row">
-<div class="label"><span>Wealth Frequency</span><span id="teaseWealth"></span></div>
-<div class="bar-bg"><div class="bar-fill" id="teaseWealthBar" style="background:linear-gradient(90deg,#7c3aed,#a855f7)"></div></div>
+<div class="gauges-row">
+<div class="gauge" id="gaugeWealth">
+<svg viewBox="0 0 120 120"><circle class="gauge-bg" cx="60" cy="60" r="50"/><circle class="gauge-fill" cx="60" cy="60" r="50" stroke-dasharray="314" stroke-dashoffset="314" id="gaugeFillWealth" style="stroke:var(--danger)"/></svg>
+<div class="gauge-label"><span class="gauge-pct" id="gaugePctWealth">0%</span><span class="gauge-name">Wealth</span></div>
 </div>
-<div class="energy-row">
-<div class="label"><span>Love Frequency</span><span id="teaseLove"></span></div>
-<div class="bar-bg"><div class="bar-fill" id="teaseLoveBar" style="background:linear-gradient(90deg,#ec4899,#f472b6)"></div></div>
+<div class="gauge">
+<svg viewBox="0 0 120 120"><circle class="gauge-bg" cx="60" cy="60" r="50"/><circle class="gauge-fill" cx="60" cy="60" r="50" stroke-dasharray="314" stroke-dashoffset="314" id="gaugeFillLove" style="stroke:var(--pink)"/></svg>
+<div class="gauge-label"><span class="gauge-pct" id="gaugePctLove">0%</span><span class="gauge-name">Love</span></div>
 </div>
-<div class="energy-row">
-<div class="label"><span>Opportunity Magnetism</span><span id="teaseOpp"></span></div>
-<div class="bar-bg"><div class="bar-fill" id="teaseOppBar" style="background:linear-gradient(90deg,#f59e0b,#fbbf24)"></div></div>
+<div class="gauge">
+<svg viewBox="0 0 120 120"><circle class="gauge-bg" cx="60" cy="60" r="50"/><circle class="gauge-fill" cx="60" cy="60" r="50" stroke-dasharray="314" stroke-dashoffset="314" id="gaugeFillOpp" style="stroke:var(--amber)"/></svg>
+<div class="gauge-label"><span class="gauge-pct" id="gaugePctOpp">0%</span><span class="gauge-name">Opportunity</span></div>
 </div>
+</div>
+
 <p class="energy-warn" id="teaseWarn"></p>
+
+<button class="next-btn" onclick="goStep('8b')">CONTINUE →</button>
+</div>
 </div>
 
-<button class="next-btn" onclick="goStep(9)">CONTINUE — ONE MORE STEP →</button>
+<!-- STEP 8B: PROJECTION CHART (NEW) -->
+<div class="step" id="step8b">
+<div class="wrap">
+<p class="step-count">Abundance Projection</p>
+<h2>Your <em>Abundance Frequency</em> Over Time</h2>
+<p class="q-sub">Based on your Life Path and current energy levels.</p>
+
+<div class="chart-container-wide">
+<canvas id="projectionChart"></canvas>
+</div>
+
+<div class="glass" style="margin-top:16px;padding:18px 22px">
+<p style="font-size:14px;color:var(--text-dim);margin:0">
+<span style="color:var(--gold);font-weight:700">Gold line:</span> With code activation &nbsp;
+<span style="color:#666;font-weight:700">Grey line:</span> Without
+</p>
+</div>
+
+<button class="next-btn" onclick="goStep(9)">ONE MORE QUESTION →</button>
 </div>
 </div>
 
-<!-- ============ STEP 9: GOAL ============ -->
+<!-- STEP 9: GOAL -->
 <div class="step" id="step9">
 <div class="wrap">
-<p class="step-count">Step 9 of 9 — Final Question</p>
+<p class="step-count">Step 11 of 11 — Final Question</p>
 <h2>What's your biggest goal in the next <em>90 days</em>?</h2>
 <p class="q-sub">Your Abundance Code activation will be calibrated to this.</p>
 <div class="options">
@@ -318,11 +528,21 @@ footer{text-align:center;padding:32px 20px;font-size:11px;color:#333;border-top:
 </div>
 </div>
 
-<!-- ============ DECODING ANIMATION ============ -->
+<!-- DECODING ANIMATION -->
 <div class="step" id="stepDecode">
 <div class="wrap">
-<div class="decode-visual">
+<div class="decode-outer">
+<div class="decode-ring"></div>
+<div class="decode-ring2"></div>
+<div class="decode-ring3"></div>
+<div class="decode-particles">
+<div class="decode-particle dp1"></div>
+<div class="decode-particle dp2"></div>
+<div class="decode-particle dp3"></div>
+</div>
+<div class="decode-center" id="decodeCenter">
 <span class="decode-number" id="decodeSpin">000</span>
+</div>
 </div>
 <p class="decode-status" id="decodeStatus">Analyzing your frequency profile...</p>
 <p class="decode-detail" id="decodeDetail">Combining birthdate + personal data</p>
@@ -330,7 +550,7 @@ footer{text-align:center;padding:32px 20px;font-size:11px;color:#333;border-top:
 </div>
 </div>
 
-<!-- ============ RESULTS PAGE ============ -->
+<!-- RESULTS PAGE -->
 <div id="stepResults">
 
 <div class="results-header">
@@ -340,11 +560,23 @@ footer{text-align:center;padding:32px 20px;font-size:11px;color:#333;border-top:
 
 <div class="r-wrap">
 
-<!-- Life Path -->
-<div class="result-card">
+<!-- LP Orb -->
+<div class="result-card" style="text-align:center">
 <h3>Your Life Path Number</h3>
-<div class="big-num" id="resLP"></div>
+<div class="res-lp-orb"><span class="res-lp-num" id="resLP"></span></div>
 <p id="resLPdesc"></p>
+</div>
+
+<!-- Radar chart (results) -->
+<div class="result-card" style="text-align:center">
+<h3>Your Frequency Profile — Current vs Potential</h3>
+<div class="chart-container" style="max-width:320px">
+<canvas id="radarChartResult"></canvas>
+</div>
+<p style="font-size:13px;color:var(--text-dim);margin-top:12px">
+<span style="display:inline-block;width:10px;height:10px;background:rgba(239,68,68,.5);border-radius:2px;vertical-align:middle;margin-right:4px"></span> Now &nbsp;
+<span style="display:inline-block;width:10px;height:10px;background:rgba(245,197,66,.5);border-radius:2px;vertical-align:middle;margin-right:4px"></span> After activation
+</p>
 </div>
 
 <!-- Traits -->
@@ -354,42 +586,49 @@ footer{text-align:center;padding:32px 20px;font-size:11px;color:#333;border-top:
 <div class="trait-grid" id="resTraits"></div>
 </div>
 
-<!-- Personalized insight based on their answers -->
+<!-- Personalized insight -->
 <div class="insight-card">
 <h3>🎯 Personalized Insight</h3>
 <p id="resInsight"></p>
 </div>
 
-<!-- Energy bars -->
-<div class="result-card">
+<!-- Energy gauges (results) -->
+<div class="result-card" style="text-align:center">
 <h3>Your Current Energy Alignment</h3>
-<p id="resEnergyIntro" style="margin-bottom:16px"></p>
-<div>
-<div style="display:flex;justify-content:space-between;font-size:13px;font-weight:600;margin-bottom:4px"><span>Wealth Frequency</span><span id="resWealthPct"></span></div>
-<div class="freq-bar"><div class="freq-fill" id="resWealthBar" style="background:linear-gradient(90deg,#7c3aed,#a855f7)"></div></div>
+<p id="resEnergyIntro" style="margin-bottom:20px"></p>
+<div class="gauges-row" id="resGaugesRow">
+<div class="gauge" style="width:130px;height:130px">
+<svg viewBox="0 0 120 120"><circle class="gauge-bg" cx="60" cy="60" r="50"/><circle class="gauge-fill" cx="60" cy="60" r="50" stroke-dasharray="314" stroke-dashoffset="314" id="resGaugeFillWealth" style="stroke:var(--danger)"/></svg>
+<div class="gauge-label"><span class="gauge-pct" id="resGaugePctWealth">0%</span><span class="gauge-name">Wealth</span></div>
 </div>
-<div style="margin-top:14px">
-<div style="display:flex;justify-content:space-between;font-size:13px;font-weight:600;margin-bottom:4px"><span>Love Frequency</span><span id="resLovePct"></span></div>
-<div class="freq-bar"><div class="freq-fill" id="resLoveBar" style="background:linear-gradient(90deg,#ec4899,#f472b6)"></div></div>
+<div class="gauge" style="width:130px;height:130px">
+<svg viewBox="0 0 120 120"><circle class="gauge-bg" cx="60" cy="60" r="50"/><circle class="gauge-fill" cx="60" cy="60" r="50" stroke-dasharray="314" stroke-dashoffset="314" id="resGaugeFillLove" style="stroke:var(--pink)"/></svg>
+<div class="gauge-label"><span class="gauge-pct" id="resGaugePctLove">0%</span><span class="gauge-name">Love</span></div>
 </div>
-<div style="margin-top:14px">
-<div style="display:flex;justify-content:space-between;font-size:13px;font-weight:600;margin-bottom:4px"><span>Opportunity Magnetism</span><span id="resOppPct"></span></div>
-<div class="freq-bar"><div class="freq-fill" id="resOppBar" style="background:linear-gradient(90deg,#f59e0b,#fbbf24)"></div></div>
+<div class="gauge" style="width:130px;height:130px">
+<svg viewBox="0 0 120 120"><circle class="gauge-bg" cx="60" cy="60" r="50"/><circle class="gauge-fill" cx="60" cy="60" r="50" stroke-dasharray="314" stroke-dashoffset="314" id="resGaugeFillOpp" style="stroke:var(--amber)"/></svg>
+<div class="gauge-label"><span class="gauge-pct" id="resGaugePctOpp">0%</span><span class="gauge-name">Opportunity</span></div>
+</div>
 </div>
 <p style="margin-top:16px;font-size:14px;color:#9898b4" id="resEnergyWarn"></p>
 </div>
 
 <!-- LOCKED CODE -->
 <div class="locked-card">
-<div class="lock-icon">🔒</div>
+<div class="lock-icon">🔐</div>
 <h3>Your 3-Digit Abundance Code</h3>
+<div style="position:relative;display:inline-block">
 <div class="locked-code" id="blurredCode">000</div>
+<span class="keyhole">🔑</span>
+</div>
 <p class="locked-sub">Your code has been calculated. Unlock it to begin activation.</p>
 
-<a href="#" class="unlock-btn">UNLOCK MY ABUNDANCE CODE — $19<small>Instant Access · 60-Day Money-Back Guarantee</small></a>
+<div class="countdown" id="countdown">⏱️ Your code expires in <span id="countdownTimer">15:00</span></div>
+
+<a href="#" class="unlock-btn">🔓 UNLOCK MY ABUNDANCE CODE — $19<small>Instant Access · 60-Day Money-Back Guarantee</small></a>
 
 <div class="locked-extras">
-<p style="margin-top:20px"><strong>When you unlock, you also get:</strong></p>
+<p style="margin-top:24px"><strong style="color:#fff">When you unlock, you also get:</strong></p>
 <ul>
 <li>Your complete Abundance Code decoded + explained</li>
 <li>The 7-Minute Frequency Activation Ritual (calibrated to YOUR code)</li>
@@ -402,26 +641,37 @@ footer{text-align:center;padding:32px 20px;font-size:11px;color:#333;border-top:
 
 <p class="guarantee">🛡️ 60-Day "Feel The Shift" Guarantee — Full refund if you don't feel it. No questions.</p>
 
-<p style="text-align:center;font-size:13px;color:#6868a0;margin:28px 0 12px;text-transform:uppercase;letter-spacing:1px;font-weight:600">Your birthdate also contains:</p>
+<p style="text-align:center;font-size:13px;color:#6868a0;margin:32px 0 16px;text-transform:uppercase;letter-spacing:1.5px;font-weight:700">Your birthdate also contains:</p>
 <div class="also-locked">
-<div class="also-card"><div class="emoji">❤️</div><h4>Love Code</h4><p>🔒 Locked</p></div>
-<div class="also-card"><div class="emoji">⚡</div><h4>Health Code</h4><p>🔒 Locked</p></div>
-<div class="also-card"><div class="emoji">🚀</div><h4>Career Code</h4><p>🔒 Locked</p></div>
-<div class="also-card"><div class="emoji">🔮</div><h4>Spiritual Code</h4><p>🔒 Locked</p></div>
+<div class="also-card"><span class="emoji">❤️</span><h4>Love Code</h4><p>Locked — unlock to reveal</p></div>
+<div class="also-card"><span class="emoji">⚡</span><h4>Health Code</h4><p>Locked — unlock to reveal</p></div>
+<div class="also-card"><span class="emoji">🚀</span><h4>Career Code</h4><p>Locked — unlock to reveal</p></div>
+<div class="also-card"><span class="emoji">🔮</span><h4>Spiritual Code</h4><p>Locked — unlock to reveal</p></div>
 </div>
 
-<div style="margin:28px 0">
+<!-- Testimonial carousel -->
+<div class="carousel-wrap">
+<div class="carousel-track" id="carouselTrack">
 <div class="ticker-item"><span class="who">Rachel U. — Austin, TX</span><p>"Day 3 I got an email about inheritance money I had NO idea existed. £14,200. My code is 7-4-2 😂"</p></div>
 <div class="ticker-item"><span class="who">Marcus O. — London, UK</span><p>"Three clients who'd gone quiet came back within 48 hours. Up £8,400 in 6 weeks."</p></div>
 <div class="ticker-item"><span class="who">Diane C. — Perth, AU</span><p>"Promotion I didn't apply for on day 11. My code was 3-3-6 — a 'leadership frequency.' Spot on."</p></div>
+<div class="ticker-item"><span class="who">James K. — Toronto, CA</span><p>"I was skeptical but within a week, two unexpected checks arrived. Total: $3,200."</p></div>
+<div class="ticker-item"><span class="who">Maria S. — Miami, FL</span><p>"Met my soulmate 9 days after activating my love code. We're inseparable."</p></div>
+<!-- duplicated for seamless scroll -->
+<div class="ticker-item"><span class="who">Rachel U. — Austin, TX</span><p>"Day 3 I got an email about inheritance money I had NO idea existed. £14,200. My code is 7-4-2 😂"</p></div>
+<div class="ticker-item"><span class="who">Marcus O. — London, UK</span><p>"Three clients who'd gone quiet came back within 48 hours. Up £8,400 in 6 weeks."</p></div>
+<div class="ticker-item"><span class="who">Diane C. — Perth, AU</span><p>"Promotion I didn't apply for on day 11. My code was 3-3-6 — a 'leadership frequency.' Spot on."</p></div>
+<div class="ticker-item"><span class="who">James K. — Toronto, CA</span><p>"I was skeptical but within a week, two unexpected checks arrived. Total: $3,200."</p></div>
+<div class="ticker-item"><span class="who">Maria S. — Miami, FL</span><p>"Met my soulmate 9 days after activating my love code. We're inseparable."</p></div>
+</div>
 </div>
 
-<div style="text-align:center;margin:32px 0">
-<a href="#" class="unlock-btn">UNLOCK MY ABUNDANCE CODE — $19<small>Instant Access · 60-Day Guarantee</small></a>
-<p class="guarantee" style="margin-top:12px">🔒 Secure checkout · Instant digital delivery</p>
+<div style="text-align:center;margin:36px 0">
+<a href="#" class="unlock-btn">🔓 UNLOCK MY ABUNDANCE CODE — $19<small>Instant Access · 60-Day Guarantee</small></a>
+<p class="guarantee" style="margin-top:14px">🔒 Secure checkout · Instant digital delivery</p>
 </div>
 
-<p style="font-size:14px;color:#7878a0;margin-bottom:40px"><strong style="color:#e0dff0">P.S.</strong> — 2026 is Universal Year 1 (2+0+2+6=1). The first reset in 9 years. Your code is more responsive to activation right now than it will be until 2035. <strong style="color:#e0dff0">$19 to find out what happens when you switch it on.</strong></p>
+<p style="font-size:14px;color:#7878a0;margin-bottom:40px"><strong style="color:var(--text)">P.S.</strong> — 2026 is Universal Year 1 (2+0+2+6=1). The first reset in 9 years. Your code is more responsive to activation right now than it will be until 2035. <strong style="color:var(--text)">$19 to find out what happens when you switch it on.</strong></p>
 </div>
 </div>
 
@@ -437,8 +687,6 @@ const answers = {};
 let lp = 0;
 const months=['','January','February','March','April','May','June','July','August','September','October','November','December'];
 
-// === DAYS (hardcoded in HTML) ===
-
 // === STEP 1 VALIDATION ===
 const mm=document.getElementById('month'),dd=document.getElementById('day'),yy=document.getElementById('year'),s1btn=document.getElementById('step1Btn');
 function checkS1(){const y=parseInt(yy.value,10);s1btn.disabled=!(mm.value&&dd.value&&y>=1930&&y<=2010)}
@@ -447,6 +695,17 @@ s1btn.addEventListener('click',()=>{
 answers.mm=+mm.value;answers.dd=+dd.value;answers.yyyy=+yy.value;
 lp=getLifePath(answers.mm,answers.dd,answers.yyyy);
 goStep(2);
+});
+
+// === SLIDER ===
+const slider=document.getElementById('universeSlider');
+const sliderVal=document.getElementById('sliderVal');
+const sliderDesc=document.getElementById('sliderDesc');
+const sliderLabels={1:'Faintly aware',2:'Slightly curious',3:'Noticing patterns',4:'Growing awareness',5:'Open & curious',6:'Feeling guided',7:'Strongly sensing',8:'Deeply connected',9:'Powerfully attuned',10:'Unmistakable signs'};
+slider.addEventListener('input',()=>{
+const v=+slider.value;
+sliderVal.textContent=v;
+sliderDesc.textContent=sliderLabels[v]||'';
 });
 
 // === NUMEROLOGY ===
@@ -470,46 +729,87 @@ const lpData={
 };
 function getLP(n){return lpData[n]||lpData[reduceToDigit(n)]||lpData[1]}
 
-// === ENERGY CALCS (seeded from birthday + answers) ===
+// === ENERGY CALCS ===
 function getEnergies(){
 const s=answers.mm*answers.dd+answers.yyyy;
 let w=18+((s*7)%23),l=25+((s*13)%35),o=15+((s*3)%28);
 if(answers.blocked==='money')w=Math.max(12,w-8);
 if(answers.blocked==='love')l=Math.max(12,l-10);
 if(answers.manifest==='failed')w=Math.max(10,w-5);
+// Universe slider influence
+const uv=answers.universe||5;
+if(uv>=8){w=Math.min(w+3,45);l=Math.min(l+5,65);o=Math.min(o+4,50)}
+else if(uv<=3){w=Math.max(w-3,10);o=Math.max(o-2,10)}
 return{w,l,o};
 }
 
 // === NAVIGATION ===
+const stepOrder=['1','2','3','4','4b','5','5b','6','7','8','8b','9'];
+const stepProgress={'1':0,'2':9,'3':18,'4':27,'4b':36,'5':45,'5b':52,'6':59,'7':68,'8':77,'8b':85,'9':93};
+
 function goStep(n){
-document.querySelectorAll('.step').forEach(s=>{s.classList.remove('active');s.style.display='none';});
-const pcts={1:0,2:11,3:22,4:33,5:44,6:55,7:66,8:77,9:88};
-document.getElementById('progressBar').style.width=(pcts[n]||0)+'%';
+n=String(n);
+document.querySelectorAll('.step').forEach(s=>{s.classList.remove('active','slide-in');s.style.display='none'});
+document.getElementById('progressBar').style.width=(stepProgress[n]||0)+'%';
 
-if(n===5){showReveal1();}
-if(n===8){showReveal2();}
-
-if(n===10){startDecode();return;}
+if(n==='5'){showReveal1();}
+if(n==='5b'){showRadarChart();}
+if(n==='8'){showReveal2();}
+if(n==='8b'){showProjectionChart();}
+if(n==='10'){startDecode();return;}
 
 const el=document.getElementById('step'+n);
-if(el){el.classList.add('active');el.style.display='flex';}
-window.scrollTo(0,0);
+if(el){el.style.display='flex';requestAnimationFrame(()=>{el.classList.add('active','slide-in')});}
+window.scrollTo({top:0,behavior:'smooth'});
 }
 
 function pick(el,key,val){
 answers[key]=val;
 el.parentElement.querySelectorAll('.opt').forEach(o=>o.classList.remove('selected'));
 el.classList.add('selected');
-const currentStep=+el.closest('.step').id.replace('step','');
-setTimeout(()=>goStep(currentStep+1),400);
+const sid=el.closest('.step').id.replace('step','');
+const idx=stepOrder.indexOf(sid);
+const next=idx>=0&&idx<stepOrder.length-1?stepOrder[idx+1]:'10';
+setTimeout(()=>goStep(next),400);
+}
+
+function pickCard(el,key,val){
+answers[key]=val;
+el.parentElement.querySelectorAll('.icon-card').forEach(c=>c.classList.remove('selected'));
+el.classList.add('selected');
+const sid=el.closest('.step').id.replace('step','');
+const idx=stepOrder.indexOf(sid);
+const next=idx>=0&&idx<stepOrder.length-1?stepOrder[idx+1]:'10';
+setTimeout(()=>goStep(next),500);
 }
 
 // === REVEAL 1: Life Path ===
 function showReveal1(){
 const d=getLP(lp);
-document.getElementById('revealLP').textContent=lp;
-document.getElementById('revealLPtext').innerHTML=`<strong>Life Path ${lp} — "${d.short}"</strong><br>${d.desc}`;
+const lpEl=document.getElementById('revealLP');
+
+// Dramatic counter animation
+let count=0;
+const spinInterval=setInterval(()=>{
+lpEl.textContent=Math.floor(Math.random()*33)+1;
+count++;
+if(count>15){clearInterval(spinInterval);lpEl.textContent=lp;}
+},80);
+
+document.getElementById('revealLPtitle').textContent=`Life Path ${lp} — "${d.short}"`;
+document.getElementById('revealLPtext').innerHTML=d.desc;
 document.getElementById('revealLPtag').textContent=lp>=11?'✦ MASTER NUMBER — extremely rare':'Top '+Math.round(100/9)+'% rarity';
+
+// Animated trait cards
+const tc=document.getElementById('revealTraits');
+tc.innerHTML='';
+d.traits.forEach((t,i)=>{
+const div=document.createElement('div');
+div.className='trait-card-anim';
+div.innerHTML=`<div class="tc"><h4>${t.t}</h4><p>${t.d}</p></div>`;
+tc.appendChild(div);
+setTimeout(()=>div.classList.add('visible'),600+i*200);
+});
 
 const numMsg={
 always:`You said you see repeating numbers <strong>all the time</strong>. That's your dormant code trying to get your attention. Life Path ${lp}s are especially attuned to numerical synchronicities — your code is practically screaming to be activated.`,
@@ -517,27 +817,52 @@ sometimes:`You've noticed repeating numbers <strong>sometimes</strong>. Those ar
 rarely:`Even though you <strong>rarely</strong> notice repeating numbers, they're still there. As a Life Path ${lp}, your code runs quieter than most — but when it activates, the shift tends to be more dramatic.`
 };
 document.getElementById('revealNumbers').innerHTML=numMsg[answers.numbers]||'';
-
-const el=document.getElementById('step5');
-el.classList.add('active');el.style.display='flex';
-window.scrollTo(0,0);
 }
 
-// === REVEAL 2: Energy Tease ===
+// === RADAR CHART ===
+let radarChartInstance=null;
+function showRadarChart(){
+document.getElementById('radarLPnum').textContent=lp;
+const e=getEnergies();
+const currentData=[e.w,Math.min(e.l,50),Math.max(20,(e.w+e.o)/2),Math.max(25,e.o-5),Math.max(15,e.w-5)];
+const potentialData=[85,90,88,82,92];
+
+if(radarChartInstance)radarChartInstance.destroy();
+const ctx=document.getElementById('radarChart').getContext('2d');
+radarChartInstance=new Chart(ctx,{
+type:'radar',
+data:{
+labels:['Wealth','Love','Career','Health','Spiritual'],
+datasets:[
+{label:'Current',data:[0,0,0,0,0],backgroundColor:'rgba(239,68,68,.15)',borderColor:'rgba(239,68,68,.6)',borderWidth:2,pointBackgroundColor:'rgba(239,68,68,.8)',pointRadius:4},
+{label:'After Activation',data:[0,0,0,0,0],backgroundColor:'rgba(245,197,66,.12)',borderColor:'rgba(245,197,66,.6)',borderWidth:2,pointBackgroundColor:'rgba(245,197,66,.8)',pointRadius:4}
+]
+},
+options:{
+responsive:true,maintainAspectRatio:true,
+scales:{r:{beginAtZero:true,max:100,ticks:{display:false,stepSize:20},grid:{color:'rgba(255,255,255,.06)'},angleLines:{color:'rgba(255,255,255,.06)'},pointLabels:{color:'#a78bfa',font:{size:13,weight:'600',family:'Inter'}}}},
+plugins:{legend:{display:false}},
+animation:{duration:1500,easing:'easeOutQuart'}
+}
+});
+// Animate data in
+setTimeout(()=>{
+radarChartInstance.data.datasets[0].data=currentData;
+radarChartInstance.data.datasets[1].data=potentialData;
+radarChartInstance.update();
+},300);
+}
+
+// === REVEAL 2: Energy Gauges ===
 function showReveal2(){
 const e=getEnergies();
-document.getElementById('teaseWealth').textContent=e.w+'%';
-document.getElementById('teaseLove').textContent=e.l+'%';
-document.getElementById('teaseOpp').textContent=e.o+'%';
-
-const el=document.getElementById('step8');
-el.classList.add('active');el.style.display='flex';
-window.scrollTo(0,0);
+const circ=314; // 2*pi*50
 
 setTimeout(()=>{
-document.getElementById('teaseWealthBar').style.width=e.w+'%';
-document.getElementById('teaseLoveBar').style.width=e.l+'%';
-document.getElementById('teaseOppBar').style.width=e.o+'%';
+animateGauge('gaugeFillWealth','gaugePctWealth',e.w,circ);
+animateGauge('gaugeFillLove','gaugePctLove',e.l,circ);
+animateGauge('gaugeFillOpp','gaugePctOpp',e.o,circ);
+if(e.w<30)document.getElementById('gaugeWealth').classList.add('pulse-low');
 },400);
 
 const blockedMap={money:'wealth',love:'love',career:'opportunity',health:'vitality'};
@@ -545,45 +870,97 @@ const area=blockedMap[answers.blocked]||'wealth';
 document.getElementById('teaseWarn').innerHTML=`⚠️ Your ${area} channel is significantly below potential. This aligns with what you told us — and it's exactly what code activation targets first.`;
 }
 
+function animateGauge(fillId,pctId,pct,circ){
+const fill=document.getElementById(fillId);
+const pctEl=document.getElementById(pctId);
+const offset=circ-(circ*pct/100);
+fill.style.strokeDashoffset=offset;
+// Animate number
+let cur=0;
+const step=pct/30;
+const int=setInterval(()=>{cur+=step;if(cur>=pct){cur=pct;clearInterval(int)}pctEl.textContent=Math.round(cur)+'%'},50);
+}
+
+// === PROJECTION CHART ===
+let projChartInstance=null;
+function showProjectionChart(){
+if(projChartInstance)projChartInstance.destroy();
+const e=getEnergies();
+const baseline=e.w;
+const withoutData=[baseline,baseline-1,baseline-2,baseline-1,baseline-3,baseline-2,baseline-4,baseline-5];
+const withData=[baseline,baseline+8,baseline+18,baseline+30,baseline+42,baseline+55,baseline+65,Math.min(baseline+78,95)];
+
+const ctx=document.getElementById('projectionChart').getContext('2d');
+projChartInstance=new Chart(ctx,{
+type:'line',
+data:{
+labels:['Now','Week 1','Week 2','Week 3','Week 4','Week 5','Week 6','Week 7'],
+datasets:[
+{label:'Without activation',data:withoutData,borderColor:'#555',borderWidth:2,borderDash:[5,5],pointRadius:0,fill:false,tension:.3},
+{label:'With activation',data:[null,null,null,null,null,null,null,null],borderColor:'var(--gold)',borderWidth:3,pointRadius:0,fill:{target:'origin',above:'rgba(245,197,66,.08)'},tension:.4}
+]
+},
+options:{
+responsive:true,maintainAspectRatio:false,
+scales:{
+x:{grid:{color:'rgba(255,255,255,.04)'},ticks:{color:'#6868a0',font:{size:11,family:'Inter'}}},
+y:{beginAtZero:true,max:100,grid:{color:'rgba(255,255,255,.04)'},ticks:{color:'#6868a0',font:{size:11,family:'Inter'},callback:v=>v+'%'}}
+},
+plugins:{
+legend:{display:false},
+tooltip:{enabled:true}
+},
+animation:{duration:1500}
+}
+});
+// Animate the gold line in
+setTimeout(()=>{
+projChartInstance.data.datasets[1].data=withData;
+projChartInstance.update();
+},400);
+}
+
 // === DECODE ANIMATION ===
 function startDecode(){
-document.querySelectorAll('.step').forEach(s=>{s.classList.remove('active');s.style.display='none'});
+document.querySelectorAll('.step').forEach(s=>{s.classList.remove('active','slide-in');s.style.display='none'});
 document.getElementById('progressBar').style.width='100%';
 const dec=document.getElementById('stepDecode');
-dec.style.display='flex';dec.classList.add('active');
-window.scrollTo(0,0);
+dec.style.display='flex';dec.classList.add('active','slide-in');
+window.scrollTo({top:0,behavior:'smooth'});
 
 const spinner=document.getElementById('decodeSpin');
 const status=document.getElementById('decodeStatus');
 const detail=document.getElementById('decodeDetail');
 const bar=document.getElementById('decodeBarFill');
 
-const steps=[
-{pct:12,s:"Combining your 9 data points...",d:"Birthdate + personal frequency profile"},
-{pct:25,s:"Calculating Life Path resonance...",d:"Life Path "+lp+" — "+getLP(lp).short},
-{pct:40,s:"Analyzing blocked channels...",d:"Primary block: "+(answers.blocked||"general")},
-{pct:55,s:"Mapping manifestation pattern...",d:"Cross-referencing with frequency database"},
-{pct:70,s:"Scanning wealth frequency depth...",d:"Identifying dormant code signature"},
-{pct:85,s:"Generating your 3-digit code...",d:"Finalizing personal Abundance Code"},
-{pct:100,s:"Complete.",d:"Your full reading is ready"}
+const phases=[
+{pct:15,s:"Scanning birthdate frequency...",d:`${months[answers.mm]} ${answers.dd}, ${answers.yyyy}`,dur:2500},
+{pct:35,s:"Cross-referencing Life Path database...",d:`Life Path ${lp} — ${getLP(lp).short}`,dur:2500},
+{pct:55,s:"Detecting blocked channels...",d:`Primary block: ${answers.blocked||'general'}`,dur:2500},
+{pct:75,s:"Mapping frequency resonance...",d:"Analyzing all 11 data points",dur:2000},
+{pct:90,s:"Calculating your 3-digit code...",d:"Locking digits...",dur:2500},
+{pct:100,s:"Complete.",d:"Your full reading is ready",dur:800}
 ];
 
-let i=0;
-const spinInt=setInterval(()=>{spinner.textContent=String(Math.floor(Math.random()*900)+100)},80);
+const spinInt=setInterval(()=>{spinner.textContent=String(Math.floor(Math.random()*900)+100)},60);
 
+let i=0;
 function next(){
-if(i>=steps.length){
+if(i>=phases.length){
 clearInterval(spinInt);
 const c1=(lp+answers.dd)%10,c2=(answers.mm+lp)%10,c3=(answers.yyyy%10+lp)%10;
 spinner.textContent=`${c1}${c2}${c3}`;
-setTimeout(showResults,800);
+spinner.style.color='var(--gold)';
+spinner.style.textShadow='0 0 30px rgba(245,197,66,.5)';
+setTimeout(showResults,1000);
 return;
 }
-bar.style.width=steps[i].pct+'%';
-status.textContent=steps[i].s;
-detail.textContent=steps[i].d;
+bar.style.width=phases[i].pct+'%';
+status.textContent=phases[i].s;
+detail.textContent=phases[i].d;
+const dur=phases[i].dur;
 i++;
-setTimeout(next,1000+Math.random()*600);
+setTimeout(next,dur);
 }
 next();
 }
@@ -592,13 +969,12 @@ next();
 function showResults(){
 document.getElementById('stepDecode').style.display='none';
 document.getElementById('stepResults').style.display='block';
-window.scrollTo(0,0);
+window.scrollTo({top:0,behavior:'smooth'});
 
 const d=getLP(lp);
 document.getElementById('resultDate').textContent=months[answers.mm]+' '+answers.dd+', '+answers.yyyy;
 document.getElementById('resLP').textContent=lp;
 
-// Full description based on all answers
 let desc=d.desc;
 if(answers.manifest==='failed')desc+=` <strong>You mentioned that manifestation hasn't worked before.</strong> That's extremely common for Life Path ${lp}s — generic techniques don't match your specific frequency. Your code requires a personalized activation sequence.`;
 else if(answers.manifest==='some')desc+=` The inconsistent results you've experienced make sense — without your specific code activated, manifestation works in bursts rather than continuously.`;
@@ -619,23 +995,92 @@ money:{
 }};
 document.getElementById('resInsight').innerHTML=(insights.money[answers.blocked]||insights.money.money);
 
-// Energy bars
+// Energy gauges (results)
 const e=getEnergies();
-document.getElementById('resWealthPct').textContent=e.w+'%';
-document.getElementById('resLovePct').textContent=e.l+'%';
-document.getElementById('resOppPct').textContent=e.o+'%';
 document.getElementById('resEnergyIntro').innerHTML=`Your channels for <strong>${months[answers.mm]} ${answers.dd}, ${answers.yyyy}</strong>:`;
 document.getElementById('resEnergyWarn').innerHTML=`⚠️ Your wealth frequency is at <strong>${e.w}%</strong>. That means <strong>${100-e.w}% of potential abundance</strong> is being deflected. Activation typically brings this above 80% within the first week.`;
 
 setTimeout(()=>{
-document.getElementById('resWealthBar').style.width=e.w+'%';
-document.getElementById('resLoveBar').style.width=e.l+'%';
-document.getElementById('resOppBar').style.width=e.o+'%';
+const circ=314;
+animateGauge('resGaugeFillWealth','resGaugePctWealth',e.w,circ);
+animateGauge('resGaugeFillLove','resGaugePctLove',e.l,circ);
+animateGauge('resGaugeFillOpp','resGaugePctOpp',e.o,circ);
+},600);
+
+// Radar chart (results)
+setTimeout(()=>{
+const currentData=[e.w,Math.min(e.l,50),Math.max(20,(e.w+e.o)/2),Math.max(25,e.o-5),Math.max(15,e.w-5)];
+const potentialData=[85,90,88,82,92];
+const ctx=document.getElementById('radarChartResult').getContext('2d');
+new Chart(ctx,{
+type:'radar',
+data:{
+labels:['Wealth','Love','Career','Health','Spiritual'],
+datasets:[
+{label:'Current',data:currentData,backgroundColor:'rgba(239,68,68,.15)',borderColor:'rgba(239,68,68,.6)',borderWidth:2,pointBackgroundColor:'rgba(239,68,68,.8)',pointRadius:4},
+{label:'After Activation',data:potentialData,backgroundColor:'rgba(245,197,66,.12)',borderColor:'rgba(245,197,66,.6)',borderWidth:2,pointBackgroundColor:'rgba(245,197,66,.8)',pointRadius:4}
+]
+},
+options:{
+responsive:true,maintainAspectRatio:true,
+scales:{r:{beginAtZero:true,max:100,ticks:{display:false,stepSize:20},grid:{color:'rgba(255,255,255,.06)'},angleLines:{color:'rgba(255,255,255,.06)'},pointLabels:{color:'#a78bfa',font:{size:12,weight:'600',family:'Inter'}}}},
+plugins:{legend:{display:false}},
+animation:{duration:1500,easing:'easeOutQuart'}
+}
+});
 },400);
 
 // Blurred code
 const c1=(lp+answers.dd)%10,c2=(answers.mm+lp)%10,c3=(answers.yyyy%10+lp)%10;
 document.getElementById('blurredCode').textContent=`${c1}${c2}${c3}`;
+
+// Start countdown
+startCountdown();
+// Start social proof
+startSocialProof();
+}
+
+// === COUNTDOWN TIMER ===
+function startCountdown(){
+let secs=15*60;
+const el=document.getElementById('countdownTimer');
+const tick=()=>{
+if(secs<=0){secs=15*60;}
+const m=Math.floor(secs/60);
+const s=secs%60;
+el.textContent=`${m}:${s<10?'0':''}${s}`;
+secs--;
+setTimeout(tick,1000);
+};
+tick();
+}
+
+// === SOCIAL PROOF ===
+function startSocialProof(){
+const names=[
+{n:'Sarah from Austin',t:'2 minutes ago'},
+{n:'Michael from London',t:'just now'},
+{n:'Jessica from Sydney',t:'4 minutes ago'},
+{n:'David from Toronto',t:'1 minute ago'},
+{n:'Emma from New York',t:'3 minutes ago'},
+{n:'Chris from Dublin',t:'just now'},
+{n:'Priya from Mumbai',t:'5 minutes ago'},
+{n:'Alex from Berlin',t:'2 minutes ago'}
+];
+const toast=document.getElementById('socialToast');
+const nameEl=document.getElementById('toastName');
+const timeEl=document.getElementById('toastTime');
+let idx=0;
+function showToast(){
+const p=names[idx%names.length];
+nameEl.textContent=p.n;
+timeEl.textContent=p.t;
+toast.classList.add('show');
+setTimeout(()=>toast.classList.remove('show'),4000);
+idx++;
+setTimeout(showToast,8000+Math.random()*4000);
+}
+setTimeout(showToast,5000);
 }
 </script>
 
