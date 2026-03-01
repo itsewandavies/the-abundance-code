@@ -248,6 +248,68 @@ input[type="range"]::-moz-range-thumb{width:36px;height:36px;border-radius:50%;b
 .ticker-item p{font-size:14px;margin:6px 0 0;font-style:italic;color:#9898b4}
 @keyframes scrollCarousel{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
 
+/* Scroll indicator */
+.scroll-indicator{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:998;opacity:0;transition:opacity .4s;pointer-events:none}
+.scroll-indicator.visible{opacity:.5}
+.scroll-indicator::before{content:'';display:block;width:28px;height:28px;border-left:3px solid rgba(255,255,255,.6);border-bottom:3px solid rgba(255,255,255,.6);transform:rotate(-45deg);animation:scrollBounce 2s ease-in-out infinite}
+@keyframes scrollBounce{0%,100%{transform:rotate(-45deg) translate(0,0)}50%{transform:rotate(-45deg) translate(5px,5px)}}
+
+/* Checkout form styles */
+.checkout-hero{text-align:center;padding:50px 20px 20px}
+.checkout-hero .mini-orb{width:80px;height:80px;border-radius:50%;background:radial-gradient(circle at 40% 40%,rgba(167,139,250,.5),rgba(124,58,237,.2));border:2px solid rgba(167,139,250,.3);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;box-shadow:0 0 40px rgba(124,58,237,.3);animation:orbPulse 4s ease-in-out infinite}
+.checkout-hero .mini-orb span{font-size:32px;font-weight:900;color:#c4b5fd}
+.checkout-hero h1{font-size:28px;font-weight:900;color:#fff;margin-bottom:8px;letter-spacing:-.5px}
+.checkout-hero .hero-sub{font-size:15px;color:var(--text-dim);margin-bottom:24px;max-width:420px;margin-left:auto;margin-right:auto}
+.social-stat{font-size:13px;color:var(--text-dim);margin-top:16px}
+.social-stat span{color:var(--gold);font-weight:700}
+
+.checkout-wrap{max-width:520px;margin:0 auto;padding:0 20px 40px}
+
+/* Checkout Step 1 form */
+.checkout-step{display:block}
+.checkout-step.hidden{display:none}
+.checkout-input{width:100%;background:rgba(255,255,255,.06);backdrop-filter:blur(10px);border:2px solid rgba(255,255,255,.1);color:#fff;font-family:'Inter',sans-serif;font-size:16px;font-weight:500;padding:16px 20px;border-radius:14px;outline:none;transition:all .25s;margin-bottom:14px}
+.checkout-input::placeholder{color:#5858a0}
+.checkout-input:focus{border-color:var(--violet);box-shadow:0 0 20px rgba(124,58,237,.2)}
+.secure-note{font-size:12px;color:var(--text-dimmer);text-align:center;margin-top:12px}
+
+/* Order summary */
+.order-summary{background:rgba(255,255,255,.04);border:1px solid var(--glass-border);border-radius:20px;padding:24px;margin-bottom:20px}
+.order-summary h3{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--violet-light);margin-bottom:16px}
+.order-summary .item-title{font-size:16px;font-weight:700;color:#fff;margin-bottom:12px}
+.order-summary ul{list-style:none;margin:0;padding:0}
+.order-summary li{font-size:14px;color:#b0b0c8;padding:5px 0 5px 20px;position:relative}
+.order-summary li::before{content:"✦";position:absolute;left:0;color:var(--violet-light);font-size:11px}
+.order-summary .item-price{font-size:22px;font-weight:900;color:var(--gold);text-align:right;margin-top:12px}
+
+/* Order bumps */
+.order-bump{background:rgba(245,197,66,.04);border:2px dashed rgba(245,197,66,.25);border-radius:16px;padding:20px;margin-bottom:16px;cursor:pointer;transition:all .25s;position:relative}
+.order-bump:hover{border-color:rgba(245,197,66,.4);background:rgba(245,197,66,.06)}
+.order-bump.unchecked{opacity:.6;border-color:rgba(255,255,255,.1);background:rgba(255,255,255,.02)}
+.order-bump label{display:flex;gap:12px;cursor:pointer;align-items:flex-start}
+.order-bump input[type="checkbox"]{width:20px;height:20px;accent-color:var(--gold);flex-shrink:0;margin-top:2px;cursor:pointer}
+.bump-text h4{font-size:15px;font-weight:800;color:var(--gold);margin-bottom:6px}
+.bump-text p{font-size:13px;color:#9898b4;margin:0 0 4px;line-height:1.5}
+.bump-text .bump-stat{color:var(--violet-light);font-weight:600}
+.bump-badge{position:absolute;top:-10px;right:16px;background:linear-gradient(135deg,var(--violet),var(--violet-light));color:#fff;font-size:10px;font-weight:800;padding:4px 12px;border-radius:10px;text-transform:uppercase;letter-spacing:1px}
+
+/* Price breakdown */
+.price-breakdown{background:rgba(255,255,255,.04);border:1px solid var(--glass-border);border-radius:16px;padding:20px;margin:20px 0}
+.price-row{display:flex;justify-content:space-between;font-size:14px;color:#9898b4;padding:6px 0}
+.price-row.hidden{display:none}
+.price-divider{border:none;border-top:1px solid rgba(255,255,255,.1);margin:8px 0}
+.price-total{display:flex;justify-content:space-between;font-size:20px;font-weight:900;color:#fff;padding:8px 0}
+
+/* Checkout badges */
+.checkout-badges{display:flex;justify-content:center;gap:24px;margin:20px 0;flex-wrap:wrap}
+.checkout-badges div{font-size:11px;color:var(--text-dimmer);text-align:center}
+.checkout-badges .badge-icon{font-size:20px;display:block;margin-bottom:4px}
+
+/* Compact testimonials */
+.compact-testimonial{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:14px;padding:16px 20px;margin-bottom:10px}
+.compact-testimonial .ct-name{font-size:12px;font-weight:700;color:var(--violet-light)}
+.compact-testimonial p{font-size:13px;margin:4px 0 0;font-style:italic;color:#9898b4}
+
 /* Social proof toast */
 .social-toast{position:fixed;bottom:20px;left:20px;background:rgba(20,20,50,.9);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(124,58,237,.2);border-radius:14px;padding:14px 20px;font-size:13px;color:var(--text);z-index:999;transform:translateY(120%);opacity:0;transition:all .4s cubic-bezier(.4,0,.2,1);max-width:320px;box-shadow:0 4px 20px rgba(0,0,0,.3)}
 .social-toast.show{transform:translateY(0);opacity:1}
@@ -550,98 +612,84 @@ footer{text-align:center;padding:40px 20px;font-size:11px;color:#333;border-top:
 </div>
 </div>
 
-<!-- RESULTS PAGE -->
+<!-- RESULTS PAGE: 2-STEP CHECKOUT -->
 <div id="stepResults">
 
-<div class="results-header">
-<h1>Your Personal Abundance Code Reading</h1>
-<p>Born <span id="resultDate"></span></p>
-</div>
+<!-- HERO -->
+<div class="checkout-hero">
+<div class="mini-orb"><span id="resLP"></span></div>
+<h1>Your Code Has Been Calculated</h1>
+<p class="hero-sub">Unlock your personal <strong>Life Path <span id="resLPinline"></span></strong> Abundance Code and begin activation today.</p>
 
-<div class="r-wrap">
-
-<!-- LP Orb -->
-<div class="result-card" style="text-align:center">
-<h3>Your Life Path Number</h3>
-<div class="res-lp-orb"><span class="res-lp-num" id="resLP"></span></div>
-<p id="resLPdesc"></p>
-</div>
-
-<!-- Radar chart (results) -->
-<div class="result-card" style="text-align:center">
-<h3>Your Frequency Profile — Current vs Potential</h3>
-<div class="chart-container" style="max-width:320px">
-<canvas id="radarChartResult"></canvas>
-</div>
-<p style="font-size:13px;color:var(--text-dim);margin-top:12px">
-<span style="display:inline-block;width:10px;height:10px;background:rgba(239,68,68,.5);border-radius:2px;vertical-align:middle;margin-right:4px"></span> Now &nbsp;
-<span style="display:inline-block;width:10px;height:10px;background:rgba(245,197,66,.5);border-radius:2px;vertical-align:middle;margin-right:4px"></span> After activation
-</p>
-</div>
-
-<!-- Traits -->
-<div class="result-card">
-<h3>Your Frequency Profile</h3>
-<p id="resFreqIntro"></p>
-<div class="trait-grid" id="resTraits"></div>
-</div>
-
-<!-- Personalized insight -->
-<div class="insight-card">
-<h3>🎯 Personalized Insight</h3>
-<p id="resInsight"></p>
-</div>
-
-<!-- Energy gauges (results) -->
-<div class="result-card" style="text-align:center">
-<h3>Your Current Energy Alignment</h3>
-<p id="resEnergyIntro" style="margin-bottom:20px"></p>
-<div class="gauges-row" id="resGaugesRow">
-<div class="gauge" style="width:130px;height:130px">
-<svg viewBox="0 0 120 120"><circle class="gauge-bg" cx="60" cy="60" r="50"/><circle class="gauge-fill" cx="60" cy="60" r="50" stroke-dasharray="314" stroke-dashoffset="314" id="resGaugeFillWealth" style="stroke:var(--danger)"/></svg>
-<div class="gauge-label"><span class="gauge-pct" id="resGaugePctWealth">0%</span><span class="gauge-name">Wealth</span></div>
-</div>
-<div class="gauge" style="width:130px;height:130px">
-<svg viewBox="0 0 120 120"><circle class="gauge-bg" cx="60" cy="60" r="50"/><circle class="gauge-fill" cx="60" cy="60" r="50" stroke-dasharray="314" stroke-dashoffset="314" id="resGaugeFillLove" style="stroke:var(--pink)"/></svg>
-<div class="gauge-label"><span class="gauge-pct" id="resGaugePctLove">0%</span><span class="gauge-name">Love</span></div>
-</div>
-<div class="gauge" style="width:130px;height:130px">
-<svg viewBox="0 0 120 120"><circle class="gauge-bg" cx="60" cy="60" r="50"/><circle class="gauge-fill" cx="60" cy="60" r="50" stroke-dasharray="314" stroke-dashoffset="314" id="resGaugeFillOpp" style="stroke:var(--amber)"/></svg>
-<div class="gauge-label"><span class="gauge-pct" id="resGaugePctOpp">0%</span><span class="gauge-name">Opportunity</span></div>
-</div>
-</div>
-<p style="margin-top:16px;font-size:14px;color:#9898b4" id="resEnergyWarn"></p>
-</div>
-
-<!-- LOCKED CODE -->
-<div class="locked-card">
-<div class="lock-icon">🔐</div>
-<h3>Your 3-Digit Abundance Code</h3>
+<!-- Blurred code -->
+<div class="locked-card" style="max-width:440px;margin:0 auto 16px;padding:28px 24px">
 <div style="position:relative;display:inline-block">
 <div class="locked-code" id="blurredCode">000</div>
 <span class="keyhole">🔑</span>
 </div>
-<p class="locked-sub">Your code has been calculated. Unlock it to begin activation.</p>
+<p class="locked-sub" style="margin-bottom:0">Your 3-digit Abundance Code — ready to unlock</p>
+</div>
 
-<div class="countdown" id="countdown">⏱️ Your code expires in <span id="countdownTimer">15:00</span></div>
+<div class="countdown" id="countdown">⏱️ Your personalized reading expires in <span id="countdownTimer">15:00</span></div>
+<p class="social-stat">⚡ <span>2,847</span> people activated their code this month</p>
+</div>
 
-<a href="#" class="unlock-btn">🔓 UNLOCK MY ABUNDANCE CODE — $19<small>Instant Access · 60-Day Money-Back Guarantee</small></a>
+<div class="checkout-wrap">
 
-<div class="locked-extras">
-<p style="margin-top:24px"><strong style="color:#fff">When you unlock, you also get:</strong></p>
+<!-- CHECKOUT STEP 1: NAME + EMAIL -->
+<div class="checkout-step" id="checkoutStep1">
+<div class="glass" style="padding:28px 24px">
+<h3 style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--violet-light);margin-bottom:18px;text-align:center">Step 1 — Your Details</h3>
+<input type="text" class="checkout-input" id="checkoutName" placeholder="First Name" autocomplete="given-name">
+<input type="email" class="checkout-input" id="checkoutEmail" placeholder="Email Address" autocomplete="email">
+<button class="unlock-btn" style="width:100%;font-size:17px;padding:18px" id="continueToCheckout">CONTINUE TO CHECKOUT →</button>
+<p class="secure-note">🔒 Your information is secure. We hate spam too.</p>
+</div>
+</div>
+
+<!-- CHECKOUT STEP 2: PAYMENT -->
+<div class="checkout-step hidden" id="checkoutStep2">
+
+<!-- Order Summary -->
+<div class="order-summary">
+<h3>✦ Your Personalized Abundance Code Reading</h3>
 <ul>
-<li>Your complete Abundance Code decoded + explained</li>
-<li>The 7-Minute Frequency Activation Ritual (calibrated to YOUR code)</li>
+<li>Your 3-digit code decoded + explained</li>
+<li>The 7-Minute Frequency Activation Ritual</li>
 <li>30-Day Activation Calendar</li>
 <li>Quick-Start Cheatsheet</li>
-<li>Tesla's 3-6-9 Amplification Method adapted to your numbers</li>
+<li>Tesla's 3-6-9 Method (for your numbers)</li>
 </ul>
-</div>
+<div class="item-price">$19</div>
 </div>
 
-<p class="guarantee">🛡️ 60-Day "Feel The Shift" Guarantee — Full refund if you don't feel it. No questions.</p>
+<!-- Order Bump 1 -->
+<div class="order-bump" id="bump1wrap">
+<label>
+<input type="checkbox" id="bump1" checked>
+<div class="bump-text">
+<h4>YES! Add the Sleep Activation Audio — $9</h4>
+<p>Fall asleep to frequencies calibrated to YOUR code. Activates your abundance channels while you sleep.</p>
+<p class="bump-stat">93% of users report vivid "download dreams" in week 1.</p>
+</div>
+</label>
+</div>
 
-<p style="text-align:center;font-size:13px;color:#6868a0;margin:32px 0 16px;text-transform:uppercase;letter-spacing:1.5px;font-weight:700">Your birthdate also contains:</p>
+<!-- Order Bump 2 -->
+<div class="order-bump" id="bump2wrap" style="position:relative">
+<span class="bump-badge">Recommended</span>
+<label>
+<input type="checkbox" id="bump2" checked>
+<div class="bump-text">
+<h4>YES! Add the Complete Life Frequency Blueprint — $27</h4>
+<p>Unlock ALL 5 life codes (Wealth + Love + Health + Career + Spiritual). Most buyers add this — your birthdate contains 5 separate codes.</p>
+<p class="bump-stat">Includes the Monthly Frequency Calendar for 2026.</p>
+</div>
+</label>
+</div>
+
+<!-- Locked codes grid (between bumps and price = FOMO for bump 2) -->
+<p style="text-align:center;font-size:13px;color:#6868a0;margin:24px 0 12px;text-transform:uppercase;letter-spacing:1.5px;font-weight:700">Your birthdate also contains:</p>
 <div class="also-locked">
 <div class="also-card"><span class="emoji">❤️</span><h4>Love Code</h4><p>Locked — unlock to reveal</p></div>
 <div class="also-card"><span class="emoji">⚡</span><h4>Health Code</h4><p>Locked — unlock to reveal</p></div>
@@ -649,30 +697,40 @@ footer{text-align:center;padding:40px 20px;font-size:11px;color:#333;border-top:
 <div class="also-card"><span class="emoji">🔮</span><h4>Spiritual Code</h4><p>Locked — unlock to reveal</p></div>
 </div>
 
-<!-- Testimonial carousel -->
-<div class="carousel-wrap">
-<div class="carousel-track" id="carouselTrack">
-<div class="ticker-item"><span class="who">Rachel U. — Austin, TX</span><p>"Day 3 I got an email about inheritance money I had NO idea existed. £14,200. My code is 7-4-2 😂"</p></div>
-<div class="ticker-item"><span class="who">Marcus O. — London, UK</span><p>"Three clients who'd gone quiet came back within 48 hours. Up £8,400 in 6 weeks."</p></div>
-<div class="ticker-item"><span class="who">Diane C. — Perth, AU</span><p>"Promotion I didn't apply for on day 11. My code was 3-3-6 — a 'leadership frequency.' Spot on."</p></div>
-<div class="ticker-item"><span class="who">James K. — Toronto, CA</span><p>"I was skeptical but within a week, two unexpected checks arrived. Total: $3,200."</p></div>
-<div class="ticker-item"><span class="who">Maria S. — Miami, FL</span><p>"Met my soulmate 9 days after activating my love code. We're inseparable."</p></div>
-<!-- duplicated for seamless scroll -->
-<div class="ticker-item"><span class="who">Rachel U. — Austin, TX</span><p>"Day 3 I got an email about inheritance money I had NO idea existed. £14,200. My code is 7-4-2 😂"</p></div>
-<div class="ticker-item"><span class="who">Marcus O. — London, UK</span><p>"Three clients who'd gone quiet came back within 48 hours. Up £8,400 in 6 weeks."</p></div>
-<div class="ticker-item"><span class="who">Diane C. — Perth, AU</span><p>"Promotion I didn't apply for on day 11. My code was 3-3-6 — a 'leadership frequency.' Spot on."</p></div>
-<div class="ticker-item"><span class="who">James K. — Toronto, CA</span><p>"I was skeptical but within a week, two unexpected checks arrived. Total: $3,200."</p></div>
-<div class="ticker-item"><span class="who">Maria S. — Miami, FL</span><p>"Met my soulmate 9 days after activating my love code. We're inseparable."</p></div>
-</div>
+<!-- Price breakdown -->
+<div class="price-breakdown">
+<div class="price-row"><span>Abundance Code Reading</span><span>$19</span></div>
+<div class="price-row" id="priceRowBump1"><span>Sleep Activation Audio</span><span>+ $9</span></div>
+<div class="price-row" id="priceRowBump2"><span>Complete Life Blueprint</span><span>+ $27</span></div>
+<hr class="price-divider">
+<div class="price-total"><span>Total today:</span><span id="orderTotal">$55</span></div>
 </div>
 
-<div style="text-align:center;margin:36px 0">
-<a href="#" class="unlock-btn">🔓 UNLOCK MY ABUNDANCE CODE — $19<small>Instant Access · 60-Day Guarantee</small></a>
-<p class="guarantee" style="margin-top:14px">🔒 Secure checkout · Instant digital delivery</p>
+<!-- Whop checkout placeholder -->
+<div id="whop-checkout-container">
+<!-- Whop embed will go here -->
+<button class="unlock-btn" style="width:100%;font-size:18px" id="completeOrderBtn">🔓 COMPLETE MY ORDER — <span id="orderTotalBtn">$55</span></button>
 </div>
 
-<p style="font-size:14px;color:#7878a0;margin-bottom:40px"><strong style="color:var(--text)">P.S.</strong> — 2026 is Universal Year 1 (2+0+2+6=1). The first reset in 9 years. Your code is more responsive to activation right now than it will be until 2035. <strong style="color:var(--text)">$19 to find out what happens when you switch it on.</strong></p>
+<!-- Guarantee -->
+<p class="guarantee" style="margin-top:20px;font-size:14px">🛡️ 60-Day "Feel The Shift" Guarantee — Full refund if you don't feel it.</p>
+
+<!-- Checkout badges -->
+<div class="checkout-badges">
+<div><span class="badge-icon">🔒</span>Secure Checkout</div>
+<div><span class="badge-icon">⚡</span>Instant Delivery</div>
+<div><span class="badge-icon">💰</span>Money-Back Guarantee</div>
 </div>
+
+<!-- Compact testimonials -->
+<div class="compact-testimonial"><span class="ct-name">Rachel U. — Austin, TX</span><p>"Day 3 I got an email about inheritance money I had NO idea existed. £14,200."</p></div>
+<div class="compact-testimonial"><span class="ct-name">Marcus O. — London, UK</span><p>"Three clients who'd gone quiet came back within 48 hours. Up £8,400 in 6 weeks."</p></div>
+<div class="compact-testimonial"><span class="ct-name">Diane C. — Perth, AU</span><p>"Promotion I didn't apply for on day 11. My code was 3-3-6 — spot on."</p></div>
+
+<p style="font-size:14px;color:#7878a0;margin:28px 0 40px;text-align:center"><strong style="color:var(--text)">P.S.</strong> — 2026 is Universal Year 1. The first reset in 9 years. Your code is more responsive right now than it will be until 2035.</p>
+
+</div><!-- /checkoutStep2 -->
+</div><!-- /checkout-wrap -->
 </div>
 
 <footer>
@@ -966,79 +1024,60 @@ next();
 }
 
 // === RESULTS ===
+let customerName='',customerEmail='';
+
 function showResults(){
 document.getElementById('stepDecode').style.display='none';
 document.getElementById('stepResults').style.display='block';
 window.scrollTo({top:0,behavior:'smooth'});
 
-const d=getLP(lp);
-document.getElementById('resultDate').textContent=months[answers.mm]+' '+answers.dd+', '+answers.yyyy;
+// Set LP numbers
 document.getElementById('resLP').textContent=lp;
-
-let desc=d.desc;
-if(answers.manifest==='failed')desc+=` <strong>You mentioned that manifestation hasn't worked before.</strong> That's extremely common for Life Path ${lp}s — generic techniques don't match your specific frequency. Your code requires a personalized activation sequence.`;
-else if(answers.manifest==='some')desc+=` The inconsistent results you've experienced make sense — without your specific code activated, manifestation works in bursts rather than continuously.`;
-document.getElementById('resLPdesc').innerHTML=desc;
-
-document.getElementById('resFreqIntro').innerHTML=`As a Life Path <strong>${lp}</strong>, your frequency profile:`;
-const tg=document.getElementById('resTraits');
-tg.innerHTML='';
-d.traits.forEach(t=>{tg.innerHTML+=`<div class="trait"><h4>${t.t}</h4><p>${t.d}</p></div>`});
-
-// Personalized insight
-const insights={
-money:{
-'money':`You said <strong>money feels most blocked</strong> and that you <strong>"${answers.mirror==='money'?'work hard but money never sticks':answers.mirror==='stuck'?'watch others succeed while you stay stuck':'feel close to a breakthrough'}"</strong>. This is textbook dormant wealth code behavior for Life Path ${lp}. Your frequency is literally deflecting financial opportunities — not because you're doing anything wrong, but because the channel isn't open. Activation typically shifts this within the first week.`,
-'love':`Even though <strong>love feels most blocked</strong>, your wealth frequency is also running well below capacity. For Life Path ${lp}s, these channels are connected — when one activates, the other follows. Your Abundance Code activation will open both simultaneously.`,
-'career':`Your <strong>career block</strong> is directly connected to your wealth frequency. Life Path ${lp}s don't thrive in misaligned work — and your code holds the key to understanding exactly what type of work amplifies your frequency versus drains it.`,
-'health':`<strong>Low energy and health blocks</strong> in Life Path ${lp}s almost always trace back to frequency misalignment. Your code activation restores energetic flow first — most people report feeling physically different within days.`
-}};
-document.getElementById('resInsight').innerHTML=(insights.money[answers.blocked]||insights.money.money);
-
-// Energy gauges (results)
-const e=getEnergies();
-document.getElementById('resEnergyIntro').innerHTML=`Your channels for <strong>${months[answers.mm]} ${answers.dd}, ${answers.yyyy}</strong>:`;
-document.getElementById('resEnergyWarn').innerHTML=`⚠️ Your wealth frequency is at <strong>${e.w}%</strong>. That means <strong>${100-e.w}% of potential abundance</strong> is being deflected. Activation typically brings this above 80% within the first week.`;
-
-setTimeout(()=>{
-const circ=314;
-animateGauge('resGaugeFillWealth','resGaugePctWealth',e.w,circ);
-animateGauge('resGaugeFillLove','resGaugePctLove',e.l,circ);
-animateGauge('resGaugeFillOpp','resGaugePctOpp',e.o,circ);
-},600);
-
-// Radar chart (results)
-setTimeout(()=>{
-const currentData=[e.w,Math.min(e.l,50),Math.max(20,(e.w+e.o)/2),Math.max(25,e.o-5),Math.max(15,e.w-5)];
-const potentialData=[85,90,88,82,92];
-const ctx=document.getElementById('radarChartResult').getContext('2d');
-new Chart(ctx,{
-type:'radar',
-data:{
-labels:['Wealth','Love','Career','Health','Spiritual'],
-datasets:[
-{label:'Current',data:currentData,backgroundColor:'rgba(239,68,68,.15)',borderColor:'rgba(239,68,68,.6)',borderWidth:2,pointBackgroundColor:'rgba(239,68,68,.8)',pointRadius:4},
-{label:'After Activation',data:potentialData,backgroundColor:'rgba(245,197,66,.12)',borderColor:'rgba(245,197,66,.6)',borderWidth:2,pointBackgroundColor:'rgba(245,197,66,.8)',pointRadius:4}
-]
-},
-options:{
-responsive:true,maintainAspectRatio:true,
-scales:{r:{beginAtZero:true,max:100,ticks:{display:false,stepSize:20},grid:{color:'rgba(255,255,255,.06)'},angleLines:{color:'rgba(255,255,255,.06)'},pointLabels:{color:'#a78bfa',font:{size:12,weight:'600',family:'Inter'}}}},
-plugins:{legend:{display:false}},
-animation:{duration:1500,easing:'easeOutQuart'}
-}
-});
-},400);
+document.getElementById('resLPinline').textContent=lp;
 
 // Blurred code
 const c1=(lp+answers.dd)%10,c2=(answers.mm+lp)%10,c3=(answers.yyyy%10+lp)%10;
 document.getElementById('blurredCode').textContent=`${c1}${c2}${c3}`;
 
-// Start countdown
+// Start countdown & social proof
 startCountdown();
-// Start social proof
 startSocialProof();
+
+// Checkout Step 1 → Step 2 transition
+document.getElementById('continueToCheckout').addEventListener('click',function(){
+const name=document.getElementById('checkoutName').value.trim();
+const email=document.getElementById('checkoutEmail').value.trim();
+if(!name){document.getElementById('checkoutName').focus();return;}
+if(!email||!email.includes('@')){document.getElementById('checkoutEmail').focus();return;}
+customerName=name;customerEmail=email;
+document.getElementById('checkoutStep1').style.display='none';
+const s2=document.getElementById('checkoutStep2');
+s2.classList.remove('hidden');
+s2.style.display='block';
+s2.style.animation='slideIn .5s cubic-bezier(.4,0,.2,1) forwards';
+s2.scrollIntoView({behavior:'smooth',block:'start'});
+});
+
+// Bump toggle logic
+const bump1=document.getElementById('bump1');
+const bump2=document.getElementById('bump2');
+function updateTotal(){
+let total=19;
+const b1=bump1.checked,b2=bump2.checked;
+if(b1)total+=9;if(b2)total+=27;
+document.getElementById('priceRowBump1').style.display=b1?'flex':'none';
+document.getElementById('priceRowBump2').style.display=b2?'flex':'none';
+document.getElementById('bump1wrap').classList.toggle('unchecked',!b1);
+document.getElementById('bump2wrap').classList.toggle('unchecked',!b2);
+document.getElementById('orderTotal').textContent='$'+total;
+document.getElementById('orderTotalBtn').textContent='$'+total;
+document.getElementById('completeOrderBtn').closest('button')||null;
 }
+bump1.addEventListener('change',updateTotal);
+bump2.addEventListener('change',updateTotal);
+updateTotal();
+}
+
 
 // === COUNTDOWN TIMER ===
 function startCountdown(){
@@ -1054,6 +1093,30 @@ setTimeout(tick,1000);
 };
 tick();
 }
+
+// === SCROLL INDICATOR ===
+(function(){
+const ind=document.createElement('div');
+ind.className='scroll-indicator';
+document.body.appendChild(ind);
+let hideTimeout;
+function checkScroll(){
+const scrollable=document.documentElement.scrollHeight-window.innerHeight-window.scrollY>80;
+if(scrollable){ind.classList.add('visible')}else{ind.classList.remove('visible')}
+}
+window.addEventListener('scroll',()=>{
+ind.classList.remove('visible');
+clearTimeout(hideTimeout);
+hideTimeout=setTimeout(checkScroll,800);
+},{passive:true});
+// Check on step transitions
+const origGoStep=window.goStep||goStep;
+const _origGoStep=goStep;
+const patchedGo=function(n){_origGoStep(n);setTimeout(checkScroll,600)};
+// Can't easily patch, so use MutationObserver
+new MutationObserver(()=>setTimeout(checkScroll,600)).observe(document.body,{childList:true,subtree:true,attributes:true,attributeFilter:['class','style']});
+setTimeout(checkScroll,1000);
+})();
 
 // === SOCIAL PROOF ===
 function startSocialProof(){
