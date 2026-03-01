@@ -3,59 +3,93 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>The Abundance Code — Decode Yours Free</title>
+<title>The Abundance Code — Free Reading</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Inter',-apple-system,sans-serif;background:#0a0a12;color:#e0dff0;line-height:1.7;font-size:17px;min-height:100vh}
+body{font-family:'Inter',-apple-system,sans-serif;background:#0a0a12;color:#e0dff0;line-height:1.7;font-size:17px;min-height:100vh;overflow-x:hidden}
 a{color:inherit}
 
-/* === STEP 1: ENTER BIRTHDAY === */
-#step1{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 20px;text-align:center}
-.s1-badge{display:inline-block;background:rgba(124,58,237,.12);color:#a78bfa;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:6px 16px;border-radius:20px;margin-bottom:20px}
-.s1-title{font-size:32px;font-weight:900;color:#fff;line-height:1.2;margin-bottom:12px;letter-spacing:-.5px;max-width:520px}
-.s1-title em{font-style:italic;color:#c4b5fd}
-.s1-sub{font-size:16px;color:#8888a8;margin-bottom:36px;max-width:440px}
-@media(max-width:480px){.s1-title{font-size:26px}}
+/* Progress bar */
+.progress{position:fixed;top:0;left:0;right:0;height:3px;background:#1a1a2e;z-index:100}
+.progress-fill{height:100%;background:linear-gradient(90deg,#7c3aed,#a855f7);transition:width .5s ease;width:0%}
 
+/* Step container */
+.step{display:none;min-height:100vh;flex-direction:column;align-items:center;justify-content:center;padding:40px 20px;text-align:center;animation:fadeIn .4s ease}
+.step.active{display:flex}
+@keyframes fadeIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+
+.wrap{max-width:520px;width:100%}
+
+/* Common elements */
+.badge{display:inline-block;background:rgba(124,58,237,.12);color:#a78bfa;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:6px 16px;border-radius:20px;margin-bottom:20px}
+.step-count{font-size:12px;color:#5858a0;margin-bottom:12px;font-weight:600}
+
+h2{font-size:26px;font-weight:900;color:#fff;line-height:1.25;margin-bottom:8px;letter-spacing:-.3px}
+h2 em{font-style:italic;color:#c4b5fd}
+@media(max-width:480px){h2{font-size:22px}}
+.q-sub{font-size:15px;color:#8888a8;margin-bottom:28px;max-width:420px;margin-left:auto;margin-right:auto}
+
+/* Option buttons */
+.options{display:flex;flex-direction:column;gap:10px;width:100%;max-width:400px;margin:0 auto}
+.opt{background:#12122a;border:2px solid rgba(124,58,237,.15);color:#e0dff0;font-family:'Inter',sans-serif;font-size:16px;font-weight:600;padding:16px 20px;border-radius:12px;cursor:pointer;transition:all .2s;text-align:left;display:flex;align-items:center;gap:12px}
+.opt:hover{border-color:#7c3aed;background:#16162e}
+.opt.selected{border-color:#7c3aed;background:rgba(124,58,237,.12)}
+.opt .emoji{font-size:22px;flex-shrink:0}
+
+/* Date form */
 .date-form{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:20px}
-.date-form select,.date-form input[type="number"]{background:#16162a;border:2px solid rgba(124,58,237,.25);color:#e0dff0;font-family:'Inter',sans-serif;font-size:16px;font-weight:600;padding:14px 16px;border-radius:10px;appearance:none;-webkit-appearance:none;text-align:center;outline:none;transition:border .2s}
+.date-form select,.date-form input[type="number"]{background:#12122a;border:2px solid rgba(124,58,237,.2);color:#e0dff0;font-family:'Inter',sans-serif;font-size:16px;font-weight:600;padding:14px 16px;border-radius:10px;appearance:none;-webkit-appearance:none;text-align:center;outline:none;transition:border .2s}
 .date-form select:focus,.date-form input:focus{border-color:#7c3aed}
 .date-form select{width:130px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%238888a8' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center}
 .date-form input[type="number"]{width:100px}
 .date-form input::-webkit-outer-spin-button,.date-form input::-webkit-inner-spin-button{-webkit-appearance:none}
 
-.decode-btn{background:linear-gradient(90deg,#7c3aed,#a855f7);color:#fff;font-size:17px;font-weight:800;padding:16px 48px;border-radius:10px;border:none;cursor:pointer;transition:transform .2s,box-shadow .2s;box-shadow:0 4px 24px rgba(124,58,237,.4);letter-spacing:-.2px;margin-top:8px}
-.decode-btn:hover{transform:translateY(-2px)}
-.decode-btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+/* Next button */
+.next-btn{background:linear-gradient(90deg,#7c3aed,#a855f7);color:#fff;font-size:17px;font-weight:800;padding:16px 44px;border-radius:10px;border:none;cursor:pointer;transition:transform .2s,box-shadow .2s;box-shadow:0 4px 24px rgba(124,58,237,.4);margin-top:20px;width:100%;max-width:400px}
+.next-btn:hover{transform:translateY(-2px)}
+.next-btn:disabled{opacity:.4;cursor:not-allowed;transform:none}
 
-.s1-proof{font-size:12px;color:#5858a0;margin-top:20px}
+/* Mid-quiz reveal cards */
+.reveal-card{background:linear-gradient(135deg,rgba(124,58,237,.12),rgba(168,85,247,.06));border:1px solid rgba(124,58,237,.25);border-radius:16px;padding:28px 24px;margin:20px auto;max-width:420px;text-align:center}
+.reveal-card .big-num{font-size:64px;font-weight:900;color:#c4b5fd;line-height:1;margin:8px 0}
+.reveal-card p{color:#b0b0c8;font-size:15px;margin:0}
+.reveal-card p strong{color:#e0dff0}
+.reveal-card .tag{display:inline-block;background:rgba(124,58,237,.2);color:#c4b5fd;font-size:12px;font-weight:700;padding:4px 12px;border-radius:12px;margin-top:12px}
+
+/* Energy bar tease */
+.energy-tease{width:100%;max-width:400px;margin:20px auto;text-align:left}
+.energy-row{margin:12px 0}
+.energy-row .label{display:flex;justify-content:space-between;font-size:13px;font-weight:600;margin-bottom:4px}
+.energy-row .label span:last-child{color:#a78bfa}
+.bar-bg{height:8px;border-radius:4px;background:#1a1a2e;overflow:hidden}
+.bar-fill{height:100%;border-radius:4px;transition:width 1.5s ease-out;width:0%}
+.energy-warn{font-size:14px;color:#ef4444;margin-top:16px;font-weight:600}
+
+/* Trust elements */
+.s1-proof{font-size:12px;color:#5858a0;margin-top:16px}
 .s1-proof span{color:#a78bfa;font-weight:700}
+.trust-row{display:flex;gap:16px;justify-content:center;margin-top:20px;flex-wrap:wrap}
+.trust-row div{font-size:11px;color:#5858a0;text-transform:uppercase;letter-spacing:.5px}
 
-.s1-trust{display:flex;gap:20px;justify-content:center;margin-top:28px;flex-wrap:wrap}
-.s1-trust div{font-size:11px;color:#5858a0;text-transform:uppercase;letter-spacing:.5px}
-
-/* === STEP 2: DECODING ANIMATION === */
-#step2{display:none;min-height:100vh;flex-direction:column;align-items:center;justify-content:center;padding:40px 20px;text-align:center}
-.decode-visual{width:200px;height:200px;border-radius:50%;border:3px solid #7c3aed;display:flex;align-items:center;justify-content:center;margin:0 auto 28px;position:relative;animation:pulse-ring 2s infinite}
-.decode-visual::after{content:'';position:absolute;inset:-12px;border-radius:50%;border:1px solid rgba(124,58,237,.2);animation:pulse-ring 2s infinite .5s}
+/* === DECODING ANIMATION === */
+#stepDecode{display:none}
+.decode-visual{width:180px;height:180px;border-radius:50%;border:3px solid #7c3aed;display:flex;align-items:center;justify-content:center;margin:0 auto 24px;position:relative}
 @keyframes pulse-ring{0%,100%{box-shadow:0 0 0 0 rgba(124,58,237,.3)}50%{box-shadow:0 0 0 20px rgba(124,58,237,0)}}
-.decode-number{font-size:48px;font-weight:900;color:#c4b5fd;font-variant-numeric:tabular-nums}
-.decode-status{font-size:14px;color:#8888a8;margin-bottom:8px}
+.decode-visual{animation:pulse-ring 2s infinite}
+.decode-number{font-size:44px;font-weight:900;color:#c4b5fd;font-variant-numeric:tabular-nums}
+.decode-status{font-size:14px;color:#8888a8;margin-bottom:6px}
 .decode-detail{font-size:12px;color:#5858a0}
-.progress-bar{width:280px;height:4px;background:#1a1a2e;border-radius:4px;margin:20px auto 0;overflow:hidden}
-.progress-fill{height:100%;background:linear-gradient(90deg,#7c3aed,#a855f7);border-radius:4px;width:0%;transition:width .3s}
+.decode-bar{width:260px;height:4px;background:#1a1a2e;border-radius:4px;margin:18px auto 0;overflow:hidden}
+.decode-bar-fill{height:100%;background:linear-gradient(90deg,#7c3aed,#a855f7);border-radius:4px;width:0%;transition:width .3s}
 
-/* === STEP 3: RESULTS === */
-#step3{display:none;padding:0 0 60px}
-
-.results-header{text-align:center;padding:40px 20px 32px;border-bottom:1px solid rgba(255,255,255,.04)}
-.results-header h1{font-size:24px;font-weight:900;color:#fff;margin-bottom:8px}
+/* === RESULTS PAGE === */
+#stepResults{display:none;padding:0 0 60px}
+.results-header{text-align:center;padding:36px 20px 28px;border-bottom:1px solid rgba(255,255,255,.04)}
+.results-header h1{font-size:24px;font-weight:900;color:#fff;margin-bottom:6px}
 .results-header p{color:#8888a8;font-size:14px}
-
 .r-wrap{max-width:640px;margin:0 auto;padding:0 20px}
 
-/* Free results cards */
 .result-card{background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.06);border-radius:14px;padding:24px;margin:20px 0}
 .result-card h3{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:#a78bfa;margin-bottom:12px}
 .result-card .big-num{font-size:56px;font-weight:900;color:#c4b5fd;line-height:1;margin-bottom:8px}
@@ -68,11 +102,16 @@ a{color:inherit}
 .trait h4{font-size:12px;font-weight:700;color:#a78bfa;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
 .trait p{font-size:13px;margin:0;color:#9898b4}
 
-.freq-bar{height:8px;border-radius:4px;background:#1a1a2e;margin-top:12px;overflow:hidden;position:relative}
+.freq-bar{height:8px;border-radius:4px;background:#1a1a2e;margin-top:12px;overflow:hidden}
 .freq-fill{height:100%;border-radius:4px;transition:width 1.5s ease-out}
-.freq-label{display:flex;justify-content:space-between;font-size:11px;color:#6868a0;margin-top:4px}
 
-/* THE LOCKED CODE */
+/* Personalized insight */
+.insight-card{background:rgba(251,191,36,.06);border:1px solid rgba(251,191,36,.15);border-radius:14px;padding:24px;margin:20px 0}
+.insight-card h3{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:#fbbf24;margin-bottom:12px}
+.insight-card p{color:#c8c4b0;font-size:15px;margin-bottom:0}
+.insight-card p strong{color:#e0dff0}
+
+/* Locked code */
 .locked-card{background:linear-gradient(135deg,rgba(124,58,237,.12),rgba(168,85,247,.06));border:2px solid rgba(124,58,237,.3);border-radius:16px;padding:32px 24px;margin:28px 0;text-align:center;position:relative;overflow:hidden}
 .locked-card h3{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:#a78bfa;margin-bottom:16px}
 .locked-code{font-size:64px;font-weight:900;color:#fff;letter-spacing:12px;filter:blur(20px);user-select:none;margin-bottom:4px;line-height:1.2}
@@ -89,7 +128,6 @@ a{color:inherit}
 .locked-extras li{font-size:14px;color:#b0b0c8;padding:6px 0 6px 22px;position:relative}
 .locked-extras li::before{content:"✦";position:absolute;left:0;color:#a78bfa;font-size:12px}
 
-/* Also locked sections */
 .also-locked{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:24px 0}
 @media(max-width:480px){.also-locked{grid-template-columns:1fr}}
 .also-card{background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.04);border-radius:10px;padding:16px;text-align:center;opacity:.55}
@@ -99,8 +137,6 @@ a{color:inherit}
 
 .guarantee{text-align:center;font-size:13px;color:#6868a0;margin:16px 0}
 
-/* Social proof ticker */
-.ticker{margin:32px 0;overflow:hidden;position:relative}
 .ticker-item{background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.04);border-radius:10px;padding:14px 18px;margin:8px 0}
 .ticker-item .who{font-size:12px;font-weight:700;color:#a78bfa}
 .ticker-item p{font-size:14px;margin:4px 0 0;font-style:italic;color:#9898b4}
@@ -110,11 +146,14 @@ footer{text-align:center;padding:32px 20px;font-size:11px;color:#333;border-top:
 </head>
 <body>
 
-<!-- ==================== STEP 1: ENTER BIRTHDAY ==================== -->
-<div id="step1">
-<span class="s1-badge">FREE ABUNDANCE CODE READING</span>
-<h1 class="s1-title">Enter Your Birthdate to Decode Your Personal <em>Abundance Code</em></h1>
-<p class="s1-sub">Your birthdate contains a hidden 3-digit frequency code. Discover yours in 60 seconds — completely free.</p>
+<div class="progress"><div class="progress-fill" id="progressBar"></div></div>
+
+<!-- ============ STEP 1: BIRTHDATE ============ -->
+<div class="step active" id="step1">
+<div class="wrap">
+<span class="badge">FREE ABUNDANCE CODE READING</span>
+<h2>Enter Your Birthdate to Begin Your <em>Free Reading</em></h2>
+<p class="q-sub">Your birthdate holds the key to your personal Abundance Code. This takes about 2 minutes.</p>
 
 <div class="date-form">
 <select id="month" aria-label="Month">
@@ -130,78 +169,221 @@ footer{text-align:center;padding:32px 20px;font-size:11px;color:#333;border-top:
 <input type="number" id="year" placeholder="Year" min="1930" max="2010" aria-label="Year">
 </div>
 
-<button class="decode-btn" id="decodeBtn" disabled onclick="startDecode()">DECODE MY ABUNDANCE CODE →</button>
+<button class="next-btn" id="step1Btn" disabled>CONTINUE →</button>
 
-<p class="s1-proof"><span>47,291</span> codes decoded this year · 100% free · takes 60 seconds</p>
-
-<div class="s1-trust">
+<p class="s1-proof"><span>47,291</span> readings completed · 100% free</p>
+<div class="trust-row">
 <div>🔒 Private & Secure</div>
 <div>⚡ Instant Results</div>
 <div>🛡️ No Email Required</div>
 </div>
 </div>
+</div>
 
-<!-- ==================== STEP 2: DECODING ANIMATION ==================== -->
-<div id="step2">
+<!-- ============ STEP 2: GENDER ============ -->
+<div class="step" id="step2">
+<div class="wrap">
+<p class="step-count">Step 2 of 9</p>
+<h2>What's your gender?</h2>
+<p class="q-sub">This affects how your frequency expresses in different life areas.</p>
+<div class="options">
+<button class="opt" onclick="pick(this,'gender','female')"><span class="emoji">♀️</span> Female</button>
+<button class="opt" onclick="pick(this,'gender','male')"><span class="emoji">♂️</span> Male</button>
+<button class="opt" onclick="pick(this,'gender','nonbinary')"><span class="emoji">⚧️</span> Non-binary</button>
+</div>
+</div>
+</div>
+
+<!-- ============ STEP 3: BLOCKED AREA ============ -->
+<div class="step" id="step3">
+<div class="wrap">
+<p class="step-count">Step 3 of 9</p>
+<h2>What area of your life feels most <em>blocked</em> right now?</h2>
+<p class="q-sub">Be honest — this calibrates your reading.</p>
+<div class="options">
+<button class="opt" onclick="pick(this,'blocked','money')"><span class="emoji">💰</span> Money & Finances</button>
+<button class="opt" onclick="pick(this,'blocked','love')"><span class="emoji">❤️</span> Love & Relationships</button>
+<button class="opt" onclick="pick(this,'blocked','career')"><span class="emoji">🚀</span> Career & Purpose</button>
+<button class="opt" onclick="pick(this,'blocked','health')"><span class="emoji">⚡</span> Health & Energy</button>
+</div>
+</div>
+</div>
+
+<!-- ============ STEP 4: REPEATING NUMBERS ============ -->
+<div class="step" id="step4">
+<div class="wrap">
+<p class="step-count">Step 4 of 9</p>
+<h2>How often do you notice <em>repeating numbers</em>?</h2>
+<p class="q-sub">11:11 on clocks, same digits on receipts, license plates...</p>
+<div class="options">
+<button class="opt" onclick="pick(this,'numbers','always')"><span class="emoji">🔮</span> All the time — it's eerie</button>
+<button class="opt" onclick="pick(this,'numbers','sometimes')"><span class="emoji">👀</span> Sometimes — enough to notice</button>
+<button class="opt" onclick="pick(this,'numbers','rarely')"><span class="emoji">🤷</span> Rarely — maybe once in a while</button>
+</div>
+</div>
+</div>
+
+<!-- ============ STEP 5: MID-QUIZ REVEAL #1 ============ -->
+<div class="step" id="step5">
+<div class="wrap">
+<p class="step-count">Step 5 of 9</p>
+
+<div class="reveal-card">
+<p style="font-size:12px;color:#a78bfa;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px">Your Life Path Number</p>
+<div class="big-num" id="revealLP"></div>
+<p id="revealLPtext"></p>
+<span class="tag" id="revealLPtag"></span>
+</div>
+
+<p style="font-size:14px;color:#7878a0;margin-top:16px" id="revealNumbers"></p>
+
+<button class="next-btn" onclick="goStep(6)">CONTINUE MY READING →</button>
+</div>
+</div>
+
+<!-- ============ STEP 6: TRIED MANIFESTATION ============ -->
+<div class="step" id="step6">
+<div class="wrap">
+<p class="step-count">Step 6 of 9</p>
+<h2>Have you tried manifestation or LOA techniques before?</h2>
+<p class="q-sub">This helps us identify your specific activation pattern.</p>
+<div class="options">
+<button class="opt" onclick="pick(this,'manifest','failed')"><span class="emoji">😔</span> Yes — but they didn't work for me</button>
+<button class="opt" onclick="pick(this,'manifest','some')"><span class="emoji">🌱</span> Yes — got some results but inconsistent</button>
+<button class="opt" onclick="pick(this,'manifest','never')"><span class="emoji">🆕</span> No — this is my first time exploring this</button>
+</div>
+</div>
+</div>
+
+<!-- ============ STEP 7: EMOTIONAL MIRROR ============ -->
+<div class="step" id="step7">
+<div class="wrap">
+<p class="step-count">Step 7 of 9</p>
+<h2>Which statement <em>resonates</em> most with you?</h2>
+<p class="q-sub">Go with your gut — there's no wrong answer.</p>
+<div class="options">
+<button class="opt" onclick="pick(this,'mirror','money')"><span class="emoji">💸</span> I work hard but money never sticks</button>
+<button class="opt" onclick="pick(this,'mirror','meant')"><span class="emoji">✨</span> I feel like I'm meant for something bigger</button>
+<button class="opt" onclick="pick(this,'mirror','stuck')"><span class="emoji">😤</span> People around me succeed but I stay stuck</button>
+<button class="opt" onclick="pick(this,'mirror','close')"><span class="emoji">🔑</span> I feel so close to a breakthrough but can't quite get there</button>
+</div>
+</div>
+</div>
+
+<!-- ============ STEP 8: MID-QUIZ REVEAL #2 — ENERGY TEASE ============ -->
+<div class="step" id="step8">
+<div class="wrap">
+<p class="step-count">Step 8 of 9</p>
+
+<div class="reveal-card" style="border-color:rgba(251,191,36,.2);background:linear-gradient(135deg,rgba(251,191,36,.06),rgba(124,58,237,.06))">
+<p style="font-size:12px;color:#fbbf24;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:12px">⚠️ Early Energy Scan</p>
+<p>Based on your answers so far, your <strong>primary frequency channels</strong> are showing:</p>
+</div>
+
+<div class="energy-tease">
+<div class="energy-row">
+<div class="label"><span>Wealth Frequency</span><span id="teaseWealth"></span></div>
+<div class="bar-bg"><div class="bar-fill" id="teaseWealthBar" style="background:linear-gradient(90deg,#7c3aed,#a855f7)"></div></div>
+</div>
+<div class="energy-row">
+<div class="label"><span>Love Frequency</span><span id="teaseLove"></span></div>
+<div class="bar-bg"><div class="bar-fill" id="teaseLoveBar" style="background:linear-gradient(90deg,#ec4899,#f472b6)"></div></div>
+</div>
+<div class="energy-row">
+<div class="label"><span>Opportunity Magnetism</span><span id="teaseOpp"></span></div>
+<div class="bar-bg"><div class="bar-fill" id="teaseOppBar" style="background:linear-gradient(90deg,#f59e0b,#fbbf24)"></div></div>
+</div>
+<p class="energy-warn" id="teaseWarn"></p>
+</div>
+
+<button class="next-btn" onclick="goStep(9)">CONTINUE — ONE MORE STEP →</button>
+</div>
+</div>
+
+<!-- ============ STEP 9: GOAL ============ -->
+<div class="step" id="step9">
+<div class="wrap">
+<p class="step-count">Step 9 of 9 — Final Question</p>
+<h2>What's your biggest goal in the next <em>90 days</em>?</h2>
+<p class="q-sub">Your Abundance Code activation will be calibrated to this.</p>
+<div class="options">
+<button class="opt" onclick="pick(this,'goal','financial')"><span class="emoji">💰</span> Financial freedom or a major income shift</button>
+<button class="opt" onclick="pick(this,'goal','love')"><span class="emoji">❤️</span> Find or deepen a romantic relationship</button>
+<button class="opt" onclick="pick(this,'goal','career')"><span class="emoji">🚀</span> Career breakthrough or new opportunity</button>
+<button class="opt" onclick="pick(this,'goal','peace')"><span class="emoji">🧘</span> Inner peace and clarity</button>
+</div>
+</div>
+</div>
+
+<!-- ============ DECODING ANIMATION ============ -->
+<div class="step" id="stepDecode">
+<div class="wrap">
 <div class="decode-visual">
 <span class="decode-number" id="decodeSpin">000</span>
 </div>
-<p class="decode-status" id="decodeStatus">Analyzing birthdate frequency...</p>
-<p class="decode-detail" id="decodeDetail">Calculating Life Path Number</p>
-<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+<p class="decode-status" id="decodeStatus">Analyzing your frequency profile...</p>
+<p class="decode-detail" id="decodeDetail">Combining birthdate + personal data</p>
+<div class="decode-bar"><div class="decode-bar-fill" id="decodeBarFill"></div></div>
+</div>
 </div>
 
-<!-- ==================== STEP 3: RESULTS ==================== -->
-<div id="step3">
+<!-- ============ RESULTS PAGE ============ -->
+<div id="stepResults">
 
 <div class="results-header">
-<h1>Your Abundance Code Reading</h1>
+<h1>Your Personal Abundance Code Reading</h1>
 <p>Born <span id="resultDate"></span></p>
 </div>
 
 <div class="r-wrap">
 
-<!-- FREE: Life Path Number -->
+<!-- Life Path -->
 <div class="result-card">
 <h3>Your Life Path Number</h3>
-<div class="big-num" id="lifePathNum"></div>
-<p id="lifePathDesc"></p>
+<div class="big-num" id="resLP"></div>
+<p id="resLPdesc"></p>
 </div>
 
-<!-- FREE: Personality Frequency -->
+<!-- Traits -->
 <div class="result-card">
 <h3>Your Frequency Profile</h3>
-<p id="freqIntro"></p>
-<div class="trait-grid" id="traitGrid"></div>
+<p id="resFreqIntro"></p>
+<div class="trait-grid" id="resTraits"></div>
 </div>
 
-<!-- FREE: Energy Levels -->
+<!-- Personalized insight based on their answers -->
+<div class="insight-card">
+<h3>🎯 Personalized Insight</h3>
+<p id="resInsight"></p>
+</div>
+
+<!-- Energy bars -->
 <div class="result-card">
 <h3>Your Current Energy Alignment</h3>
-<p id="energyIntro" style="margin-bottom:16px"></p>
+<p id="resEnergyIntro" style="margin-bottom:16px"></p>
 <div>
-<div style="display:flex;justify-content:space-between;font-size:13px;font-weight:600;margin-bottom:4px"><span>Wealth Frequency</span><span id="wealthPct"></span></div>
-<div class="freq-bar"><div class="freq-fill" id="wealthBar" style="background:linear-gradient(90deg,#7c3aed,#a855f7)"></div></div>
+<div style="display:flex;justify-content:space-between;font-size:13px;font-weight:600;margin-bottom:4px"><span>Wealth Frequency</span><span id="resWealthPct"></span></div>
+<div class="freq-bar"><div class="freq-fill" id="resWealthBar" style="background:linear-gradient(90deg,#7c3aed,#a855f7)"></div></div>
 </div>
 <div style="margin-top:14px">
-<div style="display:flex;justify-content:space-between;font-size:13px;font-weight:600;margin-bottom:4px"><span>Love Frequency</span><span id="lovePct"></span></div>
-<div class="freq-bar"><div class="freq-fill" id="loveBar" style="background:linear-gradient(90deg,#ec4899,#f472b6)"></div></div>
+<div style="display:flex;justify-content:space-between;font-size:13px;font-weight:600;margin-bottom:4px"><span>Love Frequency</span><span id="resLovePct"></span></div>
+<div class="freq-bar"><div class="freq-fill" id="resLoveBar" style="background:linear-gradient(90deg,#ec4899,#f472b6)"></div></div>
 </div>
 <div style="margin-top:14px">
-<div style="display:flex;justify-content:space-between;font-size:13px;font-weight:600;margin-bottom:4px"><span>Opportunity Magnetism</span><span id="oppPct"></span></div>
-<div class="freq-bar"><div class="freq-fill" id="oppBar" style="background:linear-gradient(90deg,#f59e0b,#fbbf24)"></div></div>
+<div style="display:flex;justify-content:space-between;font-size:13px;font-weight:600;margin-bottom:4px"><span>Opportunity Magnetism</span><span id="resOppPct"></span></div>
+<div class="freq-bar"><div class="freq-fill" id="resOppBar" style="background:linear-gradient(90deg,#f59e0b,#fbbf24)"></div></div>
 </div>
-<p style="margin-top:16px;font-size:14px;color:#9898b4" id="energyWarning"></p>
+<p style="margin-top:16px;font-size:14px;color:#9898b4" id="resEnergyWarn"></p>
 </div>
 
-<!-- 🔒 LOCKED: THE ABUNDANCE CODE -->
+<!-- LOCKED CODE -->
 <div class="locked-card">
 <div class="lock-icon">🔒</div>
 <h3>Your 3-Digit Abundance Code</h3>
 <div class="locked-code" id="blurredCode">000</div>
 <p class="locked-sub">Your code has been calculated. Unlock it to begin activation.</p>
 
-<a href="#" class="unlock-btn" id="unlockBtn">UNLOCK MY ABUNDANCE CODE — $19<small>Instant Access · 60-Day Money-Back Guarantee</small></a>
+<a href="#" class="unlock-btn">UNLOCK MY ABUNDANCE CODE — $19<small>Instant Access · 60-Day Money-Back Guarantee</small></a>
 
 <div class="locked-extras">
 <p style="margin-top:20px"><strong>When you unlock, you also get:</strong></p>
@@ -210,15 +392,14 @@ footer{text-align:center;padding:32px 20px;font-size:11px;color:#333;border-top:
 <li>The 7-Minute Frequency Activation Ritual (calibrated to YOUR code)</li>
 <li>30-Day Activation Calendar</li>
 <li>Quick-Start Cheatsheet</li>
-<li>Tesla's 3-6-9 Amplification Method adapted to your code</li>
+<li>Tesla's 3-6-9 Amplification Method adapted to your numbers</li>
 </ul>
 </div>
 </div>
 
-<p class="guarantee">🛡️ 60-Day "Feel The Shift" Guarantee — Full refund if you don't feel the shift. No questions.</p>
+<p class="guarantee">🛡️ 60-Day "Feel The Shift" Guarantee — Full refund if you don't feel it. No questions.</p>
 
-<!-- Also locked teaser -->
-<p style="text-align:center;font-size:13px;color:#6868a0;margin:28px 0 12px;text-transform:uppercase;letter-spacing:1px;font-weight:600">Your birthdate also contains these hidden codes:</p>
+<p style="text-align:center;font-size:13px;color:#6868a0;margin:28px 0 12px;text-transform:uppercase;letter-spacing:1px;font-weight:600">Your birthdate also contains:</p>
 <div class="also-locked">
 <div class="also-card"><div class="emoji">❤️</div><h4>Love Code</h4><p>🔒 Locked</p></div>
 <div class="also-card"><div class="emoji">⚡</div><h4>Health Code</h4><p>🔒 Locked</p></div>
@@ -226,21 +407,18 @@ footer{text-align:center;padding:32px 20px;font-size:11px;color:#333;border-top:
 <div class="also-card"><div class="emoji">🔮</div><h4>Spiritual Code</h4><p>🔒 Locked</p></div>
 </div>
 
-<!-- Social proof -->
-<div class="ticker">
+<div style="margin:28px 0">
 <div class="ticker-item"><span class="who">Rachel U. — Austin, TX</span><p>"Day 3 I got an email about inheritance money I had NO idea existed. £14,200. My code is 7-4-2 😂"</p></div>
 <div class="ticker-item"><span class="who">Marcus O. — London, UK</span><p>"Three clients who'd gone quiet came back within 48 hours. Up £8,400 in 6 weeks."</p></div>
-<div class="ticker-item"><span class="who">Diane C. — Perth, AU</span><p>"Promotion I didn't apply for on day 11. My code was 3-3-6 — apparently a 'leadership frequency.' Spot on."</p></div>
+<div class="ticker-item"><span class="who">Diane C. — Perth, AU</span><p>"Promotion I didn't apply for on day 11. My code was 3-3-6 — a 'leadership frequency.' Spot on."</p></div>
 </div>
 
-<!-- Final CTA -->
 <div style="text-align:center;margin:32px 0">
-<a href="#" class="unlock-btn" id="unlockBtn2">UNLOCK MY ABUNDANCE CODE — $19<small>Instant Access · 60-Day Guarantee</small></a>
+<a href="#" class="unlock-btn">UNLOCK MY ABUNDANCE CODE — $19<small>Instant Access · 60-Day Guarantee</small></a>
 <p class="guarantee" style="margin-top:12px">🔒 Secure checkout · Instant digital delivery</p>
 </div>
 
-<p style="font-size:14px;color:#7878a0;margin-bottom:40px"><strong style="color:#e0dff0">P.S.</strong> — 2026 is a Universal Year 1 (2+0+2+6=1). The first reset year in 9 years. Your code is more responsive to activation right now than it will be again until 2035. The window is open. <strong style="color:#e0dff0">$19 to find out what happens when you finally switch it on.</strong></p>
-
+<p style="font-size:14px;color:#7878a0;margin-bottom:40px"><strong style="color:#e0dff0">P.S.</strong> — 2026 is Universal Year 1 (2+0+2+6=1). The first reset in 9 years. Your code is more responsive to activation right now than it will be until 2035. <strong style="color:#e0dff0">$19 to find out what happens when you switch it on.</strong></p>
 </div>
 </div>
 
@@ -251,124 +429,212 @@ footer{text-align:center;padding:32px 20px;font-size:11px;color:#333;border-top:
 </footer>
 
 <script>
-// === DAY DROPDOWN ===
-const daySelect = document.getElementById('day');
+// === STATE ===
+const answers = {};
+let lp = 0;
+const months=['','January','February','March','April','May','June','July','August','September','October','November','December'];
+
+// === DAYS DROPDOWN ===
+const daySelect=document.getElementById('day');
 for(let i=1;i<=31;i++){const o=document.createElement('option');o.value=i;o.textContent=i;daySelect.appendChild(o)}
 
-// === ENABLE BUTTON ===
-const m=document.getElementById('month'),d=document.getElementById('day'),y=document.getElementById('year'),btn=document.getElementById('decodeBtn');
-function checkReady(){btn.disabled=!(m.value&&d.value&&y.value&&y.value>=1930&&y.value<=2010)}
-m.addEventListener('change',checkReady);d.addEventListener('change',checkReady);y.addEventListener('input',checkReady);
+// === STEP 1 VALIDATION ===
+const mm=document.getElementById('month'),dd=document.getElementById('day'),yy=document.getElementById('year'),s1btn=document.getElementById('step1Btn');
+function checkS1(){s1btn.disabled=!(mm.value&&dd.value&&yy.value&&yy.value>=1930&&yy.value<=2010)}
+mm.addEventListener('change',checkS1);dd.addEventListener('change',checkS1);yy.addEventListener('input',checkS1);
+s1btn.addEventListener('click',()=>{
+answers.mm=+mm.value;answers.dd=+dd.value;answers.yyyy=+yy.value;
+lp=getLifePath(answers.mm,answers.dd,answers.yyyy);
+goStep(2);
+});
 
-// === NUMEROLOGY MATH ===
+// === NUMEROLOGY ===
 function reduceToDigit(n){while(n>9&&n!==11&&n!==22&&n!==33){n=[...String(n)].reduce((a,b)=>a+ +b,0)}return n}
-function getLifePath(mm,dd,yyyy){return reduceToDigit(reduceToDigit(mm)+reduceToDigit(dd)+reduceToDigit(yyyy))}
+function getLifePath(m,d,y){return reduceToDigit(reduceToDigit(m)+reduceToDigit(d)+reduceToDigit(y))}
 
-// === LIFE PATH DATA (Barnum-style) ===
-const lifePathData = {
-1:{desc:"You're a natural-born leader with an independent streak that most people find magnetic. You don't follow trends — you set them. Your biggest challenge? Letting people in. You tend to build alone when you'd go further with the right allies. Your wealth frequency responds strongest to <strong>bold, decisive action</strong> — hesitation literally repels money from your field.",traits:[{t:"Core Energy",d:"Independent · Pioneering · Driven"},{t:"Wealth Style",d:"Creates new paths, first-mover advantage"},{t:"Shadow Pattern",d:"Isolation, stubbornness with money"},{t:"Peak Power",d:"When taking action, not planning"}]},
-2:{desc:"You're the quiet force that holds everything together. People underestimate you constantly — and that's your superpower. Your intuition borders on psychic; you've had gut feelings that turned out to be exactly right more times than you can count. Your wealth frequency activates through <strong>partnerships and collaboration</strong> — solo ventures drain your code.",traits:[{t:"Core Energy",d:"Intuitive · Diplomatic · Sensitive"},{t:"Wealth Style",d:"Partnerships, behind-the-scenes power"},{t:"Shadow Pattern",d:"Self-doubt, giving too much away"},{t:"Peak Power",d:"When trusting intuition over logic"}]},
-3:{desc:"You light up every room you walk into — whether you realize it or not. Your energy is magnetic, creative, and infectious. People are drawn to you for reasons they can't explain. Your biggest block? Scattered focus. You start ten things and finish three. Your wealth frequency responds to <strong>creative expression</strong> — the more authentically you create, the more money flows.",traits:[{t:"Core Energy",d:"Creative · Expressive · Magnetic"},{t:"Wealth Style",d:"Creative ventures, communication-based"},{t:"Shadow Pattern",d:"Scattered energy, self-doubt beneath confidence"},{t:"Peak Power",d:"When expressing authentic creativity"}]},
-4:{desc:"You're the builder. The one who creates things that last while everyone else chases shiny objects. You have an almost supernatural ability to create order from chaos. People come to you when everything's falling apart. Your wealth frequency responds to <strong>systems and structures</strong> — build it once, let it pay you forever.",traits:[{t:"Core Energy",d:"Disciplined · Reliable · Strategic"},{t:"Wealth Style",d:"Long-term assets, compound growth"},{t:"Shadow Pattern",d:"Rigidity, fear of taking risks"},{t:"Peak Power",d:"When building systems, not trading time"}]},
-5:{desc:"Freedom isn't a preference for you — it's oxygen. The 9-to-5 world feels like a cage, and you've probably already broken out of at least one. You're adaptable, magnetic, and slightly unpredictable. Your wealth frequency responds to <strong>variety and movement</strong> — stagnation literally blocks your abundance channel.",traits:[{t:"Core Energy",d:"Adventurous · Adaptable · Magnetic"},{t:"Wealth Style",d:"Multiple streams, travel-connected"},{t:"Shadow Pattern",d:"Restlessness, abandoning what's working"},{t:"Peak Power",d:"When embracing change, not resisting it"}]},
-6:{desc:"You're the healer. The one everyone calls when they need advice, comfort, or someone to fix things. You carry other people's problems like they're your own — sometimes too much. Your sense of responsibility is both your gift and your weight. Your wealth frequency responds to <strong>service and nurturing</strong> — when you help others prosper, your code activates automatically.",traits:[{t:"Core Energy",d:"Nurturing · Responsible · Harmonious"},{t:"Wealth Style",d:"Service-based, helping others generate wealth"},{t:"Shadow Pattern",d:"Over-giving, martyrdom, neglecting self"},{t:"Peak Power",d:"When nurturing others AND yourself equally"}]},
-7:{desc:"Your mind works differently than most people's. You see patterns where others see noise. You question things everyone else accepts. There's a depth to you that intimidates surface-level people — and attracts the ones who matter. Your wealth frequency responds to <strong>knowledge and expertise</strong> — you attract money by going deeper, not wider.",traits:[{t:"Core Energy",d:"Analytical · Intuitive · Mysterious"},{t:"Wealth Style",d:"Expertise-based, quality over quantity"},{t:"Shadow Pattern",d:"Over-analysis, isolation, distrust"},{t:"Peak Power",d:"When combining intellect with intuition"}]},
-8:{desc:"You were born with abundance consciousness. Money isn't something you chase — it's something you command. You have a natural authority that makes people take you seriously, even in a room full of people with more credentials. Your wealth frequency is <strong>already the strongest</strong> of all Life Paths — the issue is it's running at about 20% capacity. Activation will hit you harder than anyone.",traits:[{t:"Core Energy",d:"Powerful · Ambitious · Authoritative"},{t:"Wealth Style",d:"Leadership, large-scale ventures"},{t:"Shadow Pattern",d:"Control issues, workaholism"},{t:"Peak Power",d:"When leading with integrity, not force"}]},
-9:{desc:"You're here for something bigger than yourself and you've always known it. You have a global perspective that most people don't develop until much later in life — if ever. You feel deeply, give generously, and have probably been told you're 'too much' by people who were simply too small. Your wealth frequency responds to <strong>mission-driven action</strong> — purpose and profit are the same thing for your code.",traits:[{t:"Core Energy",d:"Visionary · Compassionate · Worldly"},{t:"Wealth Style",d:"Mission-aligned, impact-driven income"},{t:"Shadow Pattern",d:"Resentment when giving isn't reciprocated"},{t:"Peak Power",d:"When aligned with purpose, not just profit"}]},
-11:{desc:"You're operating on a frequency most people can't even detect. Master Number 11 — the Illuminator. Your intuition isn't just strong, it's almost alarming. You've predicted things. You've felt things before they happened. This isn't coincidence — it's your code operating at a higher octave. Your wealth frequency responds to <strong>inspired vision</strong> — when you trust the downloads, money follows.",traits:[{t:"Core Energy",d:"Visionary · Psychic · Inspiring"},{t:"Wealth Style",d:"Inspiration-based, spiritual entrepreneurship"},{t:"Shadow Pattern",d:"Anxiety, nervous energy, self-doubt"},{t:"Peak Power",d:"When channeling vision into action"}]},
-22:{desc:"Master Number 22 — the Master Builder. You don't just dream big, you have the rare ability to actually MAKE big things real. While 11s get the vision, you get the blueprint. Empires are built by 22s. Your wealth frequency is <strong>extraordinary</strong> — but it requires extraordinary activation. Half-measures won't work for your code.",traits:[{t:"Core Energy",d:"Master Builder · Visionary · Practical"},{t:"Wealth Style",d:"Large-scale creation, legacy building"},{t:"Shadow Pattern",d:"Overwhelm, not living up to potential"},{t:"Peak Power",d:"When building something that outlasts you"}]},
-33:{desc:"Master Number 33 — the Master Teacher. The rarest Life Path. You carry an almost supernatural ability to uplift and transform everyone around you. People feel different after being near you. Your wealth frequency is <strong>tied directly to your impact</strong> — the more people you genuinely help, the more abundance flows to you without effort.",traits:[{t:"Core Energy",d:"Master Healer · Selfless · Transcendent"},{t:"Wealth Style",d:"Impact-driven, effortless abundance"},{t:"Shadow Pattern",d:"Carrying too much, burnout"},{t:"Peak Power",d:"When teaching and healing freely"}]}
+// === LIFE PATH DATA ===
+const lpData={
+1:{short:"The Leader",desc:"You carry a rare independent energy. Natural pioneer — you set trends, you don't follow them.",traits:[{t:"Core Energy",d:"Independent · Pioneering · Driven"},{t:"Wealth Style",d:"Creates new paths, first-mover advantage"},{t:"Shadow",d:"Isolation, stubbornness with money"},{t:"Peak Power",d:"When taking bold action"}]},
+2:{short:"The Intuitive",desc:"Your gut instincts border on psychic. You've had feelings that turned out exactly right more times than you can count.",traits:[{t:"Core Energy",d:"Intuitive · Diplomatic · Sensitive"},{t:"Wealth Style",d:"Partnerships, behind-the-scenes power"},{t:"Shadow",d:"Self-doubt, giving too much away"},{t:"Peak Power",d:"When trusting intuition over logic"}]},
+3:{short:"The Creative",desc:"You light up every room. Magnetic, expressive, infectious energy. People are drawn to you for reasons they can't explain.",traits:[{t:"Core Energy",d:"Creative · Expressive · Magnetic"},{t:"Wealth Style",d:"Creative ventures, communication"},{t:"Shadow",d:"Scattered energy, unfinished projects"},{t:"Peak Power",d:"When expressing authentic creativity"}]},
+4:{short:"The Builder",desc:"You create things that last while everyone else chases shiny objects. An almost supernatural ability to create order from chaos.",traits:[{t:"Core Energy",d:"Disciplined · Reliable · Strategic"},{t:"Wealth Style",d:"Long-term assets, compound growth"},{t:"Shadow",d:"Rigidity, fear of taking risks"},{t:"Peak Power",d:"When building systems"}]},
+5:{short:"The Free Spirit",desc:"Freedom isn't a preference — it's oxygen. You're adaptable, magnetic, slightly unpredictable. The 9-to-5 world can't contain you.",traits:[{t:"Core Energy",d:"Adventurous · Adaptable · Magnetic"},{t:"Wealth Style",d:"Multiple streams, movement"},{t:"Shadow",d:"Restlessness, abandoning what works"},{t:"Peak Power",d:"When embracing change"}]},
+6:{short:"The Healer",desc:"You're the one everyone calls. Your sense of responsibility is both your gift and your weight. Natural nurturer and fixer.",traits:[{t:"Core Energy",d:"Nurturing · Responsible · Harmonious"},{t:"Wealth Style",d:"Service-based, helping others"},{t:"Shadow",d:"Over-giving, neglecting self"},{t:"Peak Power",d:"When nurturing self AND others"}]},
+7:{short:"The Seeker",desc:"Your mind works differently. You see patterns where others see noise. There's a depth to you that intimidates surface-level people.",traits:[{t:"Core Energy",d:"Analytical · Intuitive · Mysterious"},{t:"Wealth Style",d:"Expertise-based, depth over width"},{t:"Shadow",d:"Over-analysis, distrust"},{t:"Peak Power",d:"When combining intellect + intuition"}]},
+8:{short:"The Powerhouse",desc:"Born with abundance consciousness. You have natural authority that makes people take you seriously instantly. Your wealth frequency is the STRONGEST of all paths — but it's running at a fraction of capacity.",traits:[{t:"Core Energy",d:"Powerful · Ambitious · Authoritative"},{t:"Wealth Style",d:"Leadership, large-scale ventures"},{t:"Shadow",d:"Control issues, workaholism"},{t:"Peak Power",d:"When leading with integrity"}]},
+9:{short:"The Visionary",desc:"You're here for something bigger than yourself and you've always known it. A global perspective most people never develop.",traits:[{t:"Core Energy",d:"Visionary · Compassionate · Worldly"},{t:"Wealth Style",d:"Mission-aligned, impact-driven"},{t:"Shadow",d:"Resentment when giving isn't returned"},{t:"Peak Power",d:"When aligned with purpose"}]},
+11:{short:"The Illuminator",desc:"Master Number 11. Your intuition isn't just strong — it's almost alarming. You've predicted things. You've felt things before they happened. This isn't coincidence.",traits:[{t:"Core Energy",d:"Visionary · Psychic · Inspiring"},{t:"Wealth Style",d:"Inspiration-based, spiritual"},{t:"Shadow",d:"Anxiety, nervous energy"},{t:"Peak Power",d:"When channeling vision into action"}]},
+22:{short:"The Master Builder",desc:"Master Number 22. You don't just dream big — you make big things real. Empires are built by 22s. Your wealth frequency requires extraordinary activation.",traits:[{t:"Core Energy",d:"Master Builder · Visionary · Practical"},{t:"Wealth Style",d:"Large-scale creation, legacy"},{t:"Shadow",d:"Overwhelm, unrealized potential"},{t:"Peak Power",d:"When building something lasting"}]},
+33:{short:"The Master Teacher",desc:"Master Number 33. The rarest Life Path. You carry a supernatural ability to uplift everyone around you. People feel different after being near you.",traits:[{t:"Core Energy",d:"Master Healer · Selfless · Transcendent"},{t:"Wealth Style",d:"Impact-driven, effortless abundance"},{t:"Shadow",d:"Carrying too much, burnout"},{t:"Peak Power",d:"When teaching and healing freely"}]}
 };
-function getLPData(n){return lifePathData[n]||lifePathData[reduceToDigit(n)]||lifePathData[1]}
+function getLP(n){return lpData[n]||lpData[reduceToDigit(n)]||lpData[1]}
 
-// === DECODE SEQUENCE ===
+// === ENERGY CALCS (seeded from birthday + answers) ===
+function getEnergies(){
+const s=answers.mm*answers.dd+answers.yyyy;
+let w=18+((s*7)%23),l=25+((s*13)%35),o=15+((s*3)%28);
+if(answers.blocked==='money')w=Math.max(12,w-8);
+if(answers.blocked==='love')l=Math.max(12,l-10);
+if(answers.manifest==='failed')w=Math.max(10,w-5);
+return{w,l,o};
+}
+
+// === NAVIGATION ===
+function goStep(n){
+document.querySelectorAll('.step').forEach(s=>s.classList.remove('active'));
+const pcts={1:0,2:11,3:22,4:33,5:44,6:55,7:66,8:77,9:88};
+document.getElementById('progressBar').style.width=(pcts[n]||0)+'%';
+
+if(n===5){showReveal1();}
+if(n===8){showReveal2();}
+
+if(n===10){startDecode();return;}
+
+const el=document.getElementById('step'+n);
+if(el){el.classList.add('active');el.style.display='flex';}
+window.scrollTo(0,0);
+}
+
+function pick(el,key,val){
+answers[key]=val;
+el.parentElement.querySelectorAll('.opt').forEach(o=>o.classList.remove('selected'));
+el.classList.add('selected');
+const currentStep=+el.closest('.step').id.replace('step','');
+setTimeout(()=>goStep(currentStep+1),400);
+}
+
+// === REVEAL 1: Life Path ===
+function showReveal1(){
+const d=getLP(lp);
+document.getElementById('revealLP').textContent=lp;
+document.getElementById('revealLPtext').innerHTML=`<strong>Life Path ${lp} — "${d.short}"</strong><br>${d.desc}`;
+document.getElementById('revealLPtag').textContent=lp>=11?'✦ MASTER NUMBER — extremely rare':'Top '+Math.round(100/9)+'% rarity';
+
+const numMsg={
+always:`You said you see repeating numbers <strong>all the time</strong>. That's your dormant code trying to get your attention. Life Path ${lp}s are especially attuned to numerical synchronicities — your code is practically screaming to be activated.`,
+sometimes:`You've noticed repeating numbers <strong>sometimes</strong>. Those aren't coincidences — they're fragments of your Abundance Code surfacing. As a Life Path ${lp}, your frequency is partially active but needs full activation.`,
+rarely:`Even though you <strong>rarely</strong> notice repeating numbers, they're still there. As a Life Path ${lp}, your code runs quieter than most — but when it activates, the shift tends to be more dramatic.`
+};
+document.getElementById('revealNumbers').innerHTML=numMsg[answers.numbers]||'';
+
+const el=document.getElementById('step5');
+el.classList.add('active');el.style.display='flex';
+window.scrollTo(0,0);
+}
+
+// === REVEAL 2: Energy Tease ===
+function showReveal2(){
+const e=getEnergies();
+document.getElementById('teaseWealth').textContent=e.w+'%';
+document.getElementById('teaseLove').textContent=e.l+'%';
+document.getElementById('teaseOpp').textContent=e.o+'%';
+
+const el=document.getElementById('step8');
+el.classList.add('active');el.style.display='flex';
+window.scrollTo(0,0);
+
+setTimeout(()=>{
+document.getElementById('teaseWealthBar').style.width=e.w+'%';
+document.getElementById('teaseLoveBar').style.width=e.l+'%';
+document.getElementById('teaseOppBar').style.width=e.o+'%';
+},400);
+
+const blockedMap={money:'wealth',love:'love',career:'opportunity',health:'vitality'};
+const area=blockedMap[answers.blocked]||'wealth';
+document.getElementById('teaseWarn').innerHTML=`⚠️ Your ${area} channel is significantly below potential. This aligns with what you told us — and it's exactly what code activation targets first.`;
+}
+
+// === DECODE ANIMATION ===
 function startDecode(){
-const mm=+m.value, dd=+d.value, yyyy=+y.value;
-if(!mm||!dd||!yyyy)return;
-
-// Hide step 1, show step 2
-document.getElementById('step1').style.display='none';
-document.getElementById('step2').style.display='flex';
+document.querySelectorAll('.step').forEach(s=>{s.classList.remove('active');s.style.display='none'});
+document.getElementById('progressBar').style.width='100%';
+const dec=document.getElementById('stepDecode');
+dec.style.display='flex';dec.classList.add('active');
+window.scrollTo(0,0);
 
 const spinner=document.getElementById('decodeSpin');
 const status=document.getElementById('decodeStatus');
 const detail=document.getElementById('decodeDetail');
-const bar=document.getElementById('progressFill');
+const bar=document.getElementById('decodeBarFill');
 
 const steps=[
-{pct:15,s:"Analyzing birthdate frequency...",d:"Extracting numerical signature"},
-{pct:30,s:"Calculating Life Path Number...",d:"Reducing "+mm+"/"+dd+"/"+yyyy},
-{pct:50,s:"Mapping frequency profile...",d:"Cross-referencing vibrational patterns"},
-{pct:70,s:"Scanning energy alignment...",d:"Measuring wealth · love · opportunity channels"},
-{pct:85,s:"Decoding Abundance Code...",d:"Generating your personal 3-digit sequence"},
-{pct:100,s:"Complete.",d:"Your reading is ready"}
+{pct:12,s:"Combining your 9 data points...",d:"Birthdate + personal frequency profile"},
+{pct:25,s:"Calculating Life Path resonance...",d:"Life Path "+lp+" — "+getLP(lp).short},
+{pct:40,s:"Analyzing blocked channels...",d:"Primary block: "+(answers.blocked||"general")},
+{pct:55,s:"Mapping manifestation pattern...",d:"Cross-referencing with frequency database"},
+{pct:70,s:"Scanning wealth frequency depth...",d:"Identifying dormant code signature"},
+{pct:85,s:"Generating your 3-digit code...",d:"Finalizing personal Abundance Code"},
+{pct:100,s:"Complete.",d:"Your full reading is ready"}
 ];
 
 let i=0;
-const spinInterval=setInterval(()=>{spinner.textContent=String(Math.floor(Math.random()*900)+100)},80);
+const spinInt=setInterval(()=>{spinner.textContent=String(Math.floor(Math.random()*900)+100)},80);
 
-function nextStep(){
+function next(){
 if(i>=steps.length){
-clearInterval(spinInterval);
-const lp=getLifePath(mm,dd,yyyy);
-spinner.textContent=String(100+lp*37+dd); // fake "code"
-setTimeout(()=>showResults(mm,dd,yyyy,lp),600);
+clearInterval(spinInt);
+const c1=(lp+answers.dd)%10,c2=(answers.mm+lp)%10,c3=(answers.yyyy%10+lp)%10;
+spinner.textContent=`${c1}${c2}${c3}`;
+setTimeout(showResults,800);
 return;
 }
 bar.style.width=steps[i].pct+'%';
 status.textContent=steps[i].s;
 detail.textContent=steps[i].d;
 i++;
-setTimeout(nextStep,1200+Math.random()*800);
+setTimeout(next,1000+Math.random()*600);
 }
-nextStep();
+next();
 }
 
-// === SHOW RESULTS ===
-function showResults(mm,dd,yyyy,lp){
-document.getElementById('step2').style.display='none';
-document.getElementById('step3').style.display='block';
+// === RESULTS ===
+function showResults(){
+document.getElementById('stepDecode').style.display='none';
+document.getElementById('stepResults').style.display='block';
+window.scrollTo(0,0);
 
-const months=['','January','February','March','April','May','June','July','August','September','October','November','December'];
-document.getElementById('resultDate').textContent=months[mm]+' '+dd+', '+yyyy;
+const d=getLP(lp);
+document.getElementById('resultDate').textContent=months[answers.mm]+' '+answers.dd+', '+answers.yyyy;
+document.getElementById('resLP').textContent=lp;
 
-// Life Path
-document.getElementById('lifePathNum').textContent=lp;
-const lpData=getLPData(lp);
-document.getElementById('lifePathDesc').innerHTML=lpData.desc;
+// Full description based on all answers
+let desc=d.desc;
+if(answers.manifest==='failed')desc+=` <strong>You mentioned that manifestation hasn't worked before.</strong> That's extremely common for Life Path ${lp}s — generic techniques don't match your specific frequency. Your code requires a personalized activation sequence.`;
+else if(answers.manifest==='some')desc+=` The inconsistent results you've experienced make sense — without your specific code activated, manifestation works in bursts rather than continuously.`;
+document.getElementById('resLPdesc').innerHTML=desc;
 
-// Traits
-const tg=document.getElementById('traitGrid');
+document.getElementById('resFreqIntro').innerHTML=`As a Life Path <strong>${lp}</strong>, your frequency profile:`;
+const tg=document.getElementById('resTraits');
 tg.innerHTML='';
-lpData.traits.forEach(t=>{tg.innerHTML+=`<div class="trait"><h4>${t.t}</h4><p>${t.d}</p></div>`});
+d.traits.forEach(t=>{tg.innerHTML+=`<div class="trait"><h4>${t.t}</h4><p>${t.d}</p></div>`});
 
-// Frequency intro
-document.getElementById('freqIntro').innerHTML=`As a Life Path <strong>${lp}</strong>, your frequency profile reveals how energy flows through your three primary channels. Most people's channels are running well below capacity — especially wealth.`;
+// Personalized insight
+const insights={
+money:{
+'money':`You said <strong>money feels most blocked</strong> and that you <strong>"${answers.mirror==='money'?'work hard but money never sticks':answers.mirror==='stuck'?'watch others succeed while you stay stuck':'feel close to a breakthrough'}"</strong>. This is textbook dormant wealth code behavior for Life Path ${lp}. Your frequency is literally deflecting financial opportunities — not because you're doing anything wrong, but because the channel isn't open. Activation typically shifts this within the first week.`,
+'love':`Even though <strong>love feels most blocked</strong>, your wealth frequency is also running well below capacity. For Life Path ${lp}s, these channels are connected — when one activates, the other follows. Your Abundance Code activation will open both simultaneously.`,
+'career':`Your <strong>career block</strong> is directly connected to your wealth frequency. Life Path ${lp}s don't thrive in misaligned work — and your code holds the key to understanding exactly what type of work amplifies your frequency versus drains it.`,
+'health':`<strong>Low energy and health blocks</strong> in Life Path ${lp}s almost always trace back to frequency misalignment. Your code activation restores energetic flow first — most people report feeling physically different within days.`
+};
+document.getElementById('resInsight').innerHTML=(insights.money[answers.blocked]||insights.money.money);
 
-// Energy bars (seeded from birthday for consistency)
-const seed=mm*dd+yyyy;
-const wealth=18+((seed*7)%23); // 18-40% range (deliberately low to create urgency)
-const love=25+((seed*13)%35);
-const opp=15+((seed*3)%28);
-
-document.getElementById('wealthPct').textContent=wealth+'%';
-document.getElementById('lovePct').textContent=love+'%';
-document.getElementById('oppPct').textContent=opp+'%';
+// Energy bars
+const e=getEnergies();
+document.getElementById('resWealthPct').textContent=e.w+'%';
+document.getElementById('resLovePct').textContent=e.l+'%';
+document.getElementById('resOppPct').textContent=e.o+'%';
+document.getElementById('resEnergyIntro').innerHTML=`Your channels for <strong>${months[answers.mm]} ${answers.dd}, ${answers.yyyy}</strong>:`;
+document.getElementById('resEnergyWarn').innerHTML=`⚠️ Your wealth frequency is at <strong>${e.w}%</strong>. That means <strong>${100-e.w}% of potential abundance</strong> is being deflected. Activation typically brings this above 80% within the first week.`;
 
 setTimeout(()=>{
-document.getElementById('wealthBar').style.width=wealth+'%';
-document.getElementById('loveBar').style.width=love+'%';
-document.getElementById('oppBar').style.width=opp+'%';
-},300);
+document.getElementById('resWealthBar').style.width=e.w+'%';
+document.getElementById('resLoveBar').style.width=e.l+'%';
+document.getElementById('resOppBar').style.width=e.o+'%';
+},400);
 
-document.getElementById('energyIntro').innerHTML=`Your energy channels for <strong>${months[mm]} ${dd}, ${yyyy}</strong>:`;
-document.getElementById('energyWarning').innerHTML=`⚠️ Your wealth frequency is running at <strong>${wealth}%</strong>. This means roughly <strong>${100-wealth}% of potential abundance</strong> is being deflected by your dormant code. Activation typically brings this above 80% within the first week.`;
-
-// Blurred code (seeded)
-const c1=(lp+dd)%10, c2=(mm+lp)%10, c3=(yyyy%10+lp)%10;
+// Blurred code
+const c1=(lp+answers.dd)%10,c2=(answers.mm+lp)%10,c3=(answers.yyyy%10+lp)%10;
 document.getElementById('blurredCode').textContent=`${c1}${c2}${c3}`;
-
-window.scrollTo(0,0);
 }
 </script>
 
