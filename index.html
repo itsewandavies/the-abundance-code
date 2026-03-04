@@ -1150,9 +1150,104 @@ document.getElementById('activation-pattern').textContent = pattern;
 document.getElementById('lp-warning').textContent = lp;
 }
 
+// Removed duplicate function - see below for main showCheckout implementation
+
+// Store user data for OTO1
+function storeUserData() {
+const userData = {
+code: `${(lp+answers.dd)%10}${(answers.mm+lp)%10}${(answers.yyyy%10+lp)%10}`,
+lifePath: lp,
+blocked: answers.blocked,
+goal: answers.goal,
+birthdate: `${months[answers.mm]} ${answers.dd}, ${answers.yyyy}`,
+gender: answers.gender
+};
+
+localStorage.setItem('abundanceUserData', JSON.stringify(userData));
+console.log('User data stored:', userData);
+}
+
+// Replace the form with Whop checkout
+function replaceCheckoutWithWhop() {
+const checkoutForm = document.getElementById('checkout-form');
+const checkoutContainer = checkoutForm.parentElement;
+
+// Store user data
+storeUserData();
+
+// Create Whop embed
+const whopHTML = `
+<div style="background:#fff;border-radius:12px;overflow:hidden;margin:24px 0;">
+<div id="main-checkout-loading" style="padding:40px;text-align:center;color:#333;">
+<div style="font-size:16px;font-weight:600;">🔄 Loading Secure Checkout...</div>
+</div>
+<div class="whop-checkout-embed"
+data-whop-checkout-plan-id="plan_ABUNDANCE_CODE_19"
+data-whop-checkout-theme="light"
+data-whop-checkout-theme-accent-color="#7c3aed"
+data-whop-checkout-hide-price="false"
+data-whop-checkout-setup-future-usage="off_session">
+</div>
+</div>
+<div style="text-align:center;margin-top:16px;">
+<a href="https://whop.com/checkout/plan_ABUNDANCE_CODE_19" target="_blank" 
+style="color:#6b7280;text-decoration:none;font-size:13px;">
+Trouble loading? Click here to complete your order
+</a>
+</div>
+`;
+
+checkoutForm.innerHTML = whopHTML;
+
+// Load Whop script
+loadMainWhopScript();
+}
+
+// Load Whop script for main checkout
+function loadMainWhopScript() {
+if (document.querySelector('script[src*="whop.com"]')) return; // Already loaded
+
+const script = document.createElement('script');
+script.src = 'https://js.whop.com/static/checkout/loader.js';
+script.async = true;
+script.onload = function() {
+console.log('Main Whop checkout loaded');
+setTimeout(() => {
+const loading = document.getElementById('main-checkout-loading');
+if (loading) loading.style.display = 'none';
+}, 2000);
+};
+document.head.appendChild(script);
+}
+
+// Listen for main checkout completion
+function setupMainWhopListener() {
+window.addEventListener('message', function(event) {
+if (event.origin && event.origin.includes('whop.com')) {
+const data = event.data;
+const isSuccess = data.type === 'payment_success' ||
+data.event === 'checkout_complete' ||
+data.status === 'success' ||
+(data.payment && data.payment.status === 'succeeded');
+
+if (isSuccess) {
+console.log('Main purchase successful! Redirecting to OTO1...');
+// Redirect to OTO1 with user data
+window.location.href = '/oto1.html';
+}
+}
+});
+}
+
+// Update the checkout button to trigger Whop replacement
 function showCheckout() {
 document.getElementById('checkout-section').style.display = 'block';
 document.getElementById('checkout-section').scrollIntoView({behavior: 'smooth'});
+
+// Replace form with Whop embed
+setTimeout(() => {
+replaceCheckoutWithWhop();
+}, 500);
 
 // Start reading expiration countdown
 let timeLeft = 15 * 60; // 15 minutes in seconds
@@ -1171,12 +1266,8 @@ if(timerElement) timerElement.textContent = 'EXPIRED';
 }, 1000);
 }
 
-// Checkout form handling
-document.getElementById('checkout-form').addEventListener('submit', function(e) {
-e.preventDefault();
-// Here you would integrate with Stripe, PayPal, or your payment processor
-alert('Payment integration goes here. This would process the payment and deliver the content.');
-});
+// Initialize Whop listener
+setupMainWhopListener();
 
 // Form enhancements
 document.querySelectorAll('.form-input').forEach(input => {
