@@ -179,36 +179,59 @@ input[type="range"]::-moz-range-thumb{width:36px;height:36px;border-radius:50%;b
 .trust-row{display:flex;justify-content:center;gap:32px;margin:32px 0;font-size:15px;color:#6b7280;flex-wrap:wrap}
 .trust-item{display:flex;align-items:center;gap:8px;font-weight:600}
 
-/* CLEAN CHECKOUT STYLES */
-#checkout-section{display:none;background:#fff;padding:60px 20px;margin-top:0;border-top:2px solid #e2e8f0}
-.checkout-container{max-width:520px;margin:0 auto;text-align:center}
-.checkout-header h2{margin-bottom:32px;color:#1a1a2e;font-size:32px;font-weight:900}
-.checkout-order-card{background:#f8fafc;border:2px solid #e2e8f0;border-radius:20px;padding:32px;margin-bottom:32px;box-shadow:0 8px 32px rgba(124,58,237,.08)}
-.checkout-order-header{display:flex;align-items:center;gap:8px;margin-bottom:24px;padding-bottom:20px;border-bottom:2px solid #e2e8f0}
-.checkout-order-header h3{font-size:18px;font-weight:800;color:#1a1a2e}
-.checkout-order-header .lock{font-size:16px;color:#7c3aed}
-.checkout-order-item{display:flex;justify-content:space-between;align-items:center;padding:16px 0}
-.checkout-order-item .name{color:#4a5568;font-size:16px;font-weight:500}
-.checkout-order-item .price{color:#1a1a2e;font-weight:700;font-size:18px}
-.checkout-order-total{border-top:2px solid #e2e8f0;padding-top:20px;margin-top:20px}
-.checkout-total-row{display:flex;justify-content:space-between;align-items:center}
-.checkout-total-label{color:#1a1a2e;font-size:20px;font-weight:800}
-.checkout-total-price{color:#1a1a2e;font-size:28px;font-weight:900}
-.checkout-form-section{margin-bottom:32px}
-.checkout-form-group{margin-bottom:20px}
-.checkout-form-label{display:block;color:#4a5568;font-size:15px;font-weight:600;margin-bottom:8px}
-.checkout-form-input{width:100%;background:#fff;border:2px solid #e2e8f0;color:#1a1a2e;font-size:16px;padding:16px 18px;border-radius:12px;outline:none;transition:all .25s;font-family:inherit}
-.checkout-form-input::placeholder{color:#a0aec0}
-.checkout-form-input:focus{border-color:#7c3aed;box-shadow:0 0 0 3px rgba(124,58,237,.1)}
-.checkout-form-row{display:grid;grid-template-columns:2fr 1fr;gap:16px}
-.checkout-pay-btn{width:100%;background:linear-gradient(135deg,#d4a017,#f5c542);color:#1a1a2e;font-size:20px;font-weight:800;padding:18px;border:none;border-radius:12px;cursor:pointer;transition:all .25s;font-family:inherit;letter-spacing:.3px;box-shadow:0 4px 20px rgba(245,197,66,.25)}
-.checkout-pay-btn:hover{transform:translateY(-1px);box-shadow:0 6px 30px rgba(245,197,66,.4)}
-.checkout-trust-badges{display:flex;justify-content:center;gap:24px;margin:24px 0;flex-wrap:wrap}
-.checkout-trust-badge{display:flex;align-items:center;gap:8px;font-size:14px;color:#6b7280}
-.checkout-guarantee{text-align:center;margin:24px 0;padding:24px;background:linear-gradient(135deg,#f0fdf4,#dcfce7);border:2px solid #22c55e;border-radius:16px}
-.checkout-guarantee h4{color:#166534;font-size:16px;font-weight:800;margin-bottom:8px;display:flex;align-items:center;justify-content:center;gap:8px}
-.checkout-guarantee p{color:#166534;font-size:14px;margin:0;font-weight:500}
-.checkout-secure-note{text-align:center;font-size:13px;color:#6b7280;margin-top:20px}
+/* SHOPIFY-STYLE CLEAN CHECKOUT */
+#checkout-section{display:none;background:#fafbfc;padding:0;margin-top:0}
+.checkout-container{max-width:600px;margin:0 auto;background:#fff;min-height:100vh;box-shadow:0 0 40px rgba(0,0,0,.08)}
+
+.checkout-header{background:#fff;padding:32px 40px;border-bottom:1px solid #e1e5e9;text-align:center}
+.checkout-header h2{margin:0;color:#1a1a2e;font-size:26px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:12px}
+.checkout-header h2::before{content:'🔒';font-size:20px}
+.checkout-header p{margin:8px 0 0 0;color:#6b7280;font-size:15px;font-weight:400}
+
+.checkout-urgency{background:#fef2f2;border:1px solid #fed7d7;margin:0;padding:16px 40px;text-align:center}
+.checkout-urgency p{margin:0;color:#dc2626;font-size:14px;font-weight:600}
+.checkout-urgency p:last-child{margin-top:4px;font-size:12px;font-weight:400;color:#991b1b}
+
+.checkout-body{padding:40px}
+
+.checkout-order-summary{background:#f8fafc;border:1px solid #e1e5e9;border-radius:12px;padding:28px;margin-bottom:40px}
+.checkout-order-summary h3{margin:0 0 24px 0;color:#1a1a2e;font-size:18px;font-weight:700;display:flex;align-items:center;gap:8px}
+.checkout-order-summary h3::before{content:'📦'}
+
+.order-line{display:flex;justify-content:space-between;align-items:flex-start;padding:12px 0}
+.order-line:not(:last-child){border-bottom:1px solid #e1e5e9}
+.order-line-name{color:#374151;font-size:15px;font-weight:500;line-height:1.4;flex:1}
+.order-line-price{color:#1a1a2e;font-size:15px;font-weight:700;margin-left:16px}
+
+.order-total{background:#f3f4f6;margin:20px -28px -28px -28px;padding:20px 28px;border-radius:0 0 12px 12px}
+.order-total-row{display:flex;justify-content:space-between;align-items:center}
+.order-total-label{color:#1a1a2e;font-size:18px;font-weight:700}
+.order-total-price{color:#1a1a2e;font-size:24px;font-weight:900}
+
+.checkout-form h4{margin:0 0 20px 0;color:#1a1a2e;font-size:16px;font-weight:700}
+.form-group{margin-bottom:20px}
+.form-label{display:block;color:#374151;font-size:14px;font-weight:600;margin-bottom:6px}
+.form-input{width:100%;background:#fff;border:1px solid #d1d5db;color:#1a1a2e;font-size:16px;padding:14px 16px;border-radius:6px;outline:none;transition:all .2s;font-family:inherit;box-sizing:border-box}
+.form-input::placeholder{color:#9ca3af}
+.form-input:focus{border-color:#7c3aed;box-shadow:0 0 0 3px rgba(124,58,237,.1)}
+.form-input:invalid{border-color:#dc2626}
+
+.form-row{display:grid;grid-template-columns:2fr 1fr;gap:16px}
+
+.payment-button{width:100%;background:#7c3aed;color:#fff;font-size:16px;font-weight:700;padding:16px;border:none;border-radius:6px;cursor:pointer;transition:all .2s;font-family:inherit;margin-top:8px}
+.payment-button:hover{background:#6d28d9;transform:translateY(-1px)}
+.payment-button:active{transform:translateY(0)}
+
+.security-badges{display:flex;justify-content:center;align-items:center;gap:24px;margin:24px 0;padding:20px 0;border-top:1px solid #e1e5e9;border-bottom:1px solid #e1e5e9}
+.security-badge{display:flex;align-items:center;gap:8px;color:#6b7280;font-size:13px;font-weight:500}
+.security-badge-icon{color:#22c55e;font-size:16px}
+
+.money-back-guarantee{text-align:center;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:20px;margin:24px 0}
+.money-back-guarantee h5{margin:0 0 8px 0;color:#166534;font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:6px}
+.money-back-guarantee p{margin:0;color:#15803d;font-size:13px}
+
+.secure-note{text-align:center;color:#6b7280;font-size:12px;margin-top:16px}
+.secure-note-icon{color:#22c55e;margin-right:4px}
 
 footer{text-align:center;padding:40px 20px;font-size:11px;color:#333;border-top:1px solid rgba(255,255,255,.03);position:relative;z-index:1}
 </style>
@@ -614,124 +637,121 @@ footer{text-align:center;padding:40px 20px;font-size:11px;color:#333;border-top:
 
 </div>
 
-<!-- CLEAN CHECKOUT SECTION -->
+<!-- SHOPIFY-STYLE CHECKOUT -->
 <div id="checkout-section">
 <div class="checkout-container">
+
+<!-- Header -->
 <div class="checkout-header">
-<h2>🔓 Unlock Your Abundance Code</h2>
+<h2>Secure Checkout</h2>
 <p>Complete your order to receive instant access</p>
-<div style="background: rgba(239,68,68,.1); border: 1px solid rgba(239,68,68,.3); border-radius: 12px; padding: 16px; margin: 16px 0; text-align: center;">
-<p style="margin: 0; color: #fca5a5; font-size: 14px; font-weight: 600;">⚠️ Your reading window expires in <span id="reading-timer">14:43</span></p>
-<p style="margin: 4px 0 0 0; color: #fed7d7; font-size: 12px;">After expiration, you'll need to retake the entire quiz for a new calculation</p>
-</div>
 </div>
 
-<div class="checkout-order-card">
-<div class="checkout-order-header">
-<span class="lock">🔒</span>
+<!-- Urgency Banner -->
+<div class="checkout-urgency">
+<p>⚠️ Your reading window expires in <span id="reading-timer">14:43</span></p>
+<p>After expiration, you'll need to retake the entire quiz for a new calculation</p>
+</div>
+
+<!-- Main Body -->
+<div class="checkout-body">
+
+<!-- Order Summary -->
+<div class="checkout-order-summary">
 <h3>Order Summary</h3>
+
+<div class="order-line">
+<div class="order-line-name">Your Personal 3-Digit Activation Code</div>
+<div class="order-line-price">$19.00</div>
 </div>
 
-<div class="checkout-order-item">
-<span class="name">Your Personal 3-Digit Activation Code</span>
-<span class="price">$19.00</span>
+<div class="order-line">
+<div class="order-line-name">Complete Activation System & Guide</div>
+<div class="order-line-price">Included</div>
 </div>
 
-<div class="checkout-order-item">
-<span class="name">Complete Activation System & Guide</span>
-<span class="price">Included</span>
+<div class="order-line">
+<div class="order-line-name">7-Minute Daily Ritual (Step-by-Step)</div>
+<div class="order-line-price">Included</div>
 </div>
 
-<div class="checkout-order-item">
-<span class="name">7-Minute Daily Ritual (Step-by-Step)</span>
-<span class="price">Included</span>
+<div class="order-line">
+<div class="order-line-name">Life Path Analysis & Personal Report</div>
+<div class="order-line-price">Included</div>
 </div>
 
-<div class="checkout-order-item">
-<span class="name">Life Path Analysis & Personal Report</span>
-<span class="price">Included</span>
-</div>
-
-<div class="checkout-order-total">
-<div class="checkout-total-row">
-<span class="checkout-total-label">Total</span>
-<span class="checkout-total-price">$19</span>
-</div>
-</div>
-</div>
-
-<form id="checkout-form">
-
-<div class="checkout-form-section">
-<div class="checkout-form-group">
-<label class="checkout-form-label">Email Address</label>
-<input type="email" class="checkout-form-input" placeholder="your@email.com" required>
-</div>
-
-<div class="checkout-form-group">
-<label class="checkout-form-label">Full Name</label>
-<input type="text" class="checkout-form-input" placeholder="John Smith" required>
-</div>
-</div>
-
-<div class="checkout-form-section">
-<div class="checkout-form-group">
-<label class="checkout-form-label">Card Number</label>
-<input type="text" class="checkout-form-input" placeholder="1234 5678 9012 3456" required>
-</div>
-
-<div class="checkout-form-row">
-<div class="checkout-form-group">
-<label class="checkout-form-label">Expiry Date</label>
-<input type="text" class="checkout-form-input" placeholder="MM/YY" required>
-</div>
-<div class="checkout-form-group">
-<label class="checkout-form-label">CVC</label>
-<input type="text" class="checkout-form-input" placeholder="123" required>
+<div class="order-total">
+<div class="order-total-row">
+<div class="order-total-label">Total</div>
+<div class="order-total-price">$19</div>
 </div>
 </div>
 </div>
 
-<button type="submit" class="checkout-pay-btn">Complete Order → $19</button>
+<!-- Form -->
+<form id="checkout-form" class="checkout-form">
+
+<h4>Contact Information</h4>
+<div class="form-group">
+<label class="form-label">Email Address</label>
+<input type="email" class="form-input" placeholder="john@example.com" required>
+</div>
+
+<div class="form-group">
+<label class="form-label">Full Name</label>
+<input type="text" class="form-input" placeholder="John Smith" required>
+</div>
+
+<h4>Payment Information</h4>
+<div class="form-group">
+<label class="form-label">Card Number</label>
+<input type="text" class="form-input" placeholder="1234 5678 9012 3456" required>
+</div>
+
+<div class="form-row">
+<div class="form-group">
+<label class="form-label">Expiry Date</label>
+<input type="text" class="form-input" placeholder="MM/YY" required>
+</div>
+<div class="form-group">
+<label class="form-label">Security Code</label>
+<input type="text" class="form-input" placeholder="123" required>
+</div>
+</div>
+
+<button type="submit" class="payment-button">Complete Order</button>
 
 </form>
 
-<div class="checkout-trust-badges">
-<div class="checkout-trust-badge">
-<span>🔒</span>
-<span>256-bit SSL Encrypted</span>
+<!-- Security Badges -->
+<div class="security-badges">
+<div class="security-badge">
+<div class="security-badge-icon">🔒</div>
+<div>256-bit SSL Encrypted</div>
 </div>
-<div class="checkout-trust-badge">
-<span>⚡</span>
-<span>Instant Delivery</span>
+<div class="security-badge">
+<div class="security-badge-icon">⚡</div>
+<div>Instant Delivery</div>
 </div>
-<div class="checkout-trust-badge">
-<span>🛡️</span>
-<span>60-Day Guarantee</span>
-</div>
-</div>
-
-<!-- Quick testimonials for social proof -->
-<div style="margin: 24px 0; font-size: 13px; color: #8888a8; text-align: center;">
-<div style="background: rgba(255,255,255,.03); border-radius: 12px; padding: 16px; margin-bottom: 12px;">
-<div style="color: #fbbf24; margin-bottom: 6px;">★★★★★ Sarah M., Life Path 5</div>
-<div style="font-style: italic; color: #b8b8d0; margin-bottom: 6px;">"Day 4: Got a call about a freelance project worth £3,200. Day 11: My ex reached out wanting to work things out."</div>
-</div>
-<div style="background: rgba(255,255,255,.03); border-radius: 12px; padding: 16px;">
-<div style="color: #fbbf24; margin-bottom: 6px;">★★★★★ Marcus T., Life Path 7</div>
-<div style="font-style: italic; color: #b8b8d0; margin-bottom: 6px;">"I was skeptical but desperate. Week 2: landed my dream job. Week 3: random tax refund for $1,847."</div>
+<div class="security-badge">
+<div class="security-badge-icon">🛡️</div>
+<div>60-Day Guarantee</div>
 </div>
 </div>
 
-<div class="checkout-guarantee">
-<h4>🛡️ 60-Day Money Back Guarantee</h4>
+<!-- Money Back Guarantee -->
+<div class="money-back-guarantee">
+<h5>🛡️ 60-Day Money Back Guarantee</h5>
 <p>Try it risk-free. If you don't feel a shift in your abundance frequency within 60 days, email us for a full refund.</p>
 </div>
 
-<div class="checkout-secure-note">
-🔒 This is a secure 256-bit SSL encrypted payment. Your information is safe.
+<!-- Secure Note -->
+<div class="secure-note">
+<span class="secure-note-icon">🔒</span>
+This is a secure 256-bit SSL encrypted payment. Your information is safe and never stored on our servers.
 </div>
 
+</div>
 </div>
 </div>
 
@@ -1159,13 +1179,15 @@ alert('Payment integration goes here. This would process the payment and deliver
 });
 
 // Form enhancements
-document.querySelectorAll('.checkout-form-input').forEach(input => {
+document.querySelectorAll('.form-input').forEach(input => {
 input.addEventListener('focus', function() {
-this.parentElement.style.transform = 'scale(1.01)';
+this.style.transform = 'scale(1.02)';
+this.style.boxShadow = '0 0 0 3px rgba(124, 58, 237, 0.1)';
 });
   
 input.addEventListener('blur', function() {
-this.parentElement.style.transform = 'scale(1)';
+this.style.transform = 'scale(1)';
+this.style.boxShadow = '';
 });
 });
 </script>
