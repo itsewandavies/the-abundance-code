@@ -351,22 +351,16 @@
 
         // Smooth scroll function for secondary interactions
         function scrollToContext() {
-            // In a real app, this might open a modal or redirect to the quiz platform.
-            // For the landing page experience, we'll demonstrate a scroll or alert.
-            const assessmentUrl = "#"; // Replace with actual quiz URL
+            const assessmentUrl = "quiz-working.html"; // Direct link to working quiz
             
-            // Visual feedback before action (simulating loading the quantum assessment)
+            // Visual feedback before action
             const btn = document.querySelector('.btn-premium');
             const originalText = btn.innerHTML;
             btn.innerHTML = `<span class="relative z-10 flex items-center gap-2"><i data-lucide="loader-2" class="w-5 h-5 animate-spin"></i> Initializing...</span>`;
             lucide.createIcons();
             
             setTimeout(() => {
-                // Reset button (in case they navigate back)
-                btn.innerHTML = originalText;
-                lucide.createIcons();
-                // window.location.href = assessmentUrl; // Uncomment to route
-                alert("Calculating your numerological baseline... Redirecting to the Quantum Assessment.");
+                window.location.href = assessmentUrl; // Actually redirect to quiz
             }, 800);
         }
 
