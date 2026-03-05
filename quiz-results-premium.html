@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Abundance Analysis | The Abundance Code</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&family=Cinzel:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                        serif: ['Cinzel', 'serif'],
+                    },
+                    colors: {
+                        cosmic: {
+                            950: '#06010D',
+                            900: '#0E0320',
+                            800: '#1A063C',
+                            700: '#2A0A5E'
+                        },
+                        gold: {
+                            200: '#FEF0C7',
+                            300: '#FDE08B',
+                            400: '#F6C358',
+                            500: '#D99B28',
+                            600: '#B2761A'
+                        },
+                        mystic: {
+                            glow: '#9D4EDD',
+                            teal: '#2DD4BF'
+                        }
+                    },
+                    animation: {
+                        'float': 'float 8s ease-in-out infinite',
+                        'float-delayed': 'float 8s ease-in-out 4s infinite',
+                        'pulse-glow': 'pulse-glow 4s ease-in-out infinite',
+                        'locked-pulse': 'lockedPulse 2s ease-in-out infinite',
+                        'urgency-pulse': 'urgencyPulse 3s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-15px)' },
+                        },
+                        'pulse-glow': {
+                            '0%, 100%': { opacity: 0.3, transform: 'scale(1)' },
+                            '50%': { opacity: 0.6, transform: 'scale(1.05)' },
+                        },
+                        lockedPulse: {
+                            '0%, 100%': { opacity: 0.6, transform: 'scale(1)' },
+                            '50%': { opacity: 1, transform: 'scale(1.05)' },
+                        },
+                        urgencyPulse: {
+                            '0%, 100%': { borderColor: 'rgba(239, 68, 68, 0.4)' },
+                            '50%': { borderColor: 'rgba(239, 68, 68, 0.8)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #06010D;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        .noise-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 50;
+            opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .text-gradient-gold {
+            background: linear-gradient(135deg, #FDE08B 0%, #D99B28 50%, #FEF0C7 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            color: transparent;
+            padding-right: 0.1em;
+        }
+
+        .bg-gradient-gold {
+            background: linear-gradient(135deg, #FDE08B 0%, #D99B28 50%, #B2761A 100%);
+        }
+
+        .btn-premium {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-premium::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.3) 50%, rgba(255,255,255,0) 100%);
+            transform: skewX(-20deg);
+            animation: shimmer 4s infinite;
+        }
+
+        .btn-premium:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 40px -10px rgba(217, 155, 40, 0.7);
+        }
+
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        .locked-code {
+            filter: blur(8px);
+            user-select: none;
+            pointer-events: none;
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .delay-100 { transition-delay: 100ms; }
+        .delay-200 { transition-delay: 200ms; }
+        .delay-300 { transition-delay: 300ms; }
+        .delay-400 { transition-delay: 400ms; }
+        .delay-500 { transition-delay: 500ms; }
+    </style>
+</head>
+<body class="antialiased selection:bg-gold-500 selection:text-cosmic-950">
+
+    <!-- Film Grain Overlay -->
+    <div class="noise-overlay"></div>
+
+    <!-- Animated Cosmic Background -->
+    <div class="fixed inset-0 z-0 overflow-hidden pointer-events-none">
+        <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-cosmic-800 via-cosmic-950 to-cosmic-950"></div>
+        <div class="absolute top-[-10%] left-[-10%] w-[50vw] h-[50vw] rounded-full bg-purple-900/20 blur-[120px] animate-float"></div>
+        <div class="absolute bottom-[-20%] right-[-15%] w-[40vw] h-[40vw] rounded-full bg-gold-400/10 blur-[100px] animate-float-delayed"></div>
+        <div class="absolute top-[40%] right-[70%] w-[25vw] h-[25vw] rounded-full bg-mystic-teal/15 blur-[80px] animate-pulse-glow"></div>
+    </div>
+
+    <!-- Header -->
+    <header class="relative z-10 pt-6 sm:pt-8 pb-4">
+        <div class="container mx-auto px-6 text-center">
+            <div class="flex items-center justify-center space-x-3">
+                <div class="w-8 h-8 border-2 border-gold-300 rotate-45 shadow-lg shadow-gold-500/30"></div>
+                <span class="font-serif font-bold text-xl sm:text-2xl tracking-wide text-gradient-gold">THE ABUNDANCE CODE</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Results Content -->
+    <main class="relative z-10 py-8 sm:py-12">
+        <div class="container mx-auto px-6 max-w-4xl">
+            
+            <!-- Results Header -->
+            <section class="text-center mb-12">
+                <div class="reveal delay-100 mb-8">
+                    <h1 class="font-serif text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-6 leading-tight">
+                        Here's What We Discovered<br>
+                        <span class="text-gradient-gold">About You...</span>
+                    </h1>
+                </div>
+
+                <!-- Personal Insights -->
+                <div class="reveal delay-200 glass-panel rounded-3xl p-8 sm:p-12 mb-12 text-left">
+                    <div class="flex items-center space-x-3 mb-6">
+                        <i data-lucide="user-check" class="w-8 h-8 text-gold-300"></i>
+                        <h2 class="font-serif text-3xl font-bold text-gold-300">Your Personal Profile</h2>
+                    </div>
+                    
+                    <div id="personalInsights" class="space-y-6">
+                        <!-- Dynamic content based on quiz answers -->
+                    </div>
+                </div>
+
+                <!-- Locked Code Display -->
+                <div class="reveal delay-300 mb-12">
+                    <div class="glass-panel rounded-3xl p-8 sm:p-12 border-2 border-gold-300/30">
+                        <h2 class="font-serif text-3xl sm:text-4xl font-bold text-white mb-6">
+                            Your Personal Abundance Code
+                        </h2>
+                        <div class="relative mb-6">
+                            <div class="font-serif text-7xl sm:text-8xl font-black text-gradient-gold locked-code" id="lockedCode">
+                                ###
+                            </div>
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                <div class="bg-cosmic-900/90 backdrop-blur-sm rounded-2xl px-8 py-4 border border-gold-300/50 animate-locked-pulse">
+                                    <div class="flex items-center space-x-3">
+                                        <i data-lucide="lock" class="w-6 h-6 text-gold-300"></i>
+                                        <span class="text-gold-300 font-bold text-lg">LOCKED</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-xl text-slate-300 leading-relaxed">
+                            This powerful 3-digit code holds the exact frequency you need to align with unlimited abundance...
+                            <strong class="text-gold-300">but it's currently encrypted until you unlock your complete analysis.</strong>
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Analysis Results -->
+                <div class="reveal delay-400 space-y-8 mb-12">
+                    <div class="glass-panel rounded-2xl p-8 border-l-4 border-l-mystic-glow">
+                        <div class="flex items-start space-x-4">
+                            <div class="w-12 h-12 bg-mystic-glow/20 rounded-xl flex items-center justify-center flex-shrink-0">
+                                <i data-lucide="eye" class="w-6 h-6 text-mystic-glow"></i>
+                            </div>
+                            <div class="text-left">
+                                <h3 class="font-serif text-2xl font-bold text-mystic-glow mb-3">What's Blocking Your Abundance</h3>
+                                <div id="blockingFactors" class="text-slate-300 space-y-3">
+                                    <!-- Dynamic content -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glass-panel rounded-2xl p-8 border-l-4 border-l-green-400">
+                        <div class="flex items-start space-x-4">
+                            <div class="w-12 h-12 bg-green-400/20 rounded-xl flex items-center justify-center flex-shrink-0">
+                                <i data-lucide="trending-up" class="w-6 h-6 text-green-400"></i>
+                            </div>
+                            <div class="text-left">
+                                <h3 class="font-serif text-2xl font-bold text-green-400 mb-3">Your Abundance Potential</h3>
+                                <div id="abundancePotential" class="text-slate-300 space-y-3">
+                                    <!-- Dynamic content -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glass-panel rounded-2xl p-8 border-l-4 border-l-gold-300">
+                        <div class="flex items-start space-x-4">
+                            <div class="w-12 h-12 bg-gold-300/20 rounded-xl flex items-center justify-center flex-shrink-0">
+                                <i data-lucide="zap" class="w-6 h-6 text-gold-300"></i>
+                            </div>
+                            <div class="text-left">
+                                <h3 class="font-serif text-2xl font-bold text-gold-300 mb-3">What Happens Next</h3>
+                                <div id="nextSteps" class="text-slate-300 space-y-3">
+                                    <!-- Dynamic content -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- The Revelation -->
+                <div class="reveal delay-500 glass-panel rounded-3xl p-8 sm:p-12 mb-12 border-2 border-red-500/30">
+                    <div class="text-center mb-8">
+                        <h2 class="font-serif text-3xl sm:text-4xl font-bold text-white mb-6">
+                            Here's The Thing...
+                        </h2>
+                    </div>
+                    
+                    <div class="text-left space-y-6 text-lg text-slate-300 leading-relaxed">
+                        <p>
+                            <strong class="text-white">Most people spend YEARS</strong> trying to figure out why abundance 
+                            feels so elusive. They read books, watch videos, try different "manifestation techniques"... 
+                            but nothing seems to create lasting change.
+                        </p>
+                        
+                        <p>
+                            <strong class="text-gold-300">The reason is simple:</strong> They don't know their exact frequency signature. 
+                            It's like trying to tune into a radio station without knowing the frequency - you just get static.
+                        </p>
+                        
+                        <p>
+                            <strong class="text-white">Your 3-digit code changes everything.</strong> It's not just a number - 
+                            it's the precise vibrational frequency that your energy field resonates with for maximum abundance flow.
+                        </p>
+                        
+                        <div class="bg-cosmic-900/50 rounded-2xl p-6 border-l-4 border-l-gold-300 my-8">
+                            <p class="text-gold-300 font-semibold mb-3">Here's what happens when you unlock your code:</p>
+                            <ul class="space-y-2 text-slate-300">
+                                <li class="flex items-start space-x-2">
+                                    <span class="text-gold-300">→</span>
+                                    <span>You'll start noticing this number appearing in your daily life (license plates, receipts, timestamps) - this is the universe confirming your alignment</span>
+                                </li>
+                                <li class="flex items-start space-x-2">
+                                    <span class="text-gold-300">→</span>
+                                    <span>Money opportunities will begin flowing more naturally because you're finally operating on the right frequency</span>
+                                </li>
+                                <li class="flex items-start space-x-2">
+                                    <span class="text-gold-300">→</span>
+                                    <span>You'll have a clear, scientific roadmap for activating abundance instead of guessing what might work</span>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                        <p class="text-xl text-center">
+                            <strong class="text-gold-300">The question is: How badly do you want to unlock your abundance potential?</strong>
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Urgency Section -->
+                <div class="reveal delay-600 mb-12">
+                    <div class="glass-panel rounded-2xl p-6 sm:p-8 border-2 animate-urgency-pulse">
+                        <div class="text-center">
+                            <div class="flex items-center justify-center space-x-2 mb-4">
+                                <i data-lucide="clock" class="w-6 h-6 text-red-400"></i>
+                                <span class="font-bold text-red-400 tracking-wide">LIMITED TIME OPPORTUNITY</span>
+                                <i data-lucide="clock" class="w-6 h-6 text-red-400"></i>
+                            </div>
+                            <p class="text-slate-300 leading-relaxed mb-4">
+                                This complete abundance analysis (including your unlocked code and personalized activation plan) 
+                                is temporarily available for just <strong class="text-gold-300">$47</strong> instead of the usual $197.
+                            </p>
+                            <p class="text-sm text-slate-400">
+                                Over <strong class="text-gold-300">18,000+ people</strong> have transformed their financial reality 
+                                using their personal abundance code in the last 60 days.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Final CTA -->
+                <div class="reveal delay-700 text-center">
+                    <div class="glass-panel rounded-3xl p-8 sm:p-12 border-2 border-gold-300/50">
+                        <h2 class="font-serif text-3xl sm:text-4xl font-bold text-white mb-6">
+                            Unlock Your Complete Analysis
+                        </h2>
+                        
+                        <div class="grid sm:grid-cols-2 gap-6 mb-8 max-w-3xl mx-auto text-left">
+                            <div>
+                                <h4 class="font-bold text-gold-300 mb-3">🔓 Your Unlocked Code + Meaning</h4>
+                                <p class="text-sm text-slate-300">Your exact 3-digit frequency plus detailed explanation of what it means for your abundance journey</p>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-gold-300 mb-3">📋 Personalized Activation Plan</h4>
+                                <p class="text-sm text-slate-300">Step-by-step instructions for using your code to attract abundance, tailored to your specific blocks and desires</p>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-gold-300 mb-3">📊 Advanced Frequency Calculator</h4>
+                                <p class="text-sm text-slate-300">Precision tool to refine your frequency and track your abundance alignment over time</p>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-gold-300 mb-3">🗺️ Your Abundance Timeline</h4>
+                                <p class="text-sm text-slate-300">When and how abundance will manifest in your life based on your unique frequency signature</p>
+                            </div>
+                        </div>
+
+                        <div class="mb-8">
+                            <div class="text-slate-400 mb-2">Complete Analysis (Normally $197)</div>
+                            <div class="text-6xl font-bold text-gradient-gold mb-2">$47</div>
+                            <div class="text-slate-400 text-sm">One-time payment • Instant access • 60-day guarantee</div>
+                        </div>
+
+                        <a href="checkout.html" class="block w-full sm:w-auto sm:inline-block bg-gradient-gold text-cosmic-950 font-bold text-xl px-8 py-4 rounded-2xl btn-premium mb-4">
+                            🔓 Unlock My Abundance Code Now - $47
+                        </a>
+                        
+                        <div class="flex items-center justify-center space-x-4 text-sm text-slate-400">
+                            <div class="flex items-center space-x-1">
+                                <i data-lucide="shield-check" class="w-4 h-4 text-green-400"></i>
+                                <span>60-Day Money-Back Guarantee</span>
+                            </div>
+                            <div class="flex items-center space-x-1">
+                                <i data-lucide="zap" class="w-4 h-4 text-gold-300"></i>
+                                <span>Instant Digital Access</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </section>
+        </div>
+    </main>
+
+    <script>
+        lucide.createIcons();
+
+        // Get stored data from quiz
+        const storedCode = sessionStorage.getItem('abundanceCode') || '374';
+        const storedAnswers = JSON.parse(sessionStorage.getItem('quizAnswers') || '{}');
+
+        // Set locked code
+        document.getElementById('lockedCode').textContent = storedCode;
+
+        // Generate personalized insights based on quiz answers
+        function generatePersonalInsights() {
+            const insights = document.getElementById('personalInsights');
+            
+            let content = '';
+            
+            // Based on first answer (desires)
+            if (storedAnswers.step1 === 'wealth_freedom') {
+                content += `<p class="text-lg"><strong class="text-gold-300">Your primary drive is financial freedom.</strong> You're not just looking for more money - you want the deep security and peace of mind that comes with knowing you'll never have to worry about finances again. This indicates a highly practical manifestation style.</p>`;
+            } else if (storedAnswers.step1 === 'time_freedom') {
+                content += `<p class="text-lg"><strong class="text-gold-300">You value time freedom above all else.</strong> Your soul craves the ability to spend your days doing what truly lights you up. This suggests you're meant to manifest through joy and passion rather than struggle.</p>`;
+            } else if (storedAnswers.step1 === 'impact_legacy') {
+                content += `<p class="text-lg"><strong class="text-gold-300">You're driven by purpose and legacy.</strong> Your abundance journey is deeply connected to making a meaningful impact. This indicates you manifest most powerfully when aligned with service to others.</p>`;
+            } else {
+                content += `<p class="text-lg"><strong class="text-gold-300">Love and connection fuel your abundance.</strong> Your financial flow is directly tied to your relationships and sense of belonging. You manifest through heart-centered energy.</p>`;
+            }
+
+            // Based on fear/struggle answers
+            if (storedAnswers.step6 === 'money_stress' || storedAnswers.step7 === 'never_enough') {
+                content += `<p class="text-lg">You carry deep financial anxiety that creates energetic resistance to receiving. <strong class="text-white">This is actually common for highly sensitive people</strong> - your nervous system is protecting you from disappointment, but it's also blocking your natural abundance flow.</p>`;
+            }
+            
+            content += `<p class="text-lg">Based on your responses, <strong class="text-gold-300">you have tremendous manifesting potential that's currently being suppressed by specific frequency blocks.</strong> The good news? These blocks can be cleared once you know exactly what they are.</p>`;
+            
+            insights.innerHTML = content;
+        }
+
+        function generateBlockingFactors() {
+            const blocking = document.getElementById('blockingFactors');
+            
+            let content = '';
+            
+            if (storedAnswers.step6 === 'self_sabotage') {
+                content += `<p>• <strong class="text-red-300">Self-sabotage pattern</strong> - You unconsciously create obstacles when abundance gets close because part of you doesn't believe you deserve it</p>`;
+            }
+            
+            if (storedAnswers.step7 === 'not_worthy') {
+                content += `<p>• <strong class="text-red-300">Worthiness frequency block</strong> - Your subconscious is programmed to reject abundance because you don't feel "good enough" to receive it</p>`;
+            }
+            
+            content += `<p>• <strong class="text-red-300">Frequency misalignment</strong> - You're operating on a scarcity frequency (${Math.floor(Math.random() * 100) + 50}-150 Hz) instead of your natural abundance frequency</p>`;
+            content += `<p>• <strong class="text-red-300">Energetic resistance patterns</strong> - Past financial trauma has created protective barriers that now block new abundance from flowing in</p>`;
+            
+            blocking.innerHTML = content;
+        }
+
+        function generateAbundancePotential() {
+            const potential = document.getElementById('abundancePotential');
+            
+            let content = `
+                <p>• <strong class="text-green-300">Natural manifester</strong> - Your energy signature shows you have innate abundance-attracting abilities</p>
+                <p>• <strong class="text-green-300">High sensitivity advantage</strong> - Your intuitive nature makes you extremely responsive to frequency adjustments</p>
+                <p>• <strong class="text-green-300">Rapid transformation potential</strong> - Once aligned with your personal code, you typically see shifts within 7-21 days</p>
+                <p>• <strong class="text-green-300">Exponential growth capacity</strong> - Your frequency pattern indicates potential for sudden, dramatic abundance increases</p>
+            `;
+            
+            potential.innerHTML = content;
+        }
+
+        function generateNextSteps() {
+            const steps = document.getElementById('nextSteps');
+            
+            let content = `
+                <p>• <strong class="text-gold-300">Unlock your ${storedCode} frequency</strong> and learn exactly how to use it for manifestation</p>
+                <p>• <strong class="text-gold-300">Clear your specific blocks</strong> with targeted frequency healing techniques</p>
+                <p>• <strong class="text-gold-300">Activate your abundance flow</strong> using your personalized daily alignment protocol</p>
+                <p>• <strong class="text-gold-300">Track your progress</strong> and watch for confirmation signs that your frequency is shifting</p>
+            `;
+            
+            steps.innerHTML = content;
+        }
+
+        // Reveal animations on scroll
+        document.addEventListener("DOMContentLoaded", () => {
+            // Generate personalized content
+            generatePersonalInsights();
+            generateBlockingFactors();
+            generateAbundancePotential();
+            generateNextSteps();
+            
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    }
+                });
+            }, observerOptions);
+
+            const revealElements = document.querySelectorAll('.reveal');
+            
+            // Trigger initial animations for elements above fold immediately
+            setTimeout(() => {
+                revealElements.forEach((el, index) => {
+                    if(el.getBoundingClientRect().top < window.innerHeight) {
+                        el.classList.add('active');
+                    } else {
+                        observer.observe(el);
+                    }
+                });
+            }, 100);
+        });
+    </script>
+</body>
+</html>

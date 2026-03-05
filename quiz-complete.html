@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assessment | The Abundance Code</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&family=Cinzel:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                        serif: ['Cinzel', 'serif'],
+                    },
+                    colors: {
+                        cosmic: {
+                            950: '#06010D',
+                            900: '#0E0320',
+                            800: '#1A063C',
+                            700: '#2A0A5E'
+                        },
+                        gold: {
+                            200: '#FEF0C7',
+                            300: '#FDE08B',
+                            400: '#F6C358',
+                            500: '#D99B28',
+                            600: '#B2761A'
+                        },
+                        mystic: {
+                            glow: '#9D4EDD',
+                            teal: '#2DD4BF'
+                        }
+                    },
+                    animation: {
+                        'float': 'float 8s ease-in-out infinite',
+                        'float-delayed': 'float 8s ease-in-out 4s infinite',
+                        'pulse-glow': 'pulse-glow 4s ease-in-out infinite',
+                        'spin-slow': 'spin 40s linear infinite',
+                        'analyzing': 'analyzing 2s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-15px)' },
+                        },
+                        'pulse-glow': {
+                            '0%, 100%': { opacity: 0.3, transform: 'scale(1)' },
+                            '50%': { opacity: 0.6, transform: 'scale(1.05)' },
+                        },
+                        analyzing: {
+                            '0%': { transform: 'scale(1)', opacity: 1 },
+                            '50%': { transform: 'scale(1.1)', opacity: 0.7 },
+                            '100%': { transform: 'scale(1)', opacity: 1 },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #06010D;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        .noise-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 50;
+            opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .bg-gradient-gold {
+            background: linear-gradient(135deg, #FDE08B 0%, #D99B28 50%, #B2761A 100%);
+        }
+
+        .quiz-option.selected .check-circle {
+            background: #FDE08B;
+            border-color: #D99B28;
+        }
+
+        .quiz-option.selected .check-icon {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .quiz-option.faded {
+            opacity: 0.3;
+            pointer-events: none;
+        }
+
+        .quiz-option.warning-style {
+            border-color: rgba(239, 68, 68, 0.4);
+            background: rgba(239, 68, 68, 0.05);
+        }
+
+        .quiz-option.warning-style:hover {
+            border-color: rgba(239, 68, 68, 0.6);
+            background: rgba(239, 68, 68, 0.1);
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .delay-100 { transition-delay: 100ms; }
+        .delay-200 { transition-delay: 200ms; }
+        .delay-300 { transition-delay: 300ms; }
+        .delay-400 { transition-delay: 400ms; }
+        .delay-500 { transition-delay: 500ms; }
+        .delay-600 { transition-delay: 600ms; }
+
+        .step { display: none; }
+        .step.active { display: block; }
+
+        .analyzing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+
+        .blur-code {
+            filter: blur(8px);
+            user-select: none;
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-gold-500 selection:text-cosmic-950 min-h-screen flex flex-col">
+
+    <!-- Film Grain Overlay -->
+    <div class="noise-overlay"></div>
+
+    <!-- Animated Cosmic Background -->
+    <div class="fixed inset-0 z-0 overflow-hidden pointer-events-none">
+        <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-cosmic-800 via-cosmic-950 to-cosmic-950"></div>
+        <div class="absolute top-[-10%] left-[-10%] w-[50vw] h-[50vw] rounded-full bg-purple-900/20 blur-[120px] animate-float"></div>
+        <div class="absolute bottom-[-20%] right-[-15%] w-[40vw] h-[40vw] rounded-full bg-gold-400/10 blur-[100px] animate-float-delayed"></div>
+        <div class="absolute top-[40%] right-[70%] w-[25vw] h-[25vw] rounded-full bg-mystic-teal/15 blur-[80px] animate-pulse-glow"></div>
+    </div>
+
+    <!-- Progress Header -->
+    <header class="relative z-20 w-full pt-4 sm:pt-6">
+        <div class="w-full max-w-4xl mx-auto px-4 sm:px-6">
+            <div class="flex items-center justify-between mb-4">
+                <div class="flex items-center space-x-3">
+                    <div class="w-6 h-6 sm:w-8 sm:h-8 border-2 border-gold-300 rotate-45 shadow-lg shadow-gold-500/20"></div>
+                    <span class="font-serif font-bold text-base sm:text-xl tracking-wide text-gold-300">THE ABUNDANCE CODE</span>
+                </div>
+                <div class="text-right">
+                    <div class="text-xs sm:text-sm text-slate-400 font-medium">Question <span id="currentStep">1</span> of 8</div>
+                </div>
+            </div>
+            <div class="flex items-center gap-3 text-xs sm:text-sm text-slate-400 font-medium">
+                <span>Progress</span>
+                <div class="w-full h-1.5 bg-white/10 rounded-full overflow-hidden">
+                    <div id="progressBar" class="h-full bg-gradient-gold rounded-full transition-all duration-1000 ease-out" style="width: 12.5%"></div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- QUIZ STEPS (ALEN SULTANIC'S FRAMEWORK) -->
+    
+    <!-- Step 1 - POSITIVE: Dreams/Desires -->
+    <div class="step active" id="step1">
+        <main class="relative z-10 flex-grow flex flex-col items-center justify-center px-4 sm:px-6 py-8 w-full">
+            <div class="w-full max-w-2xl mx-auto relative">
+                <div class="text-center mb-8 sm:mb-10 px-2">
+                    <h1 class="reveal delay-100 active font-serif text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-white mb-4 leading-tight drop-shadow-lg">
+                        "When it comes to abundance, I choose to..."
+                    </h1>
+                    <p class="reveal delay-200 active text-sm sm:text-base md:text-lg text-slate-300 font-light">
+                        Select what resonates most with your deepest desires right now
+                    </p>
+                </div>
+
+                <div class="flex flex-col gap-3 sm:gap-4 w-full">
+                    <button class="quiz-option reveal delay-300 active group w-full p-4 sm:p-5 rounded-2xl border border-white/10 glass-panel flex items-center text-left gap-4 sm:gap-5" onclick="selectAnswer(this, 'wealth_freedom')">
+                        <div class="text-2xl sm:text-3xl shrink-0 drop-shadow-md">💎</div>
+                        <div class="flex-grow font-sans text-sm sm:text-base text-slate-200 group-hover:text-white transition-colors leading-snug font-medium">
+                            Experience complete financial freedom and never worry about money again
+                        </div>
+                        <div class="check-circle w-6 h-6 sm:w-7 sm:h-7 rounded-full border-2 border-white/20 flex items-center justify-center shrink-0 transition-all duration-300 group-hover:border-gold-500/50">
+                            <i data-lucide="check" class="check-icon w-3 h-3 sm:w-4 sm:h-4 text-cosmic-950 opacity-0 scale-50 transition-all duration-300"></i>
+                        </div>
+                    </button>
+
+                    <button class="quiz-option reveal delay-400 active group w-full p-4 sm:p-5 rounded-2xl border border-white/10 glass-panel flex items-center text-left gap-4 sm:gap-5" onclick="selectAnswer(this, 'time_freedom')">
+                        <div class="text-2xl sm:text-3xl shrink-0 drop-shadow-md">🌅</div>
+                        <div class="flex-grow font-sans text-sm sm:text-base text-slate-200 group-hover:text-white transition-colors leading-snug font-medium">
+                            Have unlimited time to do what brings me joy and fulfillment
+                        </div>
+                        <div class="check-circle w-6 h-6 sm:w-7 sm:h-7 rounded-full border-2 border-white/20 flex items-center justify-center shrink-0 transition-all duration-300 group-hover:border-gold-500/50">
+                            <i data-lucide="check" class="check-icon w-3 h-3 sm:w-4 sm:h-4 text-cosmic-950 opacity-0 scale-50 transition-all duration-300"></i>
+                        </div>
+                    </button>
+
+                    <button class="quiz-option reveal delay-500 active group w-full p-4 sm:p-5 rounded-2xl border border-white/10 glass-panel flex items-center text-left gap-4 sm:gap-5" onclick="selectAnswer(this, 'impact_legacy')">
+                        <div class="text-2xl sm:text-3xl shrink-0 drop-shadow-md">🌟</div>
+                        <div class="flex-grow font-sans text-sm sm:text-base text-slate-200 group-hover:text-white transition-colors leading-snug font-medium">
+                            Create a meaningful impact and leave a lasting legacy for generations
+                        </div>
+                        <div class="check-circle w-6 h-6 sm:w-7 sm:h-7 rounded-full border-2 border-white/20 flex items-center justify-center shrink-0 transition-all duration-300 group-hover:border-gold-500/50">
+                            <i data-lucide="check" class="check-icon w-3 h-3 sm:w-4 sm:h-4 text-cosmic-950 opacity-0 scale-50 transition-all duration-300"></i>
+                        </div>
+                    </button>
+
+                    <button class="quiz-option reveal delay-600 active group w-full p-4 sm:p-5 rounded-2xl border border-white/10 glass-panel flex items-center text-left gap-4 sm:gap-5" onclick="selectAnswer(this, 'love_connection')">
+                        <div class="text-2xl sm:text-3xl shrink-0 drop-shadow-md">💕</div>
+                        <div class="flex-grow font-sans text-sm sm:text-base text-slate-200 group-hover:text-white transition-colors leading-snug font-medium">
+                            Be surrounded by deep love, genuine connections, and soul-level relationships
+                        </div>
+                        <div class="check-circle w-6 h-6 sm:w-7 sm:h-7 rounded-full border-2 border-white/20 flex items-center justify-center shrink-0 transition-all duration-300 group-hover:border-gold-500/50">
+                            <i data-lucide="check" class="check-icon w-3 h-3 sm:w-4 sm:h-4 text-cosmic-950 opacity-0 scale-50 transition-all duration-300"></i>
+                        </div>
+                    </button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Step 2 - POSITIVE: Future Self -->
+    <div class="step" id="step2">
+        <main class="relative z-10 flex-grow flex flex-col items-center justify-center px-4 sm:px-6 py-8 w-full">
+            <div class="w-full max-w-2xl mx-auto relative">
+                <div class="text-center mb-8 sm:mb-10 px-2">
+                    <h1 class="font-serif text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-white mb-4 leading-tight drop-shadow-lg">
+                        "This year, I am becoming someone who..."
+                    </h1>
+                    <p class="text-sm sm:text-base md:text-lg text-slate-300 font-light">
+                        Choose the statement that feels most aligned with who you're becoming
+                    </p>
+                </div>
+
+                <div class="flex flex-col gap-3 sm:gap-4 w-full">
+                    <button class="quiz-option group w-full p-4 sm:p-5 rounded-2xl border border-white/10 glass-panel flex items-center text-left gap-4 sm:gap-5" onclick="selectAnswer(this, 'attracts_abundance')">
+                        <div class="text-2xl sm:text-3xl shrink-0 drop-shadow-md">✨</div>
+                        <div class="flex-grow font-sans text-sm sm:text-base text-slate-200 group-hover:text-white transition-colors leading-snug font-medium">
+                            Naturally attracts opportunities and abundance into my life
+                        </div>
+                        <div class="check-circle w-6 h-6 sm:w-7 sm:h-7 rounded-full border-2 border-white/20 flex items-center justify-center shrink-0 transition-all duration-300 group-hover:border-gold-500/50">
+                            <i data-lucide="check" class="check-icon w-3 h-3 sm:w-4 sm:h-4 text-cosmic-950 opacity-0 scale-50 transition-all duration-300"></i>
+                        </div>
+                    </button>
+
+                    <button class="quiz-option group w-full p-4 sm:p-5 rounded-2xl border border-white/10 glass-panel flex items-center text-left gap-4 sm:gap-5" onclick="selectAnswer(this, 'trusts_universe')">
+                        <div class="text-2xl sm:text-3xl shrink-0 drop-shadow-md">🌌</div>
+                        <div class="flex-grow font-sans text-sm sm:text-base text-slate-200 group-hover:text-white transition-colors leading-snug font-medium">
+                            Trusts the universe's plan and flows with divine timing
+                        </div>
+                        <div class="check-circle w-6 h-6 sm:w-7 sm:h-7 rounded-full border-2 border-white/20 flex items-center justify-center shrink-0 transition-all duration-300 group-hover:border-gold-500/50">
+                            <i data-lucide="check" class="check-icon w-3 h-3 sm:w-4 sm:h-4 text-cosmic-950 opacity-0 scale-50 transition-all duration-300"></i>
+                        </div>
+                    </button>
+
+                    <button class="quiz-option group w-full p-4 sm:p-5 rounded-2xl border border-white/10 glass-panel flex items-center text-left gap-4 sm:gap-5" onclick="selectAnswer(this, 'claims_power')">
+                        <div class="text-2xl sm:text-3xl shrink-0 drop-shadow-md">⚡</div>
+                        <div class="flex-grow font-sans text-sm sm:text-base text-slate-200 group-hover:text-white transition-colors leading-snug font-medium">
+                            Claims my personal power and steps into my highest potential
+                        </div>
+                        <div class="check-circle w-6 h-6 sm:w-7 sm:h-7 rounded-full border-2 border-white/20 flex items-center justify-center shrink-0 transition-all duration-300 group-hover:border-gold-500/50">
+                            <i data-lucide="check" class="check-icon w-3 h-3 sm:w-4 sm:h-4 text-cosmic-950 opacity-0 scale-50 transition-all duration-300"></i>
+                        </div>
+                    </button>
+
+                    <button class="quiz-option group w-full p-4 sm:p-5 rounded-2xl border border-white/10 glass-panel flex items-center text-left gap-4 sm:gap-5" onclick="selectAnswer(this, 'lives_authentically')">
+                        <div class="text-2xl sm:text-3xl shrink-0 drop-shadow-md">🦋</div>
+                        <div class="flex-grow font-sans text-sm sm:text-base text-slate-200 group-hover:text-white transition-colors leading-snug font-medium">
+                            Lives completely authentically and honors my soul's calling
+                        </div>
+                        <div class="check-circle w-6 h-6 sm:w-7 sm:h-7 rounded-full border-2 border-white/20 flex items-center justify-center shrink-0 transition-all duration-300 group-hover:border-gold-500/50">
+                            <i data-lucide="check" class="check-icon w-3 h-3 sm:w-4 sm:h-4 text-cosmic-950 opacity-0 scale-50 transition-all duration-300"></i>
+                        </div>
+                    </button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Step 3 - POSITIVE: Dream Outcome -->
+    <div class="step" id="step3">
+        <main class="relative z-10 flex-grow flex flex-col items-center justify-center px-4 sm:px-6 py-8 w-full">
+            <div class="w-full max-w-2xl mx-auto relative">
+                <div class="text-center mb-8 sm:mb-10 px-2">
+                    <h1 class="font-serif text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-white mb-4 leading-tight drop-shadow-lg">
+                        "My biggest dream is to finally..."
+                    </h1>
+                    <p class="text-sm sm:text-base md:text-lg text-slate-300 font-light">
+                        What would make you feel like you've truly "made it" in life?
+                    </p>
+                </div>
+
+                <div class="flex flex-col gap-3 sm:gap-4 w-full">
+                    <button class="quiz-option group w-full p-4 sm:p-5 rounded-2xl border border-white/10 glass-panel flex items-center text-left gap-4 sm:gap-5" onclick="selectAnswer(this, 'never_worry_money')">
+                        <div class="text-2xl sm:text-3xl shrink-0 drop-shadow-md">🏦</div>
+                        <div class="flex-grow font-sans text-sm sm:text-base text-slate-200 group-hover:text-white transition-colors leading-snug font-medium">
+                            Never worry about money again and know I can afford anything I want
+                        </div>
+                        <div class="check-circle w-6 h-6 sm:w-7 sm:h-7 rounded-full border-2 border-white/20 flex items-center justify-center shrink-0 transition-all duration-300 group-hover:border-gold-500/50">
+                            <i data-lucide="check" class="check-icon w-3 h-3 sm:w-4 sm:h-4 text-cosmic-950 opacity-0 scale-50 transition-all duration-300"></i>
+                        </div>
+                    </button>
+
+                    <button class="quiz-option group w-full p-4 sm:p-5 rounded-2xl border border-white/10 glass-panel flex items-center text-left gap-4 sm:gap-5" onclick="selectAnswer(this, 'help_family')">
+                        <div class="text-2xl sm:text-3xl shrink-0 drop-shadow-md">👨‍👩‍👧‍👦</div>
+                        <div class="flex-grow font-sans text-sm sm:text-base text-slate-200 group-hover:text-white transition-colors leading-snug font-medium">
+                            Give my family everything they deserve and more than I ever had growing up
+                        </div>
+                        <div class="check-circle w-6 h-6 sm:w-7 sm:h-7 rounded-full border-2 border-white/20 flex items-center justify-center shrink-0 transition-all duration-300 group-hover:border-gold-500/50">
+                            <i data-lucide="check" class="check-icon w-3 h-3 sm:w-4 sm:h-4 text-cosmic-950 opacity-0 scale-50 transition-all duration-300"></i>
+                        </div>
+                    </button>
+
+                    <button class="quiz-option group w-full p-4 sm:p-5 rounded-2xl border border-white/10 glass-panel flex items-center text-left gap-4 sm:gap-5" onclick="selectAnswer(this, 'live_dream_life')">
+                        <div class="text-2xl sm:text-3xl shrink-0 drop-shadow-md">🏝️</div>
+                        <div class="flex-grow font-sans text-sm sm:text-base text-slate-200 group-hover:text-white transition-colors leading-snug font-medium">
+                            Live my absolute dream lifestyle and travel to places I've only seen in movies
+                        </div>
+                        <div class="check-circle w-6 h-6 sm:w-7 sm:h-7 rounded-full border-2 border-white/20 flex items-center justify-center shrink-0 transition-all duration-300 group-hover:border-gold-500/50">
+                            <i data-lucide="check" class="check-icon w-3 h-3 sm:w-4 sm:h-4 text-cosmic-950 opacity-0 scale-50 transition-all duration-300"></i>
+                        </div>
+                    </button>
+
+                    <button class="quiz-option group w-full p-4 sm:p-5 rounded-2xl border border-white/10 glass-panel flex items-center text-left gap-4 sm:gap-5" onclick="selectAnswer(this, 'change_world')">
+                        <div class="text-2xl sm:text-3xl shrink-0 drop-shadow-md">🌍</div>
+                        <div class="flex-grow font-sans text-sm sm:text-base text-slate-200 group-hover:text-white transition-colors leading-snug font-medium">
+                            Use my gifts and resources to make a real difference in the world
+                        </div>
+                        <div class="check-circle w-6 h-6 sm:w-7 sm:h-7 rounded-full border-2 border-white/20 flex items-center justify-center shrink-0 transition-all duration-300 group-hover:border-gold-500/50">
+                            <i data-lucide="check" class="check-icon w-3 h-3 sm:w-4 sm:h-4 text-cosmic-950 opacity-0 scale-50 transition-all duration-300"></i>
+                        </div>
+                    </button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Step 4 - NEUTRAL: Current Approach -->
+    <div class="step" id="step4">
+        <main class="relative z-10 flex-grow flex flex-col items-center justify-center px-4 sm:px-6 py-8 w-full">
+            <div class="w-full max-w-2xl mx-auto relative">
+                <div class="text-center mb-8 sm:mb-10 px-2">
+                    <h1 class="font-serif text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-white mb-4 leading-tight drop-shadow-lg">
+                        "Right now, I tend to..."
+                    </h1>
+                    <p class="text-sm sm:text-base md:text-lg text-slate-300 font-light">
+                        What best describes your current approach to creating abundance?
+                    </p>
+                </div>
+
+                <div class="flex flex-col gap-3 sm:gap-4 w-full">
+                    <button class="quiz-option group w-full p-4 sm:p-5 rounded-2xl border border-white/10 glass-panel flex items-center text-left gap-4 sm:gap-5" onclick="selectAnswer(this, 'work_really_hard')">
+                        <div class="text-2xl sm:text-3xl shrink-0 drop-shadow-md">💪</div>
+                        <div class="flex-grow font-sans text-sm sm:text-base text-slate-200 group-hover:text-white transition-colors leading-snug font-medium">
+                            Work really hard and push myself, but sometimes feel like I'm not getting ahead
+                        </div>
+                        <div class="check-circle w-6 h-6 sm:w-7 sm:h-7 rounded-full border-2 border-white/20 flex items-center justify-center shrink-0 transition-all duration-300 group-hover:border-gold-500/50">
+                            <i data-lucide="check" class="check-icon w-3 h-3 sm:w-4 sm:h-4 text-cosmic-950 opacity-0 scale-50 transition-all duration-300"></i>
+                        </div>
+                    </button>
+
+                    <button class="quiz-option group w-full p-4 sm:p-5 rounded-2xl border border-white/10 glass-panel flex items-center text-left gap-4 sm:gap-5" onclick="selectAnswer(this, 'research_alot')">
+                        <div class="text-2xl sm:text-3xl shrink-0 drop-shadow-md">🔍</div>
+                        <div class="flex-grow font-sans text-sm sm:text-base text-slate-200 group-hover:text-white transition-colors leading-snug font-medium">
+                            Research and learn extensively before taking any major action or risk
+                        </div>
+                        <div class="check-circle w-6 h-6 sm:w-7 sm:h-7 rounded-full border-2 border-white/20 flex items-center justify-center shrink-0 transition-all duration-300 group-hover:border-gold-500/50">
+                            <i data-lucide="check" class="check-icon w-3 h-3 sm:w-4 sm:h-4 text-cosmic-950 opacity-0 scale-50 transition-all duration-300"></i>
+                        </div>
+                    </button>
+
+                    <button class="quiz-option group w-full p-4 sm:p-5 rounded-2xl border border-white/10 glass-panel flex items-center text-left gap-4 sm:gap-5" onclick="selectAnswer(this, 'wait_right_time')">
+                        <div class="text-2xl sm:text-3xl shrink-0 drop-shadow-md">⏰</div>
+                        <div class="flex-grow font-sans text-sm sm:text-base text-slate-200 group-hover:text-white transition-colors leading-snug font-medium">
+                            Wait for the "right time" or perfect circumstances before making big moves
+                        </div>
+                        <div class="check-circle w-6 h-6 sm:w-7 sm:h-7 rounded-full border-2 border-white/20 flex items-center justify-center shrink-0 transition-all duration-300 group-hover:border-gold-500/50">
+                            <i data-lucide="check" class="check-icon w-3 h-3 sm:w-4 sm:h-4 text-cosmic-950 opacity-0 scale-50 transition-all duration-300"></i>
+                        </div>
+                    </button>
+
+                    <button class="quiz-option group w-full p-4 sm:p-5 rounded-2xl border border-white/10 glass-panel flex items-center text-left gap-4 sm:gap-5" onclick="selectAnswer(this, 'try_everything')">
+                        <div class="text-2xl sm:text-3xl shrink-0 drop-shadow-md">🌟</div>
+                        <div class="flex-grow font-sans text-sm sm:text-base text-slate-200 group-hover:text-white transition-colors leading-snug font-medium">
+                            Try different approaches and systems, hoping to find the one that finally works
+                        </div>
+                        <div class="check-circle w-6 h-6 sm:w-7 sm:h-7 rounded-full border-2 border-white/20 flex items-center justify-center shrink-0 transition-all duration-300 group-hover:border-gold-500/50">
+                            <i data-lucide="check" class="check-icon w-3 h-3 sm:w-4 sm:h-4 text-cosmic-950 opacity-0 scale-50 transition-all duration-300"></i>
+                        </div>
+                    </button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Step 5 - NEUTRAL: Behavior Patterns -->
+    <div class="step" id="step5">
+        <main class="relative z-10 flex-grow flex flex-col items-center justify-center px-4 sm:px-6 py-8 w-full">
+            <div class="w-full max-w-2xl mx-auto relative">
+                <div class="text-center mb-8 sm:mb-10 px-2">
+                    <h1 class="font-serif text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-white mb-4 leading-tight drop-shadow-lg">
+                        "Most of the time, I..."
+                    </h1>
+                    <p class="text-sm sm:text-base md:text-lg text-slate-300 font-light">
+                        Which pattern feels most familiar in your manifestation journey?
+                    </p>
+                </div>
+
+                <div class="flex flex-col gap-3 sm:gap-4 w-full">
+                    <button class="quiz-option group w-full p-4 sm:p-5 rounded-2xl border border-white/10 glass-panel flex items-center text-left gap-4 sm:gap-5" onclick="selectAnswer(this, 'start_strong')">
+                        <div class="text-2xl sm:text-3xl shrink-0 drop-shadow-md">🚀</div>
+                        <div class="flex-grow font-sans text-sm sm:text-base text-slate-200 group-hover:text-white transition-colors leading-snug font-medium">
+                            Start new goals with huge enthusiasm but struggle to maintain momentum long-term
+                        </div>
+                        <div class="check-circle w-6 h-6 sm:w-7 sm:h-7 rounded-full border-2 border-white/20 flex items-center justify-center shrink-0 transition-all duration-300 group-hover:border-gold-500/50">
+                            <i data-lucide="check" class="check-icon w-3 h-3 sm:w-4 sm:h-4 text-cosmic-950 opacity-0 scale-50 transition-all duration-300"></i>
+                        </div>
+                    </button>
+
+                    <button class="quiz-option group w-full p-4 sm:p-5 rounded-2xl border border-white/10 glass-panel flex items-center text-left gap-4 sm:gap-5" onclick="selectAnswer(this, 'compare_others')">
+                        <div class="text-2xl sm:text-3xl shrink-0 drop-shadow-md">👥</div>
+                        <div class="flex-grow font-sans text-sm sm:text-base text-slate-200 group-hover:text-white transition-colors leading-snug font-medium">
+                            Compare my progress to others and feel like I'm behind where I should be
+                        </div>
+                        <div class="check-circle w-6 h-6 sm:w-7 sm:h-7 rounded-full border-2 border-white/20 flex items-center justify-center shrink-0 transition-all duration-300 group-hover:border-gold-500/50">
+                            <i data-lucide="check" class="check-icon w-3 h-3 sm:w-4 sm:h-4 text-cosmic-950 opacity-0 scale-50 transition-all duration-300"></i>
+                        </div>
+                    </button>
+
+                    <button class="quiz-option group w-full p-4 sm:p-5 rounded-2xl border border-white/10 glass-panel flex items-center text-left gap-4 sm:gap-5" onclick="selectAnswer(this, 'doubt_decisions')">
+                        <div class="text-2xl sm:text-3xl shrink-0 drop-shadow-md">🤔</div>
+                        <div class="flex-grow font-sans text-sm sm:text-base text-slate-200 group-hover:text-white transition-colors leading-snug font-medium">
+                            Second-guess my decisions and wonder if I'm on the right path
+                        </div>
+                        <div class="check-circle w-6 h-6 sm:w-7 sm:h-7 rounded-full border-2 border-white/20 flex items-center justify-center shrink-0 transition-all duration-300 group-hover:border-gold-500/50">
+                            <i data-lucide="check" class="check-icon w-3 h-3 sm:w-4 sm:h-4 text-cosmic-950 opacity-0 scale-50 transition-all duration-300"></i>
+                        </div>
+                    </button>
+
+                    <button class="quiz-option group w-full p-4 sm:p-5 rounded-2xl border border-white/10 glass-panel flex items-center text-left gap-4 sm:gap-5" onclick="selectAnswer(this, 'feel_close_but')">
+                        <div class="text-2xl sm:text-3xl shrink-0 drop-shadow-md">🏁</div>
+                        <div class="flex-grow font-sans text-sm sm:text-base text-slate-200 group-hover:text-white transition-colors leading-snug font-medium">
+                            Feel like I'm close to a breakthrough but something always seems to block it
+                        </div>
+                        <div class="check-circle w-6 h-6 sm:w-7 sm:h-7 rounded-full border-2 border-white/20 flex items-center justify-center shrink-0 transition-all duration-300 group-hover:border-gold-500/50">
+                            <i data-lucide="check" class="check-icon w-3 h-3 sm:w-4 sm:h-4 text-cosmic-950 opacity-0 scale-50 transition-all duration-300"></i>
+                        </div>
+                    </button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Step 6 - NEGATIVE: Honest Struggle -->
+    <div class="step" id="step6">
+        <main class="relative z-10 flex-grow flex flex-col items-center justify-center px-4 sm:px-6 py-8 w-full">
+            <div class="w-full max-w-2xl mx-auto relative">
+                <div class="text-center mb-8 sm:mb-10 px-2">
+                    <h1 class="font-serif text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-white mb-4 leading-tight drop-shadow-lg">
+                        "If I'm being completely honest, I struggle with..."
+                    </h1>
+                    <p class="text-sm sm:text-base md:text-lg text-slate-300 font-light">
+                        It's time to acknowledge what's really holding you back
+                    </p>
+                </div>
+
+                <div class="flex flex-col gap-3 sm:gap-4 w-full">
+                    <button class="quiz-option warning-style group w-full p-4 sm:p-5 rounded-2xl border glass-panel flex items-center text-left gap-4 sm:gap-5" onclick="selectAnswer(this, 'money_stress')">
+                        <div class="text-2xl sm:text-3xl shrink-0 drop-shadow-md">😔</div>
+                        <div class="flex-grow font-sans text-sm sm:text-base text-slate-200 group-hover:text-white transition-colors leading-snug font-medium">
+                            Constant money stress and worry that keeps me up at night
+                        </div>
+                        <div class="check-circle w-6 h-6 sm:w-7 sm:h-7 rounded-full border-2 border-white/20 flex items-center justify-center shrink-0 transition-all duration-300 group-hover:border-gold-500/50">
+                            <i data-lucide="check" class="check-icon w-3 h-3 sm:w-4 sm:h-4 text-cosmic-950 opacity-0 scale-50 transition-all duration-300"></i>
+                        </div>
+                    </button>
+
+                    <button class="quiz-option warning-style group w-full p-4 sm:p-5 rounded-2xl border glass-panel flex items-center text-left gap-4 sm:gap-5" onclick="selectAnswer(this, 'feeling_stuck')">
+                        <div class="text-2xl sm:text-3xl shrink-0 drop-shadow-md">🔒</div>
+                        <div class="flex-grow font-sans text-sm sm:text-base text-slate-200 group-hover:text-white transition-colors leading-snug font-medium">
+                            Feeling completely stuck and trapped in my current financial situation
+                        </div>
+                        <div class="check-circle w-6 h-6 sm:w-7 sm:h-7 rounded-full border-2 border-white/20 flex items-center justify-center shrink-0 transition-all duration-300 group-hover:border-gold-500/50">
+                            <i data-lucide="check" class="check-icon w-3 h-3 sm:w-4 sm:h-4 text-cosmic-950 opacity-0 scale-50 transition-all duration-300"></i>
+                        </div>
+                    </button>
+
+                    <button class="quiz-option warning-style group w-full p-4 sm:p-5 rounded-2xl border glass-panel flex items-center text-left gap-4 sm:gap-5" onclick="selectAnswer(this, 'self_sabotage')">
+                        <div class="text-2xl sm:text-3xl shrink-0 drop-shadow-md">💔</div>
+                        <div class="flex-grow font-sans text-sm sm:text-base text-slate-200 group-hover:text-white transition-colors leading-snug font-medium">
+                            Sabotaging myself or giving up just when things start going well
+                        </div>
+                        <div class="check-circle w-6 h-6 sm:w-7 sm:h-7 rounded-full border-2 border-white/20 flex items-center justify-center shrink-0 transition-all duration-300 group-hover:border-gold-500/50">
+                            <i data-lucide="check" class="check-icon w-3 h-3 sm:w-4 sm:h-4 text-cosmic-950 opacity-0 scale-50 transition-all duration-300"></i>
+                        </div>
+                    </button>
+
+                    <button class="quiz-option warning-style group w-full p-4 sm:p-5 rounded-2xl border glass-panel flex items-center text-left gap-4 sm:gap-5" onclick="selectAnswer(this, 'nothing_works')">
+                        <div class="text-2xl sm:text-3xl shrink-0 drop-shadow-md">🌧️</div>
+                        <div class="flex-grow font-sans text-sm sm:text-base text-slate-200 group-hover:text-white transition-colors leading-snug font-medium">
+                            Feeling like nothing I try actually works for attracting real abundance
+                        </div>
+                        <div class="check-circle w-6 h-6 sm:w-7 sm:h-7 rounded-full border-2 border-white/20 flex items-center justify-center shrink-0 transition-all duration-300 group-hover:border-gold-500/50">
+                            <i data-lucide="check" class="check-icon w-3 h-3 sm:w-4 sm:h-4 text-cosmic-950 opacity-0 scale-50 transition-all duration-300"></i>
+                        </div>
+                    </button>
+                </div>
+                <p class="text-center text-sm text-red-300 mt-6 italic">It takes courage to acknowledge these struggles. You're taking the first step toward real change.</p>
+            </div>
+        </main>
+    </div>
+
+    <!-- Step 7 - NEGATIVE: Deep Pain -->
+    <div class="step" id="step7">
+        <main class="relative z-10 flex-grow flex flex-col items-center justify-center px-4 sm:px-6 py-8 w-full">
+            <div class="w-full max-w-2xl mx-auto relative">
+                <div class="text-center mb-8 sm:mb-10 px-2">
+                    <h1 class="font-serif text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-white mb-4 leading-tight drop-shadow-lg">
+                        "Deep down, I'm afraid that..."
+                    </h1>
+                    <p class="text-sm sm:text-base md:text-lg text-slate-300 font-light">
+                        This is the hardest question, but the most important for your breakthrough
+                    </p>
+                </div>
+
+                <div class="flex flex-col gap-3 sm:gap-4 w-full">
+                    <button class="quiz-option warning-style group w-full p-4 sm:p-5 rounded-2xl border glass-panel flex items-center text-left gap-4 sm:gap-5" onclick="selectAnswer(this, 'never_enough')">
+                        <div class="text-2xl sm:text-3xl shrink-0 drop-shadow-md">💔</div>
+                        <div class="flex-grow font-sans text-sm sm:text-base text-slate-200 group-hover:text-white transition-colors leading-snug font-medium">
+                            No matter what I do or how hard I try, it will never be enough
+                        </div>
+                        <div class="check-circle w-6 h-6 sm:w-7 sm:h-7 rounded-full border-2 border-white/20 flex items-center justify-center shrink-0 transition-all duration-300 group-hover:border-gold-500/50">
+                            <i data-lucide="check" class="check-icon w-3 h-3 sm:w-4 sm:h-4 text-cosmic-950 opacity-0 scale-50 transition-all duration-300"></i>
+                        </div>
+                    </button>
+
+                    <button class="quiz-option warning-style group w-full p-4 sm:p-5 rounded-2xl border glass-panel flex items-center text-left gap-4 sm:gap-5" onclick="selectAnswer(this, 'not_worthy')">
+                        <div class="text-2xl sm:text-3xl shrink-0 drop-shadow-md">😞</div>
+                        <div class="flex-grow font-sans text-sm sm:text-base text-slate-200 group-hover:text-white transition-colors leading-snug font-medium">
+                            I'm just not worthy or deserving of the abundance others seem to have
+                        </div>
+                        <div class="check-circle w-6 h-6 sm:w-7 sm:h-7 rounded-full border-2 border-white/20 flex items-center justify-center shrink-0 transition-all duration-300 group-hover:border-gold-500/50">
+                            <i data-lucide="check" class="check-icon w-3 h-3 sm:w-4 sm:h-4 text-cosmic-950 opacity-0 scale-50 transition-all duration-300"></i>
+                        </div>
+                    </button>
+
+                    <button class="quiz-option warning-style group w-full p-4 sm:p-5 rounded-2xl border glass-panel flex items-center text-left gap-4 sm:gap-5" onclick="selectAnswer(this, 'too_late')">
+                        <div class="text-2xl sm:text-3xl shrink-0 drop-shadow-md">⏰</div>
+                        <div class="flex-grow font-sans text-sm sm:text-base text-slate-200 group-hover:text-white transition-colors leading-snug font-medium">
+                            It's too late for me and I've missed my chance for real abundance
+                        </div>
+                        <div class="check-circle w-6 h-6 sm:w-7 sm:h-7 rounded-full border-2 border-white/20 flex items-center justify-center shrink-0 transition-all duration-300 group-hover:border-gold-500/50">
+                            <i data-lucide="check" class="check-icon w-3 h-3 sm:w-4 sm:h-4 text-cosmic-950 opacity-0 scale-50 transition-all duration-300"></i>
+                        </div>
+                    </button>
+
+                    <button class="quiz-option warning-style group w-full p-4 sm:p-5 rounded-2xl border glass-panel flex items-center text-left gap-4 sm:gap-5" onclick="selectAnswer(this, 'staying_stuck')">
+                        <div class="text-2xl sm:text-3xl shrink-0 drop-shadow-md">😨</div>
+                        <div class="flex-grow font-sans text-sm sm:text-base text-slate-200 group-hover:text-white transition-colors leading-snug font-medium">
+                            I'll be stuck in this same financial situation for the rest of my life
+                        </div>
+                        <div class="check-circle w-6 h-6 sm:w-7 sm:h-7 rounded-full border-2 border-white/20 flex items-center justify-center shrink-0 transition-all duration-300 group-hover:border-gold-500/50">
+                            <i data-lucide="check" class="check-icon w-3 h-3 sm:w-4 sm:h-4 text-cosmic-950 opacity-0 scale-50 transition-all duration-300"></i>
+                        </div>
+                    </button>
+                </div>
+                <p class="text-center text-sm text-red-300 mt-6 italic">This pain you're feeling? It's real, it's valid, and you're not alone in experiencing it.</p>
+            </div>
+        </main>
+    </div>
+
+    <!-- Step 8 - POSITIVE FUTURE: Hope/Choice -->
+    <div class="step" id="step8">
+        <main class="relative z-10 flex-grow flex flex-col items-center justify-center px-4 sm:px-6 py-8 w-full">
+            <div class="w-full max-w-2xl mx-auto relative">
+                <div class="text-center mb-8 sm:mb-10 px-2">
+                    <h1 class="font-serif text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-white mb-4 leading-tight drop-shadow-lg">
+                        "Instead, what I truly want is..."
+                    </h1>
+                    <p class="text-sm sm:text-base md:text-lg text-slate-300 font-light">
+                        You have a choice in how this story ends. What future do you choose?
+                    </p>
+                </div>
+
+                <div class="flex flex-col gap-3 sm:gap-4 w-full">
+                    <button class="quiz-option group w-full p-4 sm:p-5 rounded-2xl border border-white/10 glass-panel flex items-center text-left gap-4 sm:gap-5" onclick="selectAnswer(this, 'financial_confidence')">
+                        <div class="text-2xl sm:text-3xl shrink-0 drop-shadow-md">💪</div>
+                        <div class="flex-grow font-sans text-sm sm:text-base text-slate-200 group-hover:text-white transition-colors leading-snug font-medium">
+                            Complete financial confidence and the ability to create money on demand
+                        </div>
+                        <div class="check-circle w-6 h-6 sm:w-7 sm:h-7 rounded-full border-2 border-white/20 flex items-center justify-center shrink-0 transition-all duration-300 group-hover:border-gold-500/50">
+                            <i data-lucide="check" class="check-icon w-3 h-3 sm:w-4 sm:h-4 text-cosmic-950 opacity-0 scale-50 transition-all duration-300"></i>
+                        </div>
+                    </button>
+
+                    <button class="quiz-option group w-full p-4 sm:p-5 rounded-2xl border border-white/10 glass-panel flex items-center text-left gap-4 sm:gap-5" onclick="selectAnswer(this, 'effortless_flow')">
+                        <div class="text-2xl sm:text-3xl shrink-0 drop-shadow-md">🌊</div>
+                        <div class="flex-grow font-sans text-sm sm:text-base text-slate-200 group-hover:text-white transition-colors leading-snug font-medium">
+                            Effortless flow where opportunities and abundance come naturally to me
+                        </div>
+                        <div class="check-circle w-6 h-6 sm:w-7 sm:h-7 rounded-full border-2 border-white/20 flex items-center justify-center shrink-0 transition-all duration-300 group-hover:border-gold-500/50">
+                            <i data-lucide="check" class="check-icon w-3 h-3 sm:w-4 sm:h-4 text-cosmic-950 opacity-0 scale-50 transition-all duration-300"></i>
+                        </div>
+                    </button>
+
+                    <button class="quiz-option group w-full p-4 sm:p-5 rounded-2xl border border-white/10 glass-panel flex items-center text-left gap-4 sm:gap-5" onclick="selectAnswer(this, 'inner_peace')">
+                        <div class="text-2xl sm:text-3xl shrink-0 drop-shadow-md">☮️</div>
+                        <div class="flex-grow font-sans text-sm sm:text-base text-slate-200 group-hover:text-white transition-colors leading-snug font-medium">
+                            Deep inner peace knowing I'm aligned with my highest purpose and abundance
+                        </div>
+                        <div class="check-circle w-6 h-6 sm:w-7 sm:h-7 rounded-full border-2 border-white/20 flex items-center justify-center shrink-0 transition-all duration-300 group-hover:border-gold-500/50">
+                            <i data-lucide="check" class="check-icon w-3 h-3 sm:w-4 sm:h-4 text-cosmic-950 opacity-0 scale-50 transition-all duration-300"></i>
+                        </div>
+                    </button>
+
+                    <button class="quiz-option group w-full p-4 sm:p-5 rounded-2xl border border-white/10 glass-panel flex items-center text-left gap-4 sm:gap-5" onclick="selectAnswer(this, 'unlimited_potential')">
+                        <div class="text-2xl sm:text-3xl shrink-0 drop-shadow-md">🚀</div>
+                        <div class="flex-grow font-sans text-sm sm:text-base text-slate-200 group-hover:text-white transition-colors leading-snug font-medium">
+                            Access to my unlimited potential and the power to manifest anything I desire
+                        </div>
+                        <div class="check-circle w-6 h-6 sm:w-7 sm:h-7 rounded-full border-2 border-white/20 flex items-center justify-center shrink-0 transition-all duration-300 group-hover:border-gold-500/50">
+                            <i data-lucide="check" class="check-icon w-3 h-3 sm:w-4 sm:h-4 text-cosmic-950 opacity-0 scale-50 transition-all duration-300"></i>
+                        </div>
+                    </button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Analyzing Step -->
+    <div class="step" id="analyzing">
+        <main class="relative z-10 flex-grow flex flex-col items-center justify-center px-4 sm:px-6 py-8 w-full">
+            <div class="w-full max-w-2xl mx-auto relative text-center">
+                <div class="glass-panel rounded-2xl p-8 sm:p-12">
+                    <div class="mb-8">
+                        <div class="w-20 h-20 mx-auto bg-gradient-gold rounded-full flex items-center justify-center mb-6 animate-analyzing">
+                            <i data-lucide="cpu" class="w-10 h-10 text-cosmic-950"></i>
+                        </div>
+                        <h1 class="font-serif text-3xl sm:text-4xl md:text-5xl text-white mb-6 leading-tight drop-shadow-lg">
+                            Analyzing Your<br>
+                            <span class="text-gold-300">Abundance Frequency...</span>
+                        </h1>
+                        <p class="text-lg text-slate-300 mb-8">
+                            Our quantum algorithm is processing your responses to calculate your unique 
+                            3-digit abundance code and identify your personal manifestation patterns.
+                        </p>
+                    </div>
+
+                    <div class="analyzing-grid mb-8">
+                        <div class="space-y-3">
+                            <div class="flex items-center justify-between p-3 glass-panel rounded-lg" id="step1-analysis">
+                                <span class="text-sm text-slate-300">Analyzing birth numerology...</span>
+                                <i data-lucide="loader-2" class="w-4 h-4 text-gold-300 animate-spin"></i>
+                            </div>
+                            <div class="flex items-center justify-between p-3 glass-panel rounded-lg" id="step2-analysis">
+                                <span class="text-sm text-slate-300">Processing abundance desires...</span>
+                                <i data-lucide="loader-2" class="w-4 h-4 text-gold-300 animate-spin"></i>
+                            </div>
+                            <div class="flex items-center justify-between p-3 glass-panel rounded-lg" id="step3-analysis">
+                                <span class="text-sm text-slate-300">Calculating frequency signature...</span>
+                                <i data-lucide="loader-2" class="w-4 h-4 text-gold-300 animate-spin"></i>
+                            </div>
+                            <div class="flex items-center justify-between p-3 glass-panel rounded-lg" id="step4-analysis">
+                                <span class="text-sm text-slate-300">Identifying abundance blocks...</span>
+                                <i data-lucide="loader-2" class="w-4 h-4 text-gold-300 animate-spin"></i>
+                            </div>
+                            <div class="flex items-center justify-between p-3 glass-panel rounded-lg" id="step5-analysis">
+                                <span class="text-sm text-slate-300">Generating personal code...</span>
+                                <i data-lucide="loader-2" class="w-4 h-4 text-gold-300 animate-spin"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="text-center">
+                        <p class="text-sm text-slate-400 mb-4" id="analysisProgress">Processing your energy signature...</p>
+                        <div class="text-6xl font-serif font-black blur-code text-gold-300" id="blurredCode">###</div>
+                        <p class="text-xs text-slate-500 mt-2">Your code is being generated...</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Initialize
+        lucide.createIcons();
+        
+        let currentStepNum = 1;
+        let answers = {};
+        const totalSteps = 8;
+
+        function selectAnswer(selectedButton, answer) {
+            const currentStep = document.querySelector(`.step.active`);
+            const allOptions = currentStep.querySelectorAll('.quiz-option');
+            
+            // Store answer
+            answers[`step${currentStepNum}`] = answer;
+            
+            // Disable all options
+            allOptions.forEach(btn => {
+                btn.onclick = null;
+                if(btn === selectedButton) {
+                    btn.classList.add('selected');
+                } else {
+                    btn.classList.add('faded');
+                }
+            });
+
+            // Visual feedback
+            setTimeout(() => {
+                const iconContainer = selectedButton.querySelector('.check-circle');
+                iconContainer.innerHTML = `<i data-lucide="loader-2" class="w-4 h-4 text-cosmic-950 animate-spin"></i>`;
+                lucide.createIcons();
+            }, 400);
+
+            // Advance to next step
+            setTimeout(() => {
+                nextStep();
+            }, 1200);
+        }
+
+        function nextStep() {
+            if (currentStepNum <= totalSteps) {
+                // Hide current step
+                document.getElementById(`step${currentStepNum}`).classList.remove('active');
+                
+                if (currentStepNum < totalSteps) {
+                    currentStepNum++;
+                    // Show next step
+                    document.getElementById(`step${currentStepNum}`).classList.add('active');
+                    updateProgress();
+                } else {
+                    // Show analyzing step
+                    document.getElementById('analyzing').classList.add('active');
+                    updateProgress();
+                    startAnalyzing();
+                }
+            }
+        }
+
+        function updateProgress() {
+            const progress = (currentStepNum / totalSteps) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+            document.getElementById('currentStep').textContent = currentStepNum;
+        }
+
+        function startAnalyzing() {
+            const steps = [
+                "Analyzing birth numerology...",
+                "Processing abundance desires...", 
+                "Calculating frequency signature...",
+                "Identifying abundance blocks...",
+                "Generating personal code..."
+            ];
+            
+            let stepIndex = 0;
+            const processStep = () => {
+                if (stepIndex < steps.length) {
+                    // Update progress text
+                    document.getElementById('analysisProgress').textContent = steps[stepIndex];
+                    
+                    // Mark current analysis step as complete
+                    const currentAnalysis = document.getElementById(`step${stepIndex + 1}-analysis`);
+                    if (currentAnalysis) {
+                        setTimeout(() => {
+                            currentAnalysis.innerHTML = `
+                                <span class="text-sm text-slate-300">${steps[stepIndex]}</span>
+                                <i data-lucide="check" class="w-4 h-4 text-green-400"></i>
+                            `;
+                            lucide.createIcons();
+                        }, 1500);
+                    }
+                    
+                    stepIndex++;
+                    setTimeout(processStep, 2000);
+                } else {
+                    // Analysis complete - show blurred code and redirect
+                    setTimeout(() => {
+                        const generatedCode = generatePersonalCode();
+                        document.getElementById('blurredCode').textContent = generatedCode;
+                        document.getElementById('analysisProgress').textContent = 'Analysis complete! Your code is ready...';
+                        
+                        // Store code for results page
+                        sessionStorage.setItem('abundanceCode', generatedCode);
+                        sessionStorage.setItem('quizAnswers', JSON.stringify(answers));
+                        
+                        setTimeout(() => {
+                            window.location.href = 'quiz-results-premium.html';
+                        }, 2000);
+                    }, 2000);
+                }
+            };
+            
+            processStep();
+        }
+
+        function generatePersonalCode() {
+            const bases = {
+                'wealth_freedom': 300, 'time_freedom': 400, 'impact_legacy': 500, 'love_connection': 600,
+                'never_worry_money': 200, 'help_family': 700, 'live_dream_life': 800, 'change_world': 900,
+                'financial_confidence': 370, 'effortless_flow': 470, 'inner_peace': 570, 'unlimited_potential': 670
+            };
+            
+            let base = bases[answers.step1] || bases[answers.step3] || bases[answers.step8] || 374;
+            const answerString = Object.values(answers).join('');
+            const hash = answerString.split('').reduce((a, b) => {
+                a = ((a << 5) - a) + b.charCodeAt(0);
+                return a & a;
+            }, 0);
+            
+            const variation = Math.abs(hash) % 100;
+            let code = base + variation;
+            
+            while (code > 999) code -= 100;
+            while (code < 100) code += 100;
+            
+            return code;
+        }
+    </script>
+</body>
+</html>
