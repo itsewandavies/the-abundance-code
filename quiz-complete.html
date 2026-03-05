@@ -152,8 +152,9 @@
         }
 
         .blur-code {
-            filter: blur(8px);
+            filter: blur(20px) brightness(0.3);
             user-select: none;
+            pointer-events: none;
         }
     </style>
 </head>
@@ -697,7 +698,7 @@
                                 <i data-lucide="loader-2" class="w-4 h-4 text-gold-300 animate-spin"></i>
                             </div>
                             <div class="flex items-center justify-between p-3 glass-panel rounded-lg" id="step5-analysis">
-                                <span class="text-sm text-slate-300">Generating personal code...</span>
+                                <span class="text-sm text-slate-300">Finalizing your frequency signature...</span>
                                 <i data-lucide="loader-2" class="w-4 h-4 text-gold-300 animate-spin"></i>
                             </div>
                         </div>
@@ -782,7 +783,7 @@
                 "Processing abundance desires...", 
                 "Calculating frequency signature...",
                 "Identifying abundance blocks...",
-                "Generating personal code..."
+                "Finalizing your frequency signature..."
             ];
             
             let stepIndex = 0;
@@ -793,7 +794,7 @@
                     
                     // Mark current analysis step as complete
                     const currentAnalysis = document.getElementById(`step${stepIndex + 1}-analysis`);
-                    if (currentAnalysis) {
+                    if (currentAnalysis && stepIndex < steps.length) {
                         setTimeout(() => {
                             currentAnalysis.innerHTML = `
                                 <span class="text-sm text-slate-300">${steps[stepIndex]}</span>
@@ -817,7 +818,7 @@
                         sessionStorage.setItem('quizAnswers', JSON.stringify(answers));
                         
                         setTimeout(() => {
-                            window.location.href = 'quiz-results-premium.html';
+                            window.location.href = 'quiz-results-sales-letter.html';
                         }, 2000);
                     }, 2000);
                 }

@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Personal Abundance Analysis | The Abundance Code</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #ffffff;
+            color: #1f2937;
+            line-height: 1.7;
+        }
+        
+        .serif {
+            font-family: 'Crimson Text', serif;
+        }
+        
+        .locked-code {
+            filter: blur(25px) brightness(0.3);
+            user-select: none;
+            pointer-events: none;
+            opacity: 0.4;
+        }
+        
+        .cta-button {
+            background: linear-gradient(135deg, #dc2626 0%, #ef4444 50%, #f87171 100%);
+            color: white;
+            font-weight: 800;
+            padding: 16px 32px;
+            border-radius: 8px;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(220, 38, 38, 0.3);
+            text-align: center;
+            width: 100%;
+            max-width: 500px;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(220, 38, 38, 0.4);
+        }
+        
+        .highlight-box {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 20px;
+            margin: 24px 0;
+            border-radius: 4px;
+        }
+        
+        .testimonial-box {
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 24px;
+            margin: 24px 0;
+        }
+        
+        .urgency-banner {
+            background: #fef2f2;
+            border: 2px solid #fecaca;
+            border-radius: 8px;
+            padding: 16px;
+            text-align: center;
+            margin: 24px 0;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.9; }
+        }
+    </style>
+</head>
+<body>
+    
+    <!-- Header -->
+    <div class="bg-gray-900 text-white py-4">
+        <div class="max-w-4xl mx-auto px-6 text-center">
+            <div class="text-xl font-bold text-yellow-400">🔮 THE ABUNDANCE CODE</div>
+        </div>
+    </div>
+
+    <div class="max-w-4xl mx-auto px-6 py-12">
+        
+        <!-- Headline -->
+        <div class="text-center mb-12">
+            <h1 class="text-4xl md:text-5xl font-black text-gray-900 mb-6 leading-tight serif">
+                Your Personal Abundance Analysis Is Complete...
+            </h1>
+            <h2 class="text-2xl md:text-3xl text-gray-700 mb-8 serif">
+                Here's What We Discovered About Your Unique Energy Signature
+            </h2>
+        </div>
+
+        <!-- Locked Code Image -->
+        <div class="text-center mb-12">
+            <div class="bg-gray-900 text-white p-8 rounded-lg inline-block">
+                <h3 class="text-2xl font-bold mb-4">YOUR PERSONAL ABUNDANCE CODE</h3>
+                <div class="relative">
+                    <div class="text-6xl font-black locked-code text-yellow-400" id="lockedCode">###</div>
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <div class="bg-black/80 text-yellow-400 px-6 py-3 rounded-lg border-2 border-yellow-400">
+                            <div class="flex items-center space-x-2">
+                                <span>🔒</span>
+                                <span class="font-bold">LOCKED</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <p class="text-gray-300 mt-4">Your code is encrypted until you unlock your complete analysis</p>
+            </div>
+        </div>
+
+        <!-- Personal Analysis -->
+        <div class="mb-12">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6 serif">Let Me Share Something Personal With You...</h2>
+            
+            <div class="prose prose-lg max-w-none">
+                <p class="text-xl text-gray-700 leading-relaxed mb-6">
+                    Based on your responses, I can see something very clearly about you...
+                </p>
+                
+                <div id="personalAnalysis" class="space-y-6">
+                    <!-- Dynamic content will be inserted here -->
+                </div>
+                
+                <div class="highlight-box">
+                    <p class="font-semibold text-gray-900 mb-2">🎯 Here's what this means:</p>
+                    <p class="text-gray-800">You have MASSIVE abundance potential that's currently being suppressed by specific energetic blocks. These aren't your fault - they're the result of programming you picked up along the way.</p>
+                </div>
+                
+                <p class="text-xl text-gray-700 leading-relaxed">
+                    <strong>The good news?</strong> Once you know your exact frequency signature (your 3-digit code), these blocks can be cleared quickly and permanently.
+                </p>
+            </div>
+        </div>
+
+        <!-- The Problem -->
+        <div class="mb-12">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6 serif">But Here's The Problem Most People Face...</h2>
+            
+            <div class="prose prose-lg max-w-none">
+                <p class="text-xl text-gray-700 leading-relaxed mb-6">
+                    They try to manifest abundance using "one-size-fits-all" techniques that weren't designed for their unique energy signature.
+                </p>
+                
+                <p class="text-lg text-gray-700 leading-relaxed mb-6">
+                    It's like trying to tune into a specific radio station without knowing the frequency. You might pick up some static, maybe even catch a few words here and there... but you'll never get the clear, strong signal you're looking for.
+                </p>
+                
+                <div class="bg-red-50 border-l-4 border-red-400 p-6 my-8">
+                    <p class="text-red-800 font-semibold mb-2">❌ This is why most abundance techniques fail:</p>
+                    <ul class="text-red-700 space-y-2">
+                        <li>• Generic affirmations that don't match your personal frequency</li>
+                        <li>• Visualization exercises that aren't aligned with your abundance style</li>
+                        <li>• Law of Attraction methods that ignore your specific energetic blocks</li>
+                        <li>• "Fake it till you make it" approaches that create internal resistance</li>
+                    </ul>
+                </div>
+                
+                <p class="text-xl text-gray-700 leading-relaxed">
+                    <strong>No wonder you've felt frustrated!</strong> You've been trying to unlock a door with the wrong key.
+                </p>
+            </div>
+        </div>
+
+        <!-- The Solution -->
+        <div class="mb-12">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6 serif">Your 3-Digit Code Changes Everything</h2>
+            
+            <div class="prose prose-lg max-w-none">
+                <p class="text-xl text-gray-700 leading-relaxed mb-6">
+                    Your personal abundance code isn't just a number. It's the precise vibrational frequency that your energy field resonates with for maximum abundance flow.
+                </p>
+                
+                <div class="highlight-box">
+                    <p class="font-semibold text-gray-900 mb-4">🔬 The Science Behind It:</p>
+                    <p class="text-gray-800 mb-4">Every person has a unique energetic signature based on their birth date, life experiences, and subconscious programming. When you align with your specific frequency, you create what quantum physicists call "constructive interference" - your energy amplifies instead of canceling out.</p>
+                    <p class="text-gray-800">This is why some people seem to effortlessly attract abundance while others struggle despite working just as hard.</p>
+                </div>
+                
+                <p class="text-lg text-gray-700 leading-relaxed mb-6">
+                    <strong>Here's what happens when you start using your personal code:</strong>
+                </p>
+                
+                <div class="bg-green-50 border-l-4 border-green-400 p-6 my-8">
+                    <ul class="text-green-800 space-y-3">
+                        <li><strong>Week 1:</strong> You start noticing your code appearing in unexpected places (receipts, timestamps, license plates) - this is the universe confirming your alignment</li>
+                        <li><strong>Week 2-3:</strong> Unexpected money opportunities begin flowing (refunds, bonuses, side income, gifts)</li>
+                        <li><strong>Week 4-8:</strong> Larger abundance manifestations start appearing (promotions, business opportunities, investment gains)</li>
+                        <li><strong>Beyond 8 weeks:</strong> Abundance becomes your new normal as your frequency fully stabilizes</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Social Proof -->
+        <div class="mb-12">
+            <h2 class="text-3xl font-bold text-gray-900 mb-8 serif">Here's What Others Are Saying...</h2>
+            
+            <div class="space-y-8">
+                <div class="testimonial-box">
+                    <div class="flex items-start space-x-4">
+                        <div class="w-16 h-16 bg-purple-500 rounded-full flex items-center justify-center text-white font-bold text-xl">M</div>
+                        <div>
+                            <div class="font-bold text-gray-900 mb-2">Maria S. - Code 582</div>
+                            <p class="text-gray-700 italic mb-3">"I was skeptical at first, but within 3 days of using my code, I received an unexpected $2,400 tax refund I had completely forgotten about. Two weeks later, my boss offered me a promotion I never even applied for. This stuff actually works."</p>
+                            <div class="text-yellow-400">★★★★★</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-box">
+                    <div class="flex items-start space-x-4">
+                        <div class="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold text-xl">J</div>
+                        <div>
+                            <div class="font-bold text-gray-900 mb-2">James T. - Code 374</div>
+                            <p class="text-gray-700 italic mb-3">"My code started appearing EVERYWHERE. Then my side business exploded - $15K in sales in one month when I'd been struggling to make $1K before. My wife thinks I'm magic now 😂"</p>
+                            <div class="text-yellow-400">★★★★★</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-box">
+                    <div class="flex items-start space-x-4">
+                        <div class="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center text-white font-bold text-xl">S</div>
+                        <div>
+                            <div class="font-bold text-gray-900 mb-2">Sarah L. - Code 639</div>
+                            <p class="text-gray-700 italic mb-3">"I paid off $8,000 in credit card debt in 6 weeks using my frequency. Money started flowing from places I never expected - old clients paying overdue invoices, finding money I'd forgotten about, even winning a small lottery prize. It's like my code opened up the floodgates."</p>
+                            <div class="text-yellow-400">★★★★★</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-8">
+                <p class="text-lg text-gray-600">Over 23,000+ people have activated their abundance codes in the last 90 days</p>
+            </div>
+        </div>
+
+        <!-- What's Included -->
+        <div class="mb-12">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6 serif">Here's Everything You Get When You Unlock Your Code Today:</h2>
+            
+            <div class="space-y-6">
+                <div class="border border-gray-200 rounded-lg p-6">
+                    <div class="flex items-start space-x-4">
+                        <div class="w-12 h-12 bg-yellow-400 rounded-lg flex items-center justify-center text-black font-bold">🔓</div>
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-900 mb-2">Your Personal 3-Digit Abundance Code</h3>
+                            <p class="text-gray-700">Your exact frequency signature plus detailed explanation of what it means for your specific abundance journey and manifestation style.</p>
+                            <p class="text-sm text-gray-500 mt-2">Value: $97</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="border border-gray-200 rounded-lg p-6">
+                    <div class="flex items-start space-x-4">
+                        <div class="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center text-white font-bold">📋</div>
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-900 mb-2">Personalized Activation Protocol</h3>
+                            <p class="text-gray-700">Step-by-step daily routine designed specifically for your frequency, including timing, visualization sequences, and affirmations that actually work for YOU.</p>
+                            <p class="text-sm text-gray-500 mt-2">Value: $197</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="border border-gray-200 rounded-lg p-6">
+                    <div class="flex items-start space-x-4">
+                        <div class="w-12 h-12 bg-green-500 rounded-lg flex items-center justify-center text-white font-bold">🎯</div>
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-900 mb-2">Block Clearing Techniques</h3>
+                            <p class="text-gray-700">Specific methods to clear the energetic blocks we identified in your analysis, customized to your personal resistance patterns.</p>
+                            <p class="text-sm text-gray-500 mt-2">Value: $147</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="border border-gray-200 rounded-lg p-6">
+                    <div class="flex items-start space-x-4">
+                        <div class="w-12 h-12 bg-purple-500 rounded-lg flex items-center justify-center text-white font-bold">📊</div>
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-900 mb-2">Advanced Frequency Calculator</h3>
+                            <p class="text-gray-700">Interactive tool to track your frequency alignment and identify the best times for major manifestations based on your personal cycle.</p>
+                            <p class="text-sm text-gray-500 mt-2">Value: $67</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="border border-gray-200 rounded-lg p-6">
+                    <div class="flex items-start space-x-4">
+                        <div class="w-12 h-12 bg-red-500 rounded-lg flex items-center justify-center text-white font-bold">⏰</div>
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-900 mb-2">Your Personal Abundance Timeline</h3>
+                            <p class="text-gray-700">When and how abundance will manifest in your life based on your unique frequency signature and current alignment level.</p>
+                            <p class="text-sm text-gray-500 mt-2">Value: $77</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-8 p-6 bg-gray-100 rounded-lg">
+                <p class="text-2xl font-bold text-gray-900">Total Value: $585</p>
+                <p class="text-lg text-gray-600 mt-2">Your Investment Today: Only $47</p>
+                <p class="text-sm text-green-600 mt-1">You Save $538 (92% off)</p>
+            </div>
+        </div>
+
+        <!-- Urgency -->
+        <div class="urgency-banner">
+            <div class="text-red-700">
+                <p class="font-bold text-lg mb-2">⚠️ IMPORTANT: This Offer Expires Soon ⚠️</p>
+                <p>This complete analysis is temporarily available for just $47 (normally $197). We can only offer this discount for a limited time due to the personalized nature of each analysis.</p>
+            </div>
+        </div>
+
+        <!-- Objection Handling -->
+        <div class="mb-12">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6 serif">"But What If This Doesn't Work For Me?"</h2>
+            
+            <div class="prose prose-lg max-w-none">
+                <p class="text-lg text-gray-700 leading-relaxed mb-6">
+                    I get it. You've probably tried other manifestation methods before and been disappointed. That's exactly why I'm offering this guarantee:
+                </p>
+                
+                <div class="bg-green-50 border-2 border-green-400 rounded-lg p-8 text-center">
+                    <h3 class="text-2xl font-bold text-green-800 mb-4">60-Day "Show Me The Money" Guarantee</h3>
+                    <p class="text-green-700 mb-4">Use your personal abundance code for 60 full days. If you don't see a noticeable increase in your financial flow - even if it's just $50 - I'll refund every penny, no questions asked.</p>
+                    <p class="text-sm text-green-600">That means you risk absolutely nothing.</p>
+                </div>
+                
+                <p class="text-lg text-gray-700 leading-relaxed mt-6">
+                    <strong>Plus, you keep everything even if you refund.</strong> The code, the protocols, the calculator - it's all yours. I'm that confident this will work for you.
+                </p>
+            </div>
+        </div>
+
+        <!-- Main CTA -->
+        <div class="text-center mb-12">
+            <a href="checkout.html" class="cta-button text-xl">
+                🔓 Yes! Unlock My Abundance Code For Just $47
+            </a>
+            <p class="text-sm text-gray-500 mt-4">Instant access • 60-day guarantee • Secure checkout</p>
+        </div>
+
+        <!-- Final Push -->
+        <div class="mb-12">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6 serif">One More Thing...</h2>
+            
+            <div class="prose prose-lg max-w-none">
+                <p class="text-lg text-gray-700 leading-relaxed mb-6">
+                    I want to be completely honest with you about something.
+                </p>
+                
+                <p class="text-lg text-gray-700 leading-relaxed mb-6">
+                    <strong>This isn't about getting rich quick.</strong> Your abundance code isn't a magic wand that will instantly make you a millionaire overnight.
+                </p>
+                
+                <p class="text-lg text-gray-700 leading-relaxed mb-6">
+                    What it IS, is a precise tool that aligns your energy with your natural abundance frequency. When that happens, opportunities start flowing more easily. Money shows up in unexpected ways. Your financial situation improves steadily and sustainably.
+                </p>
+                
+                <div class="highlight-box">
+                    <p class="font-semibold text-gray-900 mb-2">Think of it like this:</p>
+                    <p class="text-gray-800">Instead of swimming upstream against your natural flow, you'll finally be swimming WITH the current. Everything becomes easier when you're aligned with your true frequency.</p>
+                </div>
+                
+                <p class="text-xl text-gray-700 leading-relaxed font-semibold">
+                    The question is: Are you ready to stop struggling and start flowing?
+                </p>
+            </div>
+        </div>
+
+        <!-- Final CTA -->
+        <div class="text-center mb-16">
+            <a href="checkout.html" class="cta-button text-xl">
+                🔓 Unlock My Abundance Code Now - $47
+            </a>
+            <p class="text-sm text-gray-500 mt-4">
+                <span class="inline-block mr-4">✅ Instant Digital Access</span>
+                <span class="inline-block mr-4">✅ 60-Day Guarantee</span>
+                <span class="inline-block">✅ Secure Payment</span>
+            </p>
+        </div>
+
+        <!-- Footer -->
+        <div class="text-center text-gray-500 text-sm border-t border-gray-200 pt-8">
+            <p>© The Abundance Code. All rights reserved.</p>
+            <p class="mt-2">This site is not affiliated with Facebook, Google, or any other advertising platform.</p>
+        </div>
+
+    </div>
+
+    <script>
+        // Get stored data from quiz
+        const storedCode = sessionStorage.getItem('abundanceCode') || '374';
+        const storedAnswers = JSON.parse(sessionStorage.getItem('quizAnswers') || '{}');
+
+        // Set locked code display
+        document.getElementById('lockedCode').textContent = storedCode;
+
+        // Generate personalized analysis
+        function generatePersonalAnalysis() {
+            const analysisDiv = document.getElementById('personalAnalysis');
+            let content = '';
+
+            // Based on their desires (step 1)
+            if (storedAnswers.step1 === 'wealth_freedom') {
+                content += `<p class="text-lg text-gray-700 leading-relaxed mb-4"><strong>You're driven by a deep need for financial security.</strong> This isn't about greed or materialism - it's about the peace of mind that comes with knowing you'll never have to worry about money again. You have a highly practical manifestation style that responds best to concrete, measurable results.</p>`;
+            } else if (storedAnswers.step1 === 'time_freedom') {
+                content += `<p class="text-lg text-gray-700 leading-relaxed mb-4"><strong>Your soul craves freedom above all else.</strong> You're not just looking for money - you want the time and space to pursue what truly lights you up. Your abundance flows most naturally when you're aligned with joy and passion rather than struggle and force.</p>`;
+            } else if (storedAnswers.step1 === 'impact_legacy') {
+                content += `<p class="text-lg text-gray-700 leading-relaxed mb-4"><strong>You're driven by purpose and meaning.</strong> Your abundance journey is deeply connected to making a positive impact in the world. You manifest most powerfully when your financial goals are aligned with service to others and creating lasting change.</p>`;
+            } else {
+                content += `<p class="text-lg text-gray-700 leading-relaxed mb-4"><strong>Love and connection are your primary drivers.</strong> Your financial flow is directly tied to your relationships and sense of belonging in the world. You manifest through heart-centered energy and authentic connection with others.</p>`;
+            }
+
+            // Based on their struggles (step 6 & 7)
+            if (storedAnswers.step6 === 'money_stress' || storedAnswers.step7 === 'never_enough') {
+                content += `<p class="text-lg text-gray-700 leading-relaxed mb-4">You carry deep financial anxiety that's creating energetic resistance to receiving abundance. <strong>This is actually common among highly sensitive people</strong> - your nervous system is trying to protect you from disappointment, but it's also blocking your natural flow.</p>`;
+            } else if (storedAnswers.step6 === 'self_sabotage') {
+                content += `<p class="text-lg text-gray-700 leading-relaxed mb-4">You have a pattern of unconsciously sabotaging your success just when things start going well. This usually stems from a subconscious belief that you don't deserve good things - but <strong>this pattern can be completely rewired once you know your exact frequency.</strong></p>`;
+            }
+
+            // Universal insight
+            content += `<p class="text-lg text-gray-700 leading-relaxed mb-4">What I see clearly is that <strong>you have tremendous manifesting potential that's currently being suppressed</strong> by specific frequency blocks. You're not broken, and you're not doing anything wrong. You just need the right key to unlock what's already inside you.</p>`;
+
+            analysisDiv.innerHTML = content;
+        }
+
+        // Initialize personalized content
+        document.addEventListener('DOMContentLoaded', function() {
+            generatePersonalAnalysis();
+        });
+    </script>
+
+</body>
+</html>
