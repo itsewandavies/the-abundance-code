@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Abundance Code Revealed | The Abundance Code</title>
+    <title>Your Code Is Ready | The Abundance Code</title>
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -53,6 +53,7 @@
                         'spin-slow': 'spin 40s linear infinite',
                         'spin-slow-reverse': 'spin 50s linear infinite reverse',
                         'fade-in-out': 'fadeInOut 6s ease-in-out infinite',
+                        'locked-pulse': 'lockedPulse 2s ease-in-out infinite',
                     },
                     keyframes: {
                         pan: {
@@ -74,6 +75,10 @@
                         fadeInOut: {
                             '0%, 100%': { opacity: 0.1, transform: 'scale(0.95)' },
                             '50%': { opacity: 0.4, transform: 'scale(1)' },
+                        },
+                        lockedPulse: {
+                            '0%, 100%': { opacity: 0.6, transform: 'scale(1)' },
+                            '50%': { opacity: 1, transform: 'scale(1.05)' },
                         }
                     }
                 }
@@ -144,6 +149,12 @@
             box-shadow: 0 10px 40px -10px rgba(217, 155, 40, 0.7);
         }
 
+        .locked-code {
+            filter: blur(8px);
+            user-select: none;
+            pointer-events: none;
+        }
+
         .reveal {
             opacity: 0;
             transform: translateY(30px);
@@ -157,6 +168,7 @@
         .delay-200 { transition-delay: 200ms; }
         .delay-300 { transition-delay: 300ms; }
         .delay-400 { transition-delay: 400ms; }
+        .delay-500 { transition-delay: 500ms; }
     </style>
 </head>
 <body class="antialiased selection:bg-gold-500 selection:text-cosmic-950">
@@ -194,149 +206,146 @@
             <section class="text-center mb-12 sm:mb-16">
                 <div class="reveal delay-100 mb-6">
                     <div class="w-20 h-20 sm:w-24 sm:h-24 mx-auto bg-gradient-gold rounded-full flex items-center justify-center shadow-lg shadow-gold-500/30 mb-6">
-                        <i data-lucide="sparkles" class="w-10 h-10 sm:w-12 sm:h-12 text-cosmic-950"></i>
+                        <i data-lucide="lock" class="w-10 h-10 sm:w-12 sm:h-12 text-cosmic-950 animate-locked-pulse"></i>
                     </div>
                 </div>
 
                 <h1 class="reveal delay-200 font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight drop-shadow-lg">
-                    Your Personal Abundance Code Is...
+                    Your Personal Abundance Code<br>
+                    <span class="text-gold-300">Is Ready</span>
                 </h1>
 
-                <!-- Code Display -->
-                <div class="reveal delay-300 my-12">
-                    <div class="font-serif text-7xl sm:text-8xl md:text-9xl lg:text-[12rem] font-black text-gradient-gold mb-4" id="abundanceCode">
-                        374
+                <p class="reveal delay-300 text-xl sm:text-2xl text-slate-300 leading-relaxed mb-8 max-w-3xl mx-auto">
+                    Based on your responses, we've calculated your unique 3-digit abundance frequency. 
+                    But it's currently <strong class="text-gold-300">locked</strong> until you get your complete analysis.
+                </p>
+
+                <!-- Locked Code Display -->
+                <div class="reveal delay-400 my-12">
+                    <div class="relative">
+                        <div class="font-serif text-6xl sm:text-7xl md:text-8xl font-black text-gradient-gold mb-4 locked-code">
+                            ###
+                        </div>
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <div class="bg-cosmic-900/80 backdrop-blur-sm rounded-2xl px-6 py-4 border border-gold-300/30">
+                                <div class="flex items-center space-x-3">
+                                    <i data-lucide="lock" class="w-6 h-6 text-gold-300"></i>
+                                    <span class="text-gold-300 font-bold">CODE LOCKED</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="glass-panel rounded-2xl p-6 sm:p-8 max-w-2xl mx-auto">
-                        <h3 class="font-serif text-xl sm:text-2xl font-bold mb-3 text-gold-300" id="codeMeaning">Financial Mastery • Unlimited Abundance • Freedom Code</h3>
-                        <p class="text-base sm:text-lg text-slate-300 leading-relaxed">
-                            🎉 <strong>Congratulations!</strong> This 3-digit code is your unique frequency signature for attracting abundance. 
-                            When this number appears in your life, it's a signal that your manifestation power is activating.
-                        </p>
+                </div>
+
+                <div class="reveal delay-500 glass-panel rounded-2xl p-8 max-w-3xl mx-auto mb-12">
+                    <h3 class="font-serif text-2xl font-bold mb-4 text-gold-300">🔍 What We've Discovered About You:</h3>
+                    <div class="space-y-4 text-left">
+                        <div class="flex items-start space-x-3">
+                            <i data-lucide="check" class="w-5 h-5 text-gold-300 mt-1 flex-shrink-0"></i>
+                            <span class="text-slate-300">Your exact abundance frequency signature has been calculated</span>
+                        </div>
+                        <div class="flex items-start space-x-3">
+                            <i data-lucide="check" class="w-5 h-5 text-gold-300 mt-1 flex-shrink-0"></i>
+                            <span class="text-slate-300">We've identified your primary abundance blocks and limitations</span>
+                        </div>
+                        <div class="flex items-start space-x-3">
+                            <i data-lucide="check" class="w-5 h-5 text-gold-300 mt-1 flex-shrink-0"></i>
+                            <span class="text-slate-300">Your personalized activation timeline has been generated</span>
+                        </div>
+                        <div class="flex items-start space-x-3">
+                            <i data-lucide="check" class="w-5 h-5 text-gold-300 mt-1 flex-shrink-0"></i>
+                            <span class="text-slate-300">Your 3-digit code is ready to unlock your abundance potential</span>
+                        </div>
                     </div>
                 </div>
             </section>
 
-            <!-- Product Access Grid -->
-            <section class="reveal delay-400 mb-12 sm:mb-16">
-                <h2 class="font-serif text-3xl sm:text-4xl font-bold text-center mb-10 text-white">Access Your Abundance Tools:</h2>
-                
-                <div class="grid sm:grid-cols-2 gap-6 lg:gap-8">
-                    <!-- Core Guide -->
-                    <div class="glass-panel rounded-2xl p-6 sm:p-8 group hover:transform hover:scale-105 transition-all duration-300">
-                        <div class="flex items-center space-x-4 mb-4">
-                            <div class="w-12 h-12 bg-gradient-gold rounded-xl flex items-center justify-center">
-                                <i data-lucide="book-open" class="w-6 h-6 text-cosmic-950"></i>
-                            </div>
-                            <h3 class="font-serif text-xl sm:text-2xl font-bold text-white">Core Abundance Guide</h3>
-                        </div>
-                        <p class="text-slate-300 mb-6 leading-relaxed">
-                            Complete 45-page system with 8 detailed chapters, real scientific backing, and interactive exercises for permanent transformation.
+            <!-- Unlock Offer -->
+            <section class="reveal delay-600 mb-12 sm:mb-16">
+                <div class="glass-panel rounded-3xl p-8 sm:p-12 text-center border-2 border-gold-300/30">
+                    <div class="mb-8">
+                        <h2 class="font-serif text-3xl sm:text-4xl font-bold text-white mb-4">
+                            Unlock Your Complete<br>
+                            <span class="text-gradient-gold">Abundance Analysis</span>
+                        </h2>
+                        <p class="text-lg sm:text-xl text-slate-300 leading-relaxed mb-8 max-w-2xl mx-auto">
+                            Get your 3-digit abundance code plus everything you need to activate 
+                            your prosperity frequency and start manifesting abundance immediately.
                         </p>
-                        <a href="core-abundance-activation-guide.html" class="inline-block bg-gradient-gold text-cosmic-950 font-bold px-6 py-3 rounded-xl btn-premium">
-                            Access Guide →
-                        </a>
                     </div>
 
-                    <!-- Calculator -->
-                    <div class="glass-panel rounded-2xl p-6 sm:p-8 group hover:transform hover:scale-105 transition-all duration-300">
-                        <div class="flex items-center space-x-4 mb-4">
-                            <div class="w-12 h-12 bg-gradient-gold rounded-xl flex items-center justify-center">
-                                <i data-lucide="calculator" class="w-6 h-6 text-cosmic-950"></i>
+                    <!-- What's Included -->
+                    <div class="grid sm:grid-cols-2 gap-6 mb-8 max-w-3xl mx-auto">
+                        <div class="glass-panel rounded-xl p-6 text-left">
+                            <div class="flex items-center space-x-3 mb-3">
+                                <i data-lucide="key" class="w-6 h-6 text-gold-300"></i>
+                                <h4 class="font-bold text-white">Your 3-Digit Abundance Code</h4>
                             </div>
-                            <h3 class="font-serif text-xl sm:text-2xl font-bold text-white">Personal Code Calculator</h3>
+                            <p class="text-slate-300 text-sm">Unlock your unique frequency signature and learn exactly how to use it</p>
                         </div>
-                        <p class="text-slate-300 mb-6 leading-relaxed">
-                            Advanced calculation tool with genuine algorithms and personalized results to refine your exact frequency.
-                        </p>
-                        <a href="code-calculator.html" class="inline-block bg-gradient-gold text-cosmic-950 font-bold px-6 py-3 rounded-xl btn-premium">
-                            Use Calculator →
-                        </a>
+                        <div class="glass-panel rounded-xl p-6 text-left">
+                            <div class="flex items-center space-x-3 mb-3">
+                                <i data-lucide="book-open" class="w-6 h-6 text-gold-300"></i>
+                                <h4 class="font-bold text-white">Complete Activation Guide</h4>
+                            </div>
+                            <p class="text-slate-300 text-sm">45-page system with step-by-step activation protocols</p>
+                        </div>
+                        <div class="glass-panel rounded-xl p-6 text-left">
+                            <div class="flex items-center space-x-3 mb-3">
+                                <i data-lucide="calculator" class="w-6 h-6 text-gold-300"></i>
+                                <h4 class="font-bold text-white">Personal Code Calculator</h4>
+                            </div>
+                            <p class="text-slate-300 text-sm">Advanced tool to refine your frequency and track progress</p>
+                        </div>
+                        <div class="glass-panel rounded-xl p-6 text-left">
+                            <div class="flex items-center space-x-3 mb-3">
+                                <i data-lucide="compass" class="w-6 h-6 text-gold-300"></i>
+                                <h4 class="font-bold text-white">Life Path Analysis</h4>
+                            </div>
+                            <p class="text-slate-300 text-sm">Detailed report on your abundance timeline and manifestation patterns</p>
+                        </div>
                     </div>
 
-                    <!-- Life Path -->
-                    <div class="glass-panel rounded-2xl p-6 sm:p-8 group hover:transform hover:scale-105 transition-all duration-300">
-                        <div class="flex items-center space-x-4 mb-4">
-                            <div class="w-12 h-12 bg-gradient-gold rounded-xl flex items-center justify-center">
-                                <i data-lucide="compass" class="w-6 h-6 text-cosmic-950"></i>
-                            </div>
-                            <h3 class="font-serif text-xl sm:text-2xl font-bold text-white">Life Path Analyzer</h3>
-                        </div>
-                        <p class="text-slate-300 mb-6 leading-relaxed">
-                            15+ page detailed reports with real psychological insights for your unique abundance path and timing.
-                        </p>
-                        <a href="life-path-analyzer.html" class="inline-block bg-gradient-gold text-cosmic-950 font-bold px-6 py-3 rounded-xl btn-premium">
-                            Analyze Path →
-                        </a>
+                    <!-- Pricing -->
+                    <div class="mb-8">
+                        <div class="text-slate-400 mb-2">Complete Analysis (Normally $197)</div>
+                        <div class="text-5xl font-bold text-gradient-gold mb-2">$47</div>
+                        <div class="text-slate-400 text-sm">One-time payment • Instant access • 60-day guarantee</div>
                     </div>
 
-                    <!-- Abundance Tracker -->
-                    <div class="glass-panel rounded-2xl p-6 sm:p-8 group hover:transform hover:scale-105 transition-all duration-300">
-                        <div class="flex items-center space-x-4 mb-4">
-                            <div class="w-12 h-12 bg-gradient-gold rounded-xl flex items-center justify-center">
-                                <i data-lucide="trending-up" class="w-6 h-6 text-cosmic-950"></i>
-                            </div>
-                            <h3 class="font-serif text-xl sm:text-2xl font-bold text-white">Abundance Tracker</h3>
-                        </div>
-                        <p class="text-slate-300 mb-6 leading-relaxed">
-                            Full analytics platform with AI insights, goal tracking, and progress visualization for continuous growth.
-                        </p>
-                        <a href="abundance-tracker.html" class="inline-block bg-gradient-gold text-cosmic-950 font-bold px-6 py-3 rounded-xl btn-premium">
-                            Track Progress →
-                        </a>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Upsell Section -->
-            <section class="reveal delay-500 mb-12 sm:mb-16">
-                <div class="glass-panel rounded-3xl p-8 sm:p-12 text-center border-l-4 border-l-gold-300">
-                    <div class="mb-6">
-                        <div class="flex items-center justify-center space-x-2 mb-4">
-                            <i data-lucide="zap" class="w-6 h-6 text-gold-300"></i>
-                            <h3 class="font-serif text-2xl sm:text-3xl font-bold text-gold-300">Want to Accelerate Your Results?</h3>
-                            <i data-lucide="zap" class="w-6 h-6 text-gold-300"></i>
-                        </div>
-                        <p class="text-lg sm:text-xl text-slate-300 leading-relaxed mb-8 max-w-3xl mx-auto">
-                            Get the complete mastery system used by our most successful practitioners to manifest 
-                            abundance <strong class="text-gold-300">10x faster</strong> than the basic method.
-                        </p>
-                    </div>
+                    <!-- CTA -->
                     <div class="space-y-4">
-                        <a href="oto1-killer.html" class="block w-full sm:w-auto sm:inline-block bg-gradient-gold text-cosmic-950 font-bold text-lg sm:text-xl px-8 py-4 rounded-2xl btn-premium">
-                            Get Complete Mastery System ($197) →
+                        <a href="checkout.html" class="block w-full sm:w-auto sm:inline-block bg-gradient-gold text-cosmic-950 font-bold text-xl px-8 py-4 rounded-2xl btn-premium">
+                            🔓 Unlock My Abundance Code - $47
                         </a>
-                        <div class="flex items-center justify-center space-x-2 text-sm text-slate-400">
-                            <i data-lucide="shield-check" class="w-4 h-4 text-green-400"></i>
-                            <span>60-day money-back guarantee</span>
+                        <div class="flex items-center justify-center space-x-4 text-sm text-slate-400">
+                            <div class="flex items-center space-x-1">
+                                <i data-lucide="shield-check" class="w-4 h-4 text-green-400"></i>
+                                <span>60-Day Guarantee</span>
+                            </div>
+                            <div class="flex items-center space-x-1">
+                                <i data-lucide="zap" class="w-4 h-4 text-gold-300"></i>
+                                <span>Instant Access</span>
+                            </div>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <!-- Next Steps -->
-            <section class="reveal delay-600">
-                <div class="glass-panel rounded-2xl p-8 sm:p-10">
-                    <h3 class="font-serif text-2xl sm:text-3xl font-bold text-center mb-8 text-white">Your Next Steps:</h3>
-                    <div class="max-w-2xl mx-auto">
-                        <ol class="space-y-4 sm:space-y-6">
-                            <li class="flex items-start space-x-4">
-                                <span class="flex-shrink-0 w-8 h-8 bg-gradient-gold text-cosmic-950 rounded-full text-sm font-bold flex items-center justify-center">1</span>
-                                <span class="text-slate-300 text-base sm:text-lg leading-relaxed">Start with the Core Abundance Guide to understand your unique frequency signature and activation methods</span>
-                            </li>
-                            <li class="flex items-start space-x-4">
-                                <span class="flex-shrink-0 w-8 h-8 bg-gradient-gold text-cosmic-950 rounded-full text-sm font-bold flex items-center justify-center">2</span>
-                                <span class="text-slate-300 text-base sm:text-lg leading-relaxed">Use the Personal Code Calculator to refine your exact abundance frequency and get detailed instructions</span>
-                            </li>
-                            <li class="flex items-start space-x-4">
-                                <span class="flex-shrink-0 w-8 h-8 bg-gradient-gold text-cosmic-950 rounded-full text-sm font-bold flex items-center justify-center">3</span>
-                                <span class="text-slate-300 text-base sm:text-lg leading-relaxed">Track your progress with the Abundance Tracker dashboard to monitor frequency shifts and manifestations</span>
-                            </li>
-                            <li class="flex items-start space-x-4">
-                                <span class="flex-shrink-0 w-8 h-8 bg-gradient-gold text-cosmic-950 rounded-full text-sm font-bold flex items-center justify-center">4</span>
-                                <span class="text-slate-300 text-base sm:text-lg leading-relaxed">Watch for your code (<span id="codeReminder" class="text-gold-300 font-bold">374</span>) appearing in daily life as confirmation of activation</span>
-                            </li>
-                        </ol>
+            <!-- Urgency & Social Proof -->
+            <section class="reveal delay-700 mb-12">
+                <div class="glass-panel rounded-2xl p-6 sm:p-8 border-l-4 border-l-red-500">
+                    <div class="flex items-center justify-center space-x-2 mb-4">
+                        <i data-lucide="clock" class="w-5 h-5 text-red-400"></i>
+                        <span class="font-bold text-red-400 tracking-wide">LIMITED TIME OFFER</span>
+                        <i data-lucide="clock" class="w-5 h-5 text-red-400"></i>
+                    </div>
+                    <p class="text-center text-slate-300 mb-4">
+                        This complete analysis is temporarily available for just $47 (normally $197). 
+                        Over <strong class="text-gold-300">12,000 people</strong> have unlocked their abundance codes in the last 30 days.
+                    </p>
+                    <div class="text-center text-sm text-slate-400">
+                        Join them before this offer expires
                     </div>
                 </div>
             </section>
@@ -347,12 +356,6 @@
     <script>
         // Initialize Lucide Icons
         lucide.createIcons();
-
-        // Generate random code for demo (in real app, this would come from quiz results)
-        const codes = [374, 528, 741, 639, 396, 417, 285, 963, 852, 174];
-        const randomCode = codes[Math.floor(Math.random() * codes.length)];
-        document.getElementById('abundanceCode').textContent = randomCode;
-        document.getElementById('codeReminder').textContent = randomCode;
 
         // Reveal animations on scroll
         document.addEventListener("DOMContentLoaded", () => {

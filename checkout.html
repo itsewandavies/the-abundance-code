@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Checkout | The Abundance Code</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Cinzel for mystical/numerology vibe, Outfit for clean body -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&family=Cinzel:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                        serif: ['Cinzel', 'serif'],
+                    },
+                    colors: {
+                        cosmic: {
+                            950: '#06010D',
+                            900: '#0E0320',
+                            800: '#1A063C',
+                            700: '#2A0A5E'
+                        },
+                        gold: {
+                            200: '#FEF0C7',
+                            300: '#FDE08B',
+                            400: '#F6C358',
+                            500: '#D99B28',
+                            600: '#B2761A'
+                        },
+                        mystic: {
+                            glow: '#9D4EDD',
+                            teal: '#2DD4BF'
+                        }
+                    },
+                    animation: {
+                        'float': 'float 8s ease-in-out infinite',
+                        'float-delayed': 'float 8s ease-in-out 4s infinite',
+                        'pulse-glow': 'pulse-glow 4s ease-in-out infinite',
+                        'countdown': 'countdown 1s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-15px)' },
+                        },
+                        'pulse-glow': {
+                            '0%, 100%': { opacity: 0.3, transform: 'scale(1)' },
+                            '50%': { opacity: 0.6, transform: 'scale(1.05)' },
+                        },
+                        countdown: {
+                            '0%': { transform: 'scale(1)', opacity: 1 },
+                            '50%': { transform: 'scale(1.05)', opacity: 0.8 },
+                            '100%': { transform: 'scale(1)', opacity: 1 },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #06010D;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        .noise-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 50;
+            opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .bg-gradient-gold {
+            background: linear-gradient(135deg, #FDE08B 0%, #D99B28 50%, #B2761A 100%);
+        }
+
+        .btn-premium {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-premium::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.3) 50%, rgba(255,255,255,0) 100%);
+            transform: skewX(-20deg);
+            animation: shimmer 4s infinite;
+        }
+
+        .btn-premium:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 40px -10px rgba(217, 155, 40, 0.7);
+        }
+
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        .form-input {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus {
+            border-color: #FDE08B;
+            box-shadow: 0 0 20px rgba(253, 224, 139, 0.3);
+            outline: none;
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .checkout-container {
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        @media (max-width: 1024px) {
+            .checkout-container {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-gold-500 selection:text-cosmic-950">
+
+    <!-- Film Grain Overlay -->
+    <div class="noise-overlay"></div>
+
+    <!-- Animated Cosmic Background -->
+    <div class="fixed inset-0 z-0 overflow-hidden pointer-events-none">
+        <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-cosmic-800 via-cosmic-950 to-cosmic-950"></div>
+        <div class="absolute top-[-10%] left-[-10%] w-[50vw] h-[50vw] rounded-full bg-purple-900/20 blur-[120px] animate-float"></div>
+        <div class="absolute bottom-[-20%] right-[-15%] w-[40vw] h-[40vw] rounded-full bg-gold-400/10 blur-[100px] animate-float-delayed"></div>
+        <div class="absolute top-[40%] right-[70%] w-[25vw] h-[25vw] rounded-full bg-mystic-teal/15 blur-[80px] animate-pulse-glow"></div>
+    </div>
+
+    <!-- Header -->
+    <header class="relative z-10 pt-6 sm:pt-8 pb-4">
+        <div class="container mx-auto px-6 text-center">
+            <div class="flex items-center justify-center space-x-3">
+                <div class="w-8 h-8 border-2 border-gold-300 rotate-45 shadow-lg shadow-gold-500/30"></div>
+                <span class="font-serif font-bold text-xl sm:text-2xl tracking-wide text-gold-300">THE ABUNDANCE CODE</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Checkout Content -->
+    <main class="relative z-10 py-8 sm:py-12">
+        <div class="container mx-auto px-6">
+            
+            <!-- Urgent Timer -->
+            <div class="glass-panel border-l-4 border-l-red-500 rounded-lg p-4 mb-8 text-center max-w-2xl mx-auto">
+                <div class="flex items-center justify-center space-x-2 text-red-400 mb-2">
+                    <i data-lucide="clock" class="w-5 h-5 animate-countdown"></i>
+                    <span class="font-bold text-sm tracking-wide">SPECIAL OFFER EXPIRES SOON</span>
+                    <i data-lucide="clock" class="w-5 h-5 animate-countdown"></i>
+                </div>
+                <p class="text-slate-300">Complete your order in the next <span class="text-gold-300 font-bold" id="countdown">14:59</span></p>
+            </div>
+
+            <div class="checkout-container">
+                
+                <!-- Left Column - Checkout Form -->
+                <div class="space-y-8">
+                    
+                    <!-- Checkout Form -->
+                    <div class="glass-panel rounded-2xl p-8">
+                        <h2 class="font-serif text-3xl font-bold mb-6 text-white">Secure Checkout</h2>
+                        
+                        <form id="checkoutForm" class="space-y-6">
+                            <!-- Email -->
+                            <div>
+                                <label class="block text-sm font-medium text-slate-300 mb-2">Email Address</label>
+                                <input type="email" id="email" required class="form-input w-full px-4 py-3 rounded-lg text-white" placeholder="your@email.com">
+                            </div>
+
+                            <!-- Name Fields -->
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-slate-300 mb-2">First Name</label>
+                                    <input type="text" id="firstName" required class="form-input w-full px-4 py-3 rounded-lg text-white" placeholder="John">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-slate-300 mb-2">Last Name</label>
+                                    <input type="text" id="lastName" required class="form-input w-full px-4 py-3 rounded-lg text-white" placeholder="Doe">
+                                </div>
+                            </div>
+
+                            <!-- Payment Method -->
+                            <div class="space-y-4">
+                                <h3 class="font-semibold text-white flex items-center space-x-2">
+                                    <i data-lucide="credit-card" class="w-5 h-5 text-gold-300"></i>
+                                    <span>Payment Information</span>
+                                </h3>
+                                
+                                <!-- Card Number -->
+                                <div>
+                                    <label class="block text-sm font-medium text-slate-300 mb-2">Card Number</label>
+                                    <input type="text" id="cardNumber" required class="form-input w-full px-4 py-3 rounded-lg text-white" placeholder="1234 5678 9012 3456" maxlength="19">
+                                </div>
+
+                                <!-- Expiry & CVV -->
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block text-sm font-medium text-slate-300 mb-2">Expiry Date</label>
+                                        <input type="text" id="expiryDate" required class="form-input w-full px-4 py-3 rounded-lg text-white" placeholder="MM/YY" maxlength="5">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-slate-300 mb-2">CVV</label>
+                                        <input type="text" id="cvv" required class="form-input w-full px-4 py-3 rounded-lg text-white" placeholder="123" maxlength="4">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Billing Address -->
+                            <div class="space-y-4">
+                                <h3 class="font-semibold text-white">Billing Address</h3>
+                                
+                                <div>
+                                    <label class="block text-sm font-medium text-slate-300 mb-2">Address Line 1</label>
+                                    <input type="text" id="address1" required class="form-input w-full px-4 py-3 rounded-lg text-white" placeholder="123 Main Street">
+                                </div>
+
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block text-sm font-medium text-slate-300 mb-2">City</label>
+                                        <input type="text" id="city" required class="form-input w-full px-4 py-3 rounded-lg text-white" placeholder="New York">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-slate-300 mb-2">ZIP/Postal Code</label>
+                                        <input type="text" id="zipCode" required class="form-input w-full px-4 py-3 rounded-lg text-white" placeholder="10001">
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label class="block text-sm font-medium text-slate-300 mb-2">Country</label>
+                                    <select id="country" required class="form-input w-full px-4 py-3 rounded-lg text-white">
+                                        <option value="">Select Country</option>
+                                        <option value="US">United States</option>
+                                        <option value="CA">Canada</option>
+                                        <option value="GB">United Kingdom</option>
+                                        <option value="AU">Australia</option>
+                                        <option value="DE">Germany</option>
+                                        <option value="FR">France</option>
+                                        <option value="NL">Netherlands</option>
+                                        <option value="SE">Sweden</option>
+                                        <option value="NO">Norway</option>
+                                        <option value="DK">Denmark</option>
+                                        <!-- Add more countries as needed -->
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Submit Button -->
+                            <button type="submit" class="w-full bg-gradient-gold text-cosmic-950 font-bold text-xl py-4 rounded-2xl btn-premium">
+                                🔓 Unlock My Abundance Code - $47
+                            </button>
+
+                            <!-- Security -->
+                            <div class="flex items-center justify-center space-x-4 text-sm text-slate-400">
+                                <div class="flex items-center space-x-1">
+                                    <i data-lucide="shield-check" class="w-4 h-4 text-green-400"></i>
+                                    <span>256-bit SSL Secure</span>
+                                </div>
+                                <div class="flex items-center space-x-1">
+                                    <i data-lucide="lock" class="w-4 h-4 text-green-400"></i>
+                                    <span>Safe & Encrypted</span>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+
+                </div>
+
+                <!-- Right Column - Order Summary -->
+                <div class="space-y-6">
+                    
+                    <!-- Order Summary -->
+                    <div class="glass-panel rounded-2xl p-6 sticky top-6">
+                        <h3 class="font-serif text-2xl font-bold mb-6 text-white">Order Summary</h3>
+                        
+                        <div class="space-y-4 mb-6">
+                            <div class="flex justify-between items-start">
+                                <div class="flex-1 pr-4">
+                                    <h4 class="font-semibold text-white">Complete Abundance Analysis</h4>
+                                    <p class="text-sm text-slate-400 mt-1">3-digit code + activation guide + calculator + life path analysis</p>
+                                </div>
+                                <div class="text-gold-300 font-bold">$47</div>
+                            </div>
+                        </div>
+
+                        <div class="border-t border-white/10 pt-4 mb-6">
+                            <div class="flex justify-between items-center text-lg">
+                                <span class="font-semibold text-white">Total:</span>
+                                <span class="font-bold text-2xl text-gold-300">$47</span>
+                            </div>
+                            <p class="text-sm text-slate-400 mt-2">One-time payment • No recurring charges</p>
+                        </div>
+
+                        <!-- Guarantee -->
+                        <div class="glass-panel rounded-lg p-4 border-l-4 border-l-green-500">
+                            <div class="flex items-center space-x-2 mb-2">
+                                <i data-lucide="shield-check" class="w-5 h-5 text-green-400"></i>
+                                <span class="font-bold text-green-400">60-Day Money-Back Guarantee</span>
+                            </div>
+                            <p class="text-sm text-slate-300">If you're not completely satisfied, get a full refund within 60 days.</p>
+                        </div>
+
+                        <!-- What You Get -->
+                        <div class="mt-6">
+                            <h4 class="font-bold text-white mb-3">🎁 You'll Get Instant Access To:</h4>
+                            <ul class="space-y-2 text-sm text-slate-300">
+                                <li class="flex items-center space-x-2">
+                                    <i data-lucide="check" class="w-4 h-4 text-gold-300 flex-shrink-0"></i>
+                                    <span>Your personal 3-digit abundance code</span>
+                                </li>
+                                <li class="flex items-center space-x-2">
+                                    <i data-lucide="check" class="w-4 h-4 text-gold-300 flex-shrink-0"></i>
+                                    <span>Complete 45-page activation guide</span>
+                                </li>
+                                <li class="flex items-center space-x-2">
+                                    <i data-lucide="check" class="w-4 h-4 text-gold-300 flex-shrink-0"></i>
+                                    <span>Advanced frequency calculator</span>
+                                </li>
+                                <li class="flex items-center space-x-2">
+                                    <i data-lucide="check" class="w-4 h-4 text-gold-300 flex-shrink-0"></i>
+                                    <span>Detailed life path analysis</span>
+                                </li>
+                                <li class="flex items-center space-x-2">
+                                    <i data-lucide="check" class="w-4 h-4 text-gold-300 flex-shrink-0"></i>
+                                    <span>Progress tracking dashboard</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+        lucide.createIcons();
+        
+        // Countdown timer
+        let timeLeft = 15 * 60; // 15 minutes
+        
+        function updateCountdown() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            const display = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+            
+            document.getElementById('countdown').textContent = display;
+            
+            if (timeLeft > 0) {
+                timeLeft--;
+            } else {
+                timeLeft = 15 * 60; // Reset
+            }
+        }
+        
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+        // Card number formatting
+        document.getElementById('cardNumber').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\s/g, '').replace(/[^0-9]/gi, '');
+            let formattedValue = value.match(/.{1,4}/g)?.join(' ');
+            e.target.value = formattedValue || value;
+        });
+
+        // Expiry date formatting
+        document.getElementById('expiryDate').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length >= 2) {
+                value = value.substring(0, 2) + '/' + value.substring(2, 4);
+            }
+            e.target.value = value;
+        });
+
+        // CVV formatting
+        document.getElementById('cvv').addEventListener('input', function(e) {
+            e.target.value = e.target.value.replace(/\D/g, '');
+        });
+
+        // Form submission
+        document.getElementById('checkoutForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Validate form
+            const form = e.target;
+            if (!form.checkValidity()) {
+                form.reportValidity();
+                return;
+            }
+
+            // Show processing state
+            const submitBtn = form.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<i data-lucide="loader-2" class="w-5 h-5 inline animate-spin mr-2"></i>Processing...';
+            submitBtn.disabled = true;
+            lucide.createIcons();
+
+            // Simulate payment processing
+            setTimeout(() => {
+                // In real app, this would process payment via Stripe/PayPal
+                // For now, just redirect to thank you page
+                window.location.href = 'thankyou.html';
+            }, 2000);
+        });
+    </script>
+</body>
+</html>

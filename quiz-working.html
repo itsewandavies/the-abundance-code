@@ -296,7 +296,11 @@
                 
                 // For demo, we'll skip to results after step 1
                 if (currentStepNum === 2) {
-                    currentStepNum = 8;
+                    // Go to quiz results page instead of showing code
+                    setTimeout(() => {
+                        window.location.href = 'quiz-results.html';
+                    }, 500);
+                    return;
                 }
                 
                 // Show next step
