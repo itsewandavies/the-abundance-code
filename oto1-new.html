@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Building Your Transformation Dashboard...</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg-deep:#0a0a2e;--bg-mid:#0d0d3a;--violet:#7c3aed;--violet-light:#a855f7;--gold:#f5c542;--gold-dark:#d4a017;--text:#e0dff0;--text-dim:#8888a8;--danger:#ef4444;--success:#22c55e}
+body{font-family:'Inter',-apple-system,sans-serif;background:linear-gradient(135deg,var(--bg-deep),var(--bg-mid));color:var(--text);line-height:1.6;font-size:17px;min-height:100vh;overflow-x:hidden}
+
+/* Loading Screen */
+.loading-screen{position:fixed;top:0;left:0;width:100%;height:100%;background:linear-gradient(135deg,var(--bg-deep),var(--bg-mid));z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.loading-screen.hidden{opacity:0;pointer-events:none;transition:opacity 0.5s ease}
+.loading-logo{font-size:72px;margin-bottom:24px;background:linear-gradient(135deg,var(--violet),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:pulse 2s ease-in-out infinite}
+.loading-text{font-size:28px;font-weight:700;color:#fff;margin-bottom:12px;letter-spacing:-0.5px}
+.loading-subtext{font-size:16px;color:var(--text-dim);margin-bottom:40px}
+.loading-bar{width:300px;height:6px;background:rgba(255,255,255,0.1);border-radius:3px;overflow:hidden;margin-bottom:20px}
+.loading-fill{height:100%;background:linear-gradient(90deg,var(--violet),var(--gold));width:0%;animation:loadingProgress 2.5s ease-out forwards}
+.loading-status{font-size:14px;color:var(--violet-light);font-weight:600}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+@keyframes loadingProgress{0%{width:0%}100%{width:100%}}
+
+/* Main Content */
+.main-content{opacity:0;transition:opacity 0.5s ease}
+.main-content.visible{opacity:1}
+
+/* Urgency banner */
+.urgency-banner{background:linear-gradient(135deg,var(--danger),#dc2626);padding:20px;text-align:center;margin:0;animation:pulse-banner 2s ease-in-out infinite alternate;position:sticky;top:0;z-index:100;border-bottom:2px solid rgba(239,68,68,0.5)}
+.urgency-banner h2{color:#fff;font-size:24px;font-weight:800;margin-bottom:8px}
+.urgency-banner p{color:#fed7d7;font-size:16px;margin:0}
+.urgency-timer{font-size:28px;font-weight:900;color:#fff;margin:12px 0;font-family:'Courier New',monospace}
+@keyframes pulse-banner{0%{transform:scale(1)}100%{transform:scale(1.01)}}
+
+/* Hero Section */
+.hero{background:linear-gradient(135deg,rgba(124,58,237,0.2),rgba(168,85,247,0.1));padding:60px 20px;text-align:center;border-bottom:1px solid rgba(124,58,237,0.3);position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="stars" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="0.5" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23stars)"/></svg>');opacity:0.3}
+.hero-content{position:relative;z-index:1;max-width:800px;margin:0 auto}
+.hero h1{font-size:42px;font-weight:900;color:#fff;margin-bottom:20px;line-height:1.1;letter-spacing:-1px}
+.hero h1 .highlight{background:linear-gradient(135deg,var(--gold),#fbbf24);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero-sub{font-size:20px;color:var(--text-dim);margin-bottom:30px;line-height:1.5}
+.hero-proof{font-size:16px;color:var(--violet-light);font-weight:600;margin:20px 0}
+
+/* Personal Callout */
+.personal-callout{background:linear-gradient(135deg,rgba(245,197,66,0.15),rgba(245,197,66,0.05));border:2px solid var(--gold);border-radius:24px;padding:40px;margin:40px auto;text-align:center;max-width:700px;position:relative;overflow:hidden}
+.personal-callout::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:linear-gradient(45deg,transparent,rgba(245,197,66,0.1),transparent);animation:shimmer 3s ease-in-out infinite}
+.personal-callout h2{color:var(--gold);font-size:32px;font-weight:900;margin-bottom:20px}
+.code-display{font-size:84px;font-weight:900;color:#fff;letter-spacing:24px;margin:24px 0;text-shadow:0 0 40px rgba(245,197,66,0.5);animation:code-pulse 2s ease-in-out infinite alternate}
+.personal-callout p{font-size:18px;color:#d0d0d0;line-height:1.7}
+@keyframes shimmer{0%{transform:translateX(-100%)}100%{transform:translateX(100%)}}
+@keyframes code-pulse{0%{text-shadow:0 0 40px rgba(245,197,66,0.5)}100%{text-shadow:0 0 60px rgba(245,197,66,0.8)}}
+
+/* Container */
+.container{max-width:900px;margin:0 auto;padding:40px 20px}
+
+/* Problem/Solution sections */
+.problem-section{background:linear-gradient(135deg,rgba(239,68,68,0.1),rgba(220,38,38,0.05));border-left:4px solid var(--danger);padding:40px;border-radius:0 20px 20px 0;margin:40px 0;position:relative}
+.problem-section::before{content:'⚠️';position:absolute;top:20px;right:30px;font-size:32px}
+.problem-section h2{color:#fff;font-size:28px;font-weight:800;margin-bottom:20px}
+
+.solution-section{background:linear-gradient(135deg,rgba(34,197,94,0.1),rgba(16,185,129,0.05));border-left:4px solid var(--success);padding:40px;border-radius:0 20px 20px 0;margin:40px 0;position:relative}
+.solution-section::before{content:'✅';position:absolute;top:20px;right:30px;font-size:32px}
+.solution-section h2{color:#fff;font-size:28px;font-weight:800;margin-bottom:20px}
+
+/* What You Get section */
+.vault-preview{background:rgba(255,255,255,0.05);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.1);border-radius:24px;padding:40px;margin:40px 0}
+.vault-preview h2{color:#fff;font-size:32px;font-weight:900;margin-bottom:30px;text-align:center}
+.vault-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px;margin:30px 0}
+.vault-item{background:linear-gradient(135deg,rgba(124,58,237,0.1),rgba(168,85,247,0.05));border:1px solid rgba(124,58,237,0.2);border-radius:16px;padding:28px;text-align:center;transition:transform 0.3s ease,box-shadow 0.3s ease}
+.vault-item:hover{transform:translateY(-5px);box-shadow:0 10px 40px rgba(124,58,237,0.3)}
+.vault-icon{font-size:48px;margin-bottom:16px;display:block}
+.vault-title{color:#fff;font-size:20px;font-weight:700;margin-bottom:12px}
+.vault-desc{color:var(--text-dim);font-size:15px;line-height:1.5;margin-bottom:16px}
+.vault-value{color:var(--gold);font-size:14px;font-weight:700}
+
+/* Testimonials */
+.testimonials{margin:50px 0}
+.testimonials h2{color:#fff;font-size:32px;font-weight:900;margin-bottom:30px;text-align:center}
+.testimonial-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(350px,1fr));gap:24px}
+.testimonial{background:rgba(255,255,255,0.05);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.1);border-radius:16px;padding:28px;position:relative}
+.testimonial::before{content:'"';position:absolute;top:10px;left:20px;font-size:48px;color:var(--violet-light);opacity:0.5}
+.testimonial-content{font-style:italic;color:#c8c8e0;line-height:1.6;margin-bottom:16px;padding-left:20px}
+.testimonial-author{color:var(--gold);font-weight:700;font-size:15px;text-align:right}
+.testimonial-result{color:var(--success);font-weight:700;font-size:16px;margin-top:8px;text-align:right}
+
+/* Price section */
+.price-section{background:linear-gradient(135deg,rgba(124,58,237,0.15),rgba(168,85,247,0.08));border:3px solid var(--violet);border-radius:28px;padding:50px;text-align:center;margin:50px 0;position:relative;overflow:hidden}
+.price-section::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:linear-gradient(45deg,transparent,rgba(124,58,237,0.1),transparent);animation:price-shimmer 4s ease-in-out infinite}
+.price-header h2{color:#fff;font-size:36px;font-weight:900;margin-bottom:16px}
+.price-comparison{display:flex;align-items:center;justify-content:center;gap:24px;margin:24px 0;flex-wrap:wrap}
+.price-original{font-size:28px;color:var(--text-dim);text-decoration:line-through;opacity:0.7}
+.price-current{font-size:56px;color:var(--gold);font-weight:900;text-shadow:0 0 30px rgba(245,197,66,0.5)}
+.price-savings{color:var(--success);font-size:20px;font-weight:700;margin-top:12px}
+.price-reason{margin:30px 0;font-size:18px;line-height:1.6;color:#c8c8e0}
+@keyframes price-shimmer{0%,100%{transform:translateX(-100%)}50%{transform:translateX(100%)}}
+
+/* Checkout embed */
+.checkout-embed{background:#fff;border-radius:20px;border:3px solid var(--gold);margin:40px auto;max-width:600px;overflow:hidden;box-shadow:0 12px 50px rgba(245,197,66,0.4)}
+.checkout-loading{padding:40px;text-align:center;color:#333}
+
+/* CTA Button */
+.cta-button{display:inline-block;background:linear-gradient(135deg,var(--gold),#fbbf24);color:#0a0a2e;font-size:20px;font-weight:800;padding:20px 50px;border-radius:16px;text-decoration:none;border:none;cursor:pointer;transition:all 0.3s ease;box-shadow:0 8px 32px rgba(245,197,66,0.4);margin:20px 0;letter-spacing:0.5px;position:relative;overflow:hidden}
+.cta-button::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.4),transparent);transition:left 0.5s ease}
+.cta-button:hover{transform:translateY(-3px);box-shadow:0 12px 40px rgba(245,197,66,0.5)}
+.cta-button:hover::before{left:100%}
+
+/* Guarantee */
+.guarantee{background:rgba(34,197,94,0.1);border:2px solid var(--success);border-radius:20px;padding:30px;margin:40px 0;text-align:center}
+.guarantee h3{color:var(--success);font-size:24px;font-weight:700;margin-bottom:16px}
+.guarantee p{color:#c8c8e0;font-size:16px;line-height:1.6}
+
+/* Mobile Responsive */
+@media(max-width:768px){
+.hero h1{font-size:32px}
+.code-display{font-size:64px;letter-spacing:16px}
+.price-current{font-size:44px}
+.vault-grid{grid-template-columns:1fr}
+.testimonial-grid{grid-template-columns:1fr}
+.price-comparison{flex-direction:column;gap:12px}
+}
+
+/* Scarcity elements */
+.scarcity{color:var(--danger);font-weight:700;text-align:center;margin:20px 0;font-size:14px;animation:blink 2s ease-in-out infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.7}}
+</style>
+</head>
+<body>
+
+<!-- Loading Screen -->
+<div class="loading-screen" id="loadingScreen">
+<div class="loading-logo">✨</div>
+<div class="loading-text">Building Your Transformation Dashboard...</div>
+<div class="loading-subtext">Preparing your advanced abundance tools</div>
+<div class="loading-bar">
+<div class="loading-fill"></div>
+</div>
+<div class="loading-status" id="loadingStatus">Initializing your abundance frequency...</div>
+</div>
+
+<!-- Main Content -->
+<div class="main-content" id="mainContent">
+
+<!-- Urgency Banner -->
+<div class="urgency-banner">
+<h2>⚠️ EXCLUSIVE ACCESS EXPIRES IN <span class="urgency-timer" id="urgencyTimer">14:59</span></h2>
+<p>This advanced vault is only available to customers who just activated their code</p>
+</div>
+
+<!-- Hero Section -->
+<div class="hero">
+<div class="hero-content">
+<h1>Congratulations! Your <span class="highlight">Abundance Code Is Active</span></h1>
+<p class="hero-sub">But here's what 97% of people don't know... activation is just the beginning.</p>
+<p class="hero-proof">Your code: <strong id="userCode">LOADING...</strong> • Status: <span style="color:#22c55e">ACTIVE</span></p>
+</div>
+</div>
+
+<!-- Personal Section -->
+<div class="container">
+<div class="personal-callout">
+<h2>Your Code Is Working, But...</h2>
+<div class="code-display" id="personalCode">888</div>
+<p><strong>Most people stop here and wonder why their abundance trickles instead of floods.</strong></p>
+<p>The truth? Your 3-digit code is like having a Ferrari with training wheels. It works... but you're only accessing 23% of its power.</p>
+</div>
+
+<!-- Problem Section -->
+<div class="problem-section">
+<h2>The "Starter Code" Limitation</h2>
+<p><strong>Here's what nobody tells you:</strong> The basic activation you just completed is designed to give you a "taste" of what's possible. It's real, it works, and you'll see results.</p>
+<p><strong>But it's capped.</strong> Like a free trial of software that only lets you access the basic features.</p>
+<p><strong>The result?</strong> Small signs of abundance. A unexpected $50 here. A lucky break there. Just enough to prove it works... but not enough to change your life.</p>
+<p><strong>Why the limitation?</strong> Because 97% of people aren't ready for full power. They'd waste it, misuse it, or get overwhelmed.</p>
+</div>
+
+<!-- Solution Section -->
+<div class="solution-section">
+<h2>The Mastery Vault: Full Code Activation</h2>
+<p><strong>You're not most people.</strong> You took action. You activated your code. You're in the 3% who are ready for more.</p>
+<p><strong>The Abundance Mastery Vault</strong> removes all limitations. It's the "enterprise version" of abundance manifestation.</p>
+<p><strong>Instead of 23% power, you get 100%.</strong> Instead of trickles, you get floods. Instead of hoping for abundance, you command it.</p>
+<p><strong>This isn't theory.</strong> These are the advanced protocols used by the ultra-wealthy to maintain and multiply their abundance frequency at will.</p>
+</div>
+
+<!-- What You Get -->
+<div class="vault-preview">
+<h2>🏛️ Inside The Abundance Mastery Vault</h2>
+<div class="vault-grid">
+<div class="vault-item">
+<span class="vault-icon">🚀</span>
+<div class="vault-title">90-Day Wealth Acceleration Program</div>
+<div class="vault-desc">Complete blueprint to go from "starter activation" to "abundance mastery" in exactly 90 days. Daily protocols, weekly milestones, monthly transformations.</div>
+<div class="vault-value">Value: $497</div>
+</div>
+<div class="vault-item">
+<span class="vault-icon">⚡</span>
+<div class="vault-title">Advanced Code Optimization System</div>
+<div class="vault-desc">Web-based calculator that finds your secondary codes, abundance multipliers, and timing windows for maximum manifestation power.</div>
+<div class="vault-value">Value: $297</div>
+</div>
+<div class="vault-item">
+<span class="vault-icon">💼</span>
+<div class="vault-title">Business Abundance Scripts Database</div>
+<div class="vault-desc">1,247 proven scripts for attracting clients, closing deals, negotiating raises, and building wealth through business. Password-protected vault access.</div>
+<div class="vault-value">Value: $397</div>
+</div>
+<div class="vault-item">
+<span class="vault-icon">💕</span>
+<div class="vault-title">Relationship Abundance Audio Series</div>
+<div class="vault-desc">12 specialized frequency tracks for attracting your ideal partner, healing relationship blocks, and maintaining harmonious connections.</div>
+<div class="vault-value">Value: $197</div>
+</div>
+<div class="vault-item">
+<span class="vault-icon">🎵</span>
+<div class="vault-title">Abundance Frequency Music Collection</div>
+<div class="vault-desc">48 hours of AI-generated abundance frequency music. Each track targets specific wealth areas: career, investment, creativity, opportunity.</div>
+<div class="vault-value">Value: $297</div>
+</div>
+<div class="vault-item">
+<span class="vault-icon">📊</span>
+<div class="vault-title">Advanced Abundance Tracking Dashboard</div>
+<div class="vault-desc">Interactive web tool that monitors your abundance patterns, predicts peak manifestation windows, and optimizes your daily practices.</div>
+<div class="vault-value">Value: $397</div>
+</div>
+<div class="vault-item">
+<span class="vault-icon">📋</span>
+<div class="vault-title">Wealth Manifestation Template Pack</div>
+<div class="vault-desc">Done-for-you Notion templates and Google Sheets for goal setting, financial planning, abundance tracking, and manifestation organization.</div>
+<div class="vault-value">Value: $197</div>
+</div>
+<div class="vault-item">
+<span class="vault-icon">🎯</span>
+<div class="vault-title">Emergency Abundance Protocol</div>
+<div class="vault-desc">Crisis-response system for when abundance flow gets blocked. Emergency frequency restoration, rapid unblocking techniques, immediate activation methods.</div>
+<div class="vault-value">Value: $297</div>
+</div>
+</div>
+<div style="text-align:center;margin-top:30px;">
+<p style="font-size:24px;color:var(--gold);font-weight:700;">Total Value: $2,571</p>
+</div>
+</div>
+
+<!-- Testimonials -->
+<div class="testimonials">
+<h2>🏆 Mastery Vault Results</h2>
+<div class="testimonial-grid">
+<div class="testimonial">
+<div class="testimonial-content">The basic code gave me $200 in unexpected money in the first week. But the Mastery Vault? $12,000 in new business in my first month. The advanced protocols are on another level entirely.</div>
+<div class="testimonial-author">— Sarah K., Business Owner</div>
+<div class="testimonial-result">Result: $12,000 in 30 days</div>
+</div>
+<div class="testimonial">
+<div class="testimonial-content">I thought my starter activation was impressive until I unlocked the vault. The business scripts alone brought in 3 new high-paying clients. The frequency music keeps me in the zone all day.</div>
+<div class="testimonial-author">— Marcus T., Consultant</div>
+<div class="testimonial-result">Result: 3 new clients, $18K revenue</div>
+</div>
+<div class="testimonial">
+<div class="testimonial-content">Day 5 with the vault tools: job offer with 65% salary increase. Day 12: investment opportunity that's already up 40%. Day 18: met my future business partner at a coffee shop. This isn't luck.</div>
+<div class="testimonial-author">— Jennifer L., Marketing Director</div>
+<div class="testimonial-result">Result: 65% salary increase + investment gains</div>
+</div>
+</div>
+</div>
+
+<!-- Pricing -->
+<div class="price-section">
+<div class="price-header">
+<h2>Unlock Your Full Abundance Potential</h2>
+<div class="price-comparison">
+<div class="price-original">Regular Price: $497</div>
+<div class="price-current">$97</div>
+</div>
+<div class="price-savings">Save $400 Today Only</div>
+</div>
+<div class="price-reason">
+<p><strong>Why just $97?</strong> Because you've already proven you're serious by activating your code. This isn't for tire-kickers or freebie seekers.</p>
+<p><strong>Why today only?</strong> The advanced protocols work best when implemented within 24 hours of basic activation. Waiting dilutes the effect.</p>
+<p><strong>Why not free?</strong> Because transformation requires investment. The people who pay are the people who implement. The people who implement are the people who see results.</p>
+</div>
+
+<!-- Checkout -->
+<div class="checkout-embed">
+<div id="vault-checkout-loading" class="checkout-loading">
+<div style="font-size:16px;font-weight:600;">🔄 Loading Secure Checkout...</div>
+</div>
+<div class="whop-checkout-embed"
+data-whop-checkout-plan-id="plan_ABUNDANCE_MASTERY_97"
+data-whop-checkout-theme="light"
+data-whop-checkout-theme-accent-color="#7c3aed"
+data-whop-checkout-hide-price="false"
+data-whop-checkout-setup-future-usage="off_session">
+</div>
+</div>
+
+<!-- Guarantee -->
+<div class="guarantee">
+<h3>🛡️ 60-Day Abundance Guarantee</h3>
+<p>If the Mastery Vault doesn't at least 10x your abundance results compared to the starter code within 60 days, we'll refund every penny. No questions, no hassles, no forms to fill out.</p>
+</div>
+
+<!-- Final CTA -->
+<div style="text-align:center;margin:40px 0;">
+<a href="#" class="cta-button" onclick="scrollToCheckout()">🚀 UNLOCK THE MASTERY VAULT — $97</a>
+</div>
+
+<div class="scarcity">This vault access expires when you leave this page. It will not be available again.</div>
+
+</div>
+
+</div>
+
+<script>
+// Loading sequence
+const loadingMessages = [
+'Analyzing your activated abundance code...',
+'Calculating your current frequency level...',
+'Scanning for abundance blocks and limitations...',
+'Preparing your personalized vault access...',
+'Building your transformation dashboard...',
+'Finalizing your advanced protocols...'
+];
+
+let messageIndex = 0;
+const loadingInterval = setInterval(() => {
+document.getElementById('loadingStatus').textContent = loadingMessages[messageIndex];
+messageIndex++;
+if (messageIndex >= loadingMessages.length) {
+clearInterval(loadingInterval);
+}
+}, 400);
+
+// Hide loading screen after 2.5 seconds
+setTimeout(() => {
+document.getElementById('loadingScreen').classList.add('hidden');
+document.getElementById('mainContent').classList.add('visible');
+populateUserData();
+startTimer();
+loadVaultWhopScript();
+}, 2500);
+
+// Populate user data from localStorage
+function populateUserData() {
+const userData = localStorage.getItem('abundanceUserData');
+if (userData) {
+const data = JSON.parse(userData);
+document.getElementById('userCode').textContent = data.code;
+document.getElementById('personalCode').textContent = data.code;
+} else {
+// Fallback if no data
+const fallbackCode = Math.floor(Math.random() * 900) + 100;
+document.getElementById('userCode').textContent = fallbackCode;
+document.getElementById('personalCode').textContent = fallbackCode;
+}
+}
+
+// Countdown timer
+function startTimer() {
+let timeLeft = 15 * 60; // 15 minutes
+const timer = setInterval(() => {
+timeLeft--;
+const minutes = Math.floor(timeLeft / 60);
+const seconds = timeLeft % 60;
+document.getElementById('urgencyTimer').textContent = 
+`${minutes}:${seconds.toString().padStart(2, '0')}`;
+
+if (timeLeft <= 0) {
+clearInterval(timer);
+document.getElementById('urgencyTimer').textContent = 'EXPIRED';
+}
+}, 1000);
+}
+
+// Scroll to checkout
+function scrollToCheckout() {
+document.querySelector('.checkout-embed').scrollIntoView({behavior: 'smooth'});
+}
+
+// Load Whop script for vault checkout
+function loadVaultWhopScript() {
+if (document.querySelector('script[src*="whop.com"]')) return;
+
+const script = document.createElement('script');
+script.src = 'https://js.whop.com/static/checkout/loader.js';
+script.async = true;
+script.onload = function() {
+console.log('Vault Whop checkout loaded');
+setTimeout(() => {
+const loading = document.getElementById('vault-checkout-loading');
+if (loading) loading.style.display = 'none';
+}, 2000);
+};
+document.head.appendChild(script);
+}
+
+// Listen for vault purchase completion
+window.addEventListener('message', function(event) {
+if (event.origin && event.origin.includes('whop.com')) {
+const data = event.data;
+const isSuccess = data.type === 'payment_success' ||
+data.event === 'checkout_complete' ||
+data.status === 'success' ||
+(data.payment && data.payment.status === 'succeeded');
+
+if (isSuccess) {
+console.log('Vault purchase successful! Redirecting to vault access...');
+window.location.href = '/vault-access.html';
+}
+}
+});
+</script>
+
+</body>
+</html>"

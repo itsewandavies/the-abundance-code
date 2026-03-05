@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Abundance Tracking Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg-deep:#0a0a2e;--bg-mid:#0d0d3a;--violet:#7c3aed;--violet-light:#a855f7;--gold:#f5c542;--text:#e0dff0;--text-dim:#8888a8;--success:#22c55e;--danger:#ef4444}
+body{font-family:'Inter',-apple-system,sans-serif;background:linear-gradient(135deg,var(--bg-deep),var(--bg-mid));color:var(--text);line-height:1.6;min-height:100vh;padding:20px}
+
+.container{max-width:1200px;margin:0 auto}
+.header{text-align:center;margin-bottom:40px}
+.header h1{font-size:36px;font-weight:900;color:#fff;margin-bottom:16px}
+.header p{font-size:18px;color:var(--text-dim)}
+
+.dashboard-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;margin-bottom:40px}
+
+.card{background:rgba(255,255,255,.04);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:25px;transition:all .3s ease}
+.card:hover{transform:translateY(-5px);box-shadow:0 10px 40px rgba(124,58,237,.2)}
+
+.card h2{color:#fff;font-size:20px;font-weight:800;margin-bottom:20px;display:flex;align-items:center;gap:10px}
+.card-icon{font-size:24px}
+
+.metric{text-align:center;margin:15px 0}
+.metric-value{font-size:36px;font-weight:900;color:var(--gold);margin-bottom:5px}
+.metric-label{font-size:12px;color:var(--text-dim);text-transform:uppercase;letter-spacing:1px}
+
+.progress-bar{background:rgba(255,255,255,.1);border-radius:10px;height:8px;margin:15px 0;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--violet),var(--gold));border-radius:10px;transition:width .5s ease}
+
+.frequency-indicator{display:flex;align-items:center;gap:10px;margin:15px 0}
+.frequency-dot{width:12px;height:12px;border-radius:50%;transition:all .3s}
+.frequency-dot.active{background:var(--success);box-shadow:0 0 10px var(--success)}
+.frequency-dot.inactive{background:var(--text-dim)}
+
+.input-section{margin-bottom:40px}
+.input-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:15px;margin:20px 0}
+.input-field{background:rgba(255,255,255,.06);border:2px solid rgba(255,255,255,.1);color:var(--text);font-size:16px;padding:12px 16px;border-radius:8px;outline:none;transition:all .3s;font-family:inherit;width:100%}
+.input-field:focus{border-color:var(--violet);box-shadow:0 0 15px rgba(124,58,237,.2)}
+
+.btn{background:linear-gradient(135deg,var(--violet),var(--violet-light));color:#fff;font-size:16px;font-weight:700;padding:12px 24px;border-radius:8px;border:none;cursor:pointer;transition:all .3s;text-decoration:none;display:inline-block;text-align:center}
+.btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(124,58,237,.3)}
+
+.entry-list{margin-top:20px}
+.entry-item{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:15px;margin:10px 0;display:flex;justify-content:space-between;align-items:center}
+.entry-date{color:var(--text-dim);font-size:12px}
+.entry-content{flex:1;margin:0 15px}
+.entry-amount{color:var(--success);font-weight:700;font-size:16px}
+
+.chart-container{height:300px;margin:20px 0;background:rgba(255,255,255,.02);border-radius:10px;padding:20px;display:flex;align-items:center;justify-content:center;color:var(--text-dim)}
+
+.tabs{display:flex;border-bottom:2px solid rgba(255,255,255,.1);margin-bottom:20px}
+.tab{padding:15px 25px;cursor:pointer;border-bottom:2px solid transparent;transition:all .3s}
+.tab.active{border-bottom-color:var(--violet);color:var(--violet-light)}
+.tab:hover{color:#fff}
+
+.tab-content{display:none}
+.tab-content.active{display:block}
+
+.download-links{display:flex;gap:15px;margin:20px 0;flex-wrap:wrap}
+</style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h1>📊 Abundance Tracking Dashboard</h1>
+        <p>Monitor your frequency activation progress and abundance manifestations</p>
+    </div>
+    
+    <!-- Dashboard Overview -->
+    <div class="dashboard-grid">
+        <div class="card">
+            <h2><span class="card-icon">💰</span> Total Abundance</h2>
+            <div class="metric">
+                <div class="metric-value" id="totalAbundance">$0</div>
+                <div class="metric-label">This Month</div>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="abundanceProgress" style="width: 0%"></div>
+            </div>
+        </div>
+        
+        <div class="card">
+            <h2><span class="card-icon">⚡</span> Frequency Level</h2>
+            <div class="metric">
+                <div class="metric-value" id="frequencyLevel">0%</div>
+                <div class="metric-label">Activation</div>
+            </div>
+            <div class="frequency-indicator">
+                <div class="frequency-dot" id="dot1"></div>
+                <div class="frequency-dot" id="dot2"></div>
+                <div class="frequency-dot" id="dot3"></div>
+                <div class="frequency-dot" id="dot4"></div>
+                <div class="frequency-dot" id="dot5"></div>
+            </div>
+        </div>
+        
+        <div class="card">
+            <h2><span class="card-icon">🎯</span> Daily Practice</h2>
+            <div class="metric">
+                <div class="metric-value" id="practiceStreak">0</div>
+                <div class="metric-label">Day Streak</div>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="practiceProgress" style="width: 0%"></div>
+            </div>
+        </div>
+        
+        <div class="card">
+            <h2><span class="card-icon">🌟</span> Synchronicities</h2>
+            <div class="metric">
+                <div class="metric-value" id="syncCount">0</div>
+                <div class="metric-label">This Week</div>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="syncProgress" style="width: 0%"></div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Tracking Tabs -->
+    <div class="card">
+        <div class="tabs">
+            <div class="tab active" onclick="showTab('abundance')">💰 Abundance Events</div>
+            <div class="tab" onclick="showTab('practice')">🎯 Daily Practice</div>
+            <div class="tab" onclick="showTab('synchronicity')">🌟 Synchronicities</div>
+            <div class="tab" onclick="showTab('insights')">💡 Insights</div>
+        </div>
+        
+        <!-- Abundance Tracking -->
+        <div class="tab-content active" id="abundance-tab">
+            <h3>Track Abundance Manifestations</h3>
+            <div class="input-row">
+                <input type="date" class="input-field" id="abundanceDate" placeholder="Date">
+                <input type="text" class="input-field" id="abundanceDesc" placeholder="Description (e.g., unexpected check, new client)">
+                <input type="number" class="input-field" id="abundanceAmount" placeholder="Amount ($)">
+                <button class="btn" onclick="addAbundance()">Add Entry</button>
+            </div>
+            <div class="entry-list" id="abundanceList"></div>
+        </div>
+        
+        <!-- Practice Tracking -->
+        <div class="tab-content" id="practice-tab">
+            <h3>Daily Practice Log</h3>
+            <div class="input-row">
+                <input type="date" class="input-field" id="practiceDate" placeholder="Date">
+                <select class="input-field" id="practiceTime">
+                    <option value="">Select Time</option>
+                    <option value="morning">Morning (6-9 AM)</option>
+                    <option value="midday">Midday (12-3 PM)</option>
+                    <option value="evening">Evening (6-9 PM)</option>
+                    <option value="night">Night (9 PM-12 AM)</option>
+                </select>
+                <input type="range" class="input-field" id="practiceQuality" min="1" max="10" value="7">
+                <span id="qualityValue">7/10</span>
+                <button class="btn" onclick="addPractice()">Log Practice</button>
+            </div>
+            <div class="entry-list" id="practiceList"></div>
+        </div>
+        
+        <!-- Synchronicity Tracking -->
+        <div class="tab-content" id="synchronicity-tab">
+            <h3>Synchronicity Events</h3>
+            <div class="input-row">
+                <input type="date" class="input-field" id="syncDate" placeholder="Date">
+                <input type="text" class="input-field" id="syncDesc" placeholder="Description (e.g., saw 11:11, met perfect contact)">
+                <select class="input-field" id="syncType">
+                    <option value="">Type</option>
+                    <option value="numbers">Number Patterns</option>
+                    <option value="people">Right People</option>
+                    <option value="opportunities">Opportunities</option>
+                    <option value="timing">Perfect Timing</option>
+                    <option value="signs">Signs & Symbols</option>
+                </select>
+                <button class="btn" onclick="addSynchronicity()">Add Event</button>
+            </div>
+            <div class="entry-list" id="syncList"></div>
+        </div>
+        
+        <!-- Insights Tracking -->
+        <div class="tab-content" id="insights-tab">
+            <h3>Insights & Patterns</h3>
+            <div class="input-row">
+                <input type="date" class="input-field" id="insightDate" placeholder="Date">
+                <textarea class="input-field" id="insightText" placeholder="What insights or patterns are you noticing?" rows="3"></textarea>
+                <button class="btn" onclick="addInsight()">Save Insight</button>
+            </div>
+            <div class="entry-list" id="insightList"></div>
+        </div>
+    </div>
+    
+    <!-- Download Options -->
+    <div class="card">
+        <h2><span class="card-icon">📁</span> Export Your Data</h2>
+        <p>Download your tracking data for backup or analysis:</p>
+        <div class="download-links">
+            <button class="btn" onclick="exportToCSV()">📊 Export as CSV</button>
+            <button class="btn" onclick="exportToJSON()">📄 Export as JSON</button>
+            <a href="https://docs.google.com/spreadsheets/d/1abc123/template" target="_blank" class="btn">📈 Copy Google Sheets Template</a>
+        </div>
+    </div>
+</div>
+
+<script>
+// Data storage
+let trackingData = {
+    abundance: JSON.parse(localStorage.getItem('abundanceTracking') || '[]'),
+    practice: JSON.parse(localStorage.getItem('practiceTracking') || '[]'),
+    synchronicity: JSON.parse(localStorage.getItem('syncTracking') || '[]'),
+    insights: JSON.parse(localStorage.getItem('insightsTracking') || '[]')
+};
+
+// Initialize dashboard
+function initDashboard() {
+    updateMetrics();
+    renderLists();
+    
+    // Set today's date as default
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById('abundanceDate').value = today;
+    document.getElementById('practiceDate').value = today;
+    document.getElementById('syncDate').value = today;
+    document.getElementById('insightDate').value = today;
+}
+
+// Update dashboard metrics
+function updateMetrics() {
+    // Calculate total abundance this month
+    const thisMonth = new Date().getMonth();
+    const thisYear = new Date().getFullYear();
+    const monthlyAbundance = trackingData.abundance
+        .filter(entry => {
+            const entryDate = new Date(entry.date);
+            return entryDate.getMonth() === thisMonth && entryDate.getFullYear() === thisYear;
+        })
+        .reduce((sum, entry) => sum + (parseFloat(entry.amount) || 0), 0);
+    
+    document.getElementById('totalAbundance').textContent = `$${monthlyAbundance.toLocaleString()}`;
+    
+    // Calculate practice streak
+    const practiceStreak = calculatePracticeStreak();
+    document.getElementById('practiceStreak').textContent = practiceStreak;
+    
+    // Update frequency level based on practice consistency
+    const frequencyLevel = Math.min(100, (practiceStreak / 21) * 100);
+    document.getElementById('frequencyLevel').textContent = `${Math.round(frequencyLevel)}%`;
+    
+    // Update frequency dots
+    const activeDots = Math.floor(frequencyLevel / 20);
+    for (let i = 1; i <= 5; i++) {
+        const dot = document.getElementById(`dot${i}`);
+        if (i <= activeDots) {
+            dot.classList.add('active');
+            dot.classList.remove('inactive');
+        } else {
+            dot.classList.add('inactive');
+            dot.classList.remove('active');
+        }
+    }
+    
+    // Calculate synchronicities this week
+    const weekAgo = new Date();
+    weekAgo.setDate(weekAgo.getDate() - 7);
+    const weeklySync = trackingData.synchronicity.filter(entry => 
+        new Date(entry.date) >= weekAgo
+    ).length;
+    
+    document.getElementById('syncCount').textContent = weeklySync;
+    
+    // Update progress bars
+    document.getElementById('abundanceProgress').style.width = `${Math.min(100, (monthlyAbundance / 1000) * 100)}%`;
+    document.getElementById('practiceProgress').style.width = `${(practiceStreak / 21) * 100}%`;
+    document.getElementById('syncProgress').style.width = `${Math.min(100, (weeklySync / 10) * 100)}%`;
+}
+
+function calculatePracticeStreak() {
+    if (trackingData.practice.length === 0) return 0;
+    
+    const sortedPractices = trackingData.practice
+        .map(p => p.date)
+        .sort((a, b) => new Date(b) - new Date(a));
+    
+    let streak = 0;
+    let currentDate = new Date();
+    
+    for (let i = 0; i < sortedPractices.length; i++) {
+        const practiceDate = new Date(sortedPractices[i]);
+        const daysDiff = Math.floor((currentDate - practiceDate) / (1000 * 60 * 60 * 24));
+        
+        if (daysDiff === streak) {
+            streak++;
+            currentDate = new Date(practiceDate);
+            currentDate.setDate(currentDate.getDate() - 1);
+        } else {
+            break;
+        }
+    }
+    
+    return streak;
+}
+
+// Tab switching
+function showTab(tabName) {
+    // Hide all tabs
+    document.querySelectorAll('.tab-content').forEach(tab => {
+        tab.classList.remove('active');
+    });
+    document.querySelectorAll('.tab').forEach(tab => {
+        tab.classList.remove('active');
+    });
+    
+    // Show selected tab
+    document.getElementById(`${tabName}-tab`).classList.add('active');
+    event.target.classList.add('active');
+}
+
+// Add abundance entry
+function addAbundance() {
+    const date = document.getElementById('abundanceDate').value;
+    const desc = document.getElementById('abundanceDesc').value;
+    const amount = document.getElementById('abundanceAmount').value;
+    
+    if (date && desc && amount) {
+        trackingData.abundance.push({
+            id: Date.now(),
+            date: date,
+            description: desc,
+            amount: parseFloat(amount)
+        });
+        
+        saveData('abundanceTracking', trackingData.abundance);
+        renderAbundanceList();
+        updateMetrics();
+        
+        // Clear form
+        document.getElementById('abundanceDesc').value = '';
+        document.getElementById('abundanceAmount').value = '';
+    }
+}
+
+// Add practice entry
+function addPractice() {
+    const date = document.getElementById('practiceDate').value;
+    const time = document.getElementById('practiceTime').value;
+    const quality = document.getElementById('practiceQuality').value;
+    
+    if (date && time) {
+        trackingData.practice.push({
+            id: Date.now(),
+            date: date,
+            time: time,
+            quality: parseInt(quality)
+        });
+        
+        saveData('practiceTracking', trackingData.practice);
+        renderPracticeList();
+        updateMetrics();
+        
+        // Clear form
+        document.getElementById('practiceTime').value = '';
+    }
+}
+
+// Add synchronicity entry
+function addSynchronicity() {
+    const date = document.getElementById('syncDate').value;
+    const desc = document.getElementById('syncDesc').value;
+    const type = document.getElementById('syncType').value;
+    
+    if (date && desc && type) {
+        trackingData.synchronicity.push({
+            id: Date.now(),
+            date: date,
+            description: desc,
+            type: type
+        });
+        
+        saveData('syncTracking', trackingData.synchronicity);
+        renderSyncList();
+        updateMetrics();
+        
+        // Clear form
+        document.getElementById('syncDesc').value = '';
+        document.getElementById('syncType').value = '';
+    }
+}
+
+// Add insight entry
+function addInsight() {
+    const date = document.getElementById('insightDate').value;
+    const text = document.getElementById('insightText').value;
+    
+    if (date && text) {
+        trackingData.insights.push({
+            id: Date.now(),
+            date: date,
+            text: text
+        });
+        
+        saveData('insightsTracking', trackingData.insights);
+        renderInsightList();
+        
+        // Clear form
+        document.getElementById('insightText').value = '';
+    }
+}
+
+// Render all lists
+function renderLists() {
+    renderAbundanceList();
+    renderPracticeList();
+    renderSyncList();
+    renderInsightList();
+}
+
+function renderAbundanceList() {
+    const list = document.getElementById('abundanceList');
+    list.innerHTML = '';
+    
+    trackingData.abundance
+        .sort((a, b) => new Date(b.date) - new Date(a.date))
+        .slice(0, 10)
+        .forEach(entry => {
+            const item = document.createElement('div');
+            item.className = 'entry-item';
+            item.innerHTML = `
+                <div class="entry-date">${new Date(entry.date).toLocaleDateString()}</div>
+                <div class="entry-content">${entry.description}</div>
+                <div class="entry-amount">+$${entry.amount.toLocaleString()}</div>
+            `;
+            list.appendChild(item);
+        });
+}
+
+function renderPracticeList() {
+    const list = document.getElementById('practiceList');
+    list.innerHTML = '';
+    
+    trackingData.practice
+        .sort((a, b) => new Date(b.date) - new Date(a.date))
+        .slice(0, 10)
+        .forEach(entry => {
+            const item = document.createElement('div');
+            item.className = 'entry-item';
+            item.innerHTML = `
+                <div class="entry-date">${new Date(entry.date).toLocaleDateString()}</div>
+                <div class="entry-content">${entry.time} session</div>
+                <div class="entry-amount">${entry.quality}/10</div>
+            `;
+            list.appendChild(item);
+        });
+}
+
+function renderSyncList() {
+    const list = document.getElementById('syncList');
+    list.innerHTML = '';
+    
+    trackingData.synchronicity
+        .sort((a, b) => new Date(b.date) - new Date(a.date))
+        .slice(0, 10)
+        .forEach(entry => {
+            const item = document.createElement('div');
+            item.className = 'entry-item';
+            item.innerHTML = `
+                <div class="entry-date">${new Date(entry.date).toLocaleDateString()}</div>
+                <div class="entry-content">${entry.description}</div>
+                <div class="entry-amount">${entry.type}</div>
+            `;
+            list.appendChild(item);
+        });
+}
+
+function renderInsightList() {
+    const list = document.getElementById('insightList');
+    list.innerHTML = '';
+    
+    trackingData.insights
+        .sort((a, b) => new Date(b.date) - new Date(a.date))
+        .slice(0, 10)
+        .forEach(entry => {
+            const item = document.createElement('div');
+            item.className = 'entry-item';
+            item.innerHTML = `
+                <div class="entry-date">${new Date(entry.date).toLocaleDateString()}</div>
+                <div class="entry-content">${entry.text}</div>
+                <div class="entry-amount">💡</div>
+            `;
+            list.appendChild(item);
+        });
+}
+
+// Data management
+function saveData(key, data) {
+    localStorage.setItem(key, JSON.stringify(data));
+}
+
+// Export functions
+function exportToCSV() {
+    let csv = 'Type,Date,Description,Amount,Quality,Category\n';
+    
+    trackingData.abundance.forEach(entry => {
+        csv += `Abundance,${entry.date},"${entry.description}",${entry.amount},,\n`;
+    });
+    
+    trackingData.practice.forEach(entry => {
+        csv += `Practice,${entry.date},"${entry.time}",,,${entry.quality}\n`;
+    });
+    
+    trackingData.synchronicity.forEach(entry => {
+        csv += `Synchronicity,${entry.date},"${entry.description}",,,"${entry.type}"\n`;
+    });
+    
+    trackingData.insights.forEach(entry => {
+        csv += `Insight,${entry.date},"${entry.text}",,,,\n`;
+    });
+    
+    downloadFile(csv, 'abundance-tracking.csv', 'text/csv');
+}
+
+function exportToJSON() {
+    const data = JSON.stringify(trackingData, null, 2);
+    downloadFile(data, 'abundance-tracking.json', 'application/json');
+}
+
+function downloadFile(content, filename, type) {
+    const blob = new Blob([content], { type: type });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = filename;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+}
+
+// Practice quality slider
+document.getElementById('practiceQuality').addEventListener('input', function() {
+    document.getElementById('qualityValue').textContent = `${this.value}/10`;
+});
+
+// Initialize on page load
+window.addEventListener('load', initDashboard);
+</script>
+
+</body>
+</html>"

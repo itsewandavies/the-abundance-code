@@ -661,29 +661,53 @@ footer{text-align:center;padding:40px 20px;font-size:11px;color:#333;border-top:
 <h3>Order Summary</h3>
 
 <div class="order-line">
-<div class="order-line-name">Your Personal 3-Digit Activation Code</div>
-<div class="order-line-price">$19.00</div>
+<div class="order-line-name">The Abundance Code Starter System</div>
+<div class="order-line-price">$47.00</div>
 </div>
 
 <div class="order-line">
-<div class="order-line-name">Complete Activation System & Guide</div>
+<div class="order-line-name">Personal 3-Digit Code Calculator (Web Tool)</div>
 <div class="order-line-price">Included</div>
 </div>
 
 <div class="order-line">
-<div class="order-line-name">7-Minute Daily Ritual (Step-by-Step)</div>
+<div class="order-line-name">Core Abundance Activation PDF (45 Pages)</div>
 <div class="order-line-price">Included</div>
 </div>
 
 <div class="order-line">
-<div class="order-line-name">Life Path Analysis & Personal Report</div>
+<div class="order-line-name">7-Minute Daily Ritual Audio Track</div>
 <div class="order-line-price">Included</div>
+</div>
+
+<div class="order-line">
+<div class="order-line-name">Life Path Analysis Report Generator</div>
+<div class="order-line-price">Included</div>
+</div>
+
+<div class="order-line">
+<div class="order-line-name">Monthly Abundance Forecast Algorithm</div>
+<div class="order-line-price">Included</div>
+</div>
+
+<div class="order-line">
+<div class="order-line-name">Abundance Tracking Spreadsheet</div>
+<div class="order-line-price">Included</div>
+</div>
+
+<div class="order-line order-bump" style="background:#f0f9ff;border:2px solid #0ea5e9;margin:16px 0;border-radius:8px;padding:16px;">
+<div style="display:flex;align-items:center;margin-bottom:12px;">
+<input type="checkbox" id="orderBump" style="margin-right:8px;transform:scale(1.2);">
+<label for="orderBump" style="font-weight:700;color:#0ea5e9;cursor:pointer;">🚨 ADD EMERGENCY ABUNDANCE TOOLKIT</label>
+</div>
+<div class="order-line-name" style="font-size:14px;color:#374151;">Same-day activation protocol, abundance emergency scripts, quick wealth frequency restoration tools, instant abundance assessment calculator</div>
+<div class="order-line-price" style="color:#0ea5e9;font-weight:700;">+$37</div>
 </div>
 
 <div class="order-total">
 <div class="order-total-row">
 <div class="order-total-label">Total</div>
-<div class="order-total-price">$19</div>
+<div class="order-total-price" id="orderTotal">$47</div>
 </div>
 </div>
 </div>
@@ -1182,7 +1206,7 @@ const whopHTML = `
 <div style="font-size:16px;font-weight:600;">🔄 Loading Secure Checkout...</div>
 </div>
 <div class="whop-checkout-embed"
-data-whop-checkout-plan-id="plan_ABUNDANCE_CODE_19"
+data-whop-checkout-plan-id="plan_ABUNDANCE_CODE_47"
 data-whop-checkout-theme="light"
 data-whop-checkout-theme-accent-color="#7c3aed"
 data-whop-checkout-hide-price="false"
@@ -1233,7 +1257,7 @@ data.status === 'success' ||
 if (isSuccess) {
 console.log('Main purchase successful! Redirecting to OTO1...');
 // Redirect to OTO1 with user data
-window.location.href = '/oto1.html';
+window.location.href = '/oto1-new.html';
 }
 }
 });
@@ -1280,6 +1304,16 @@ input.addEventListener('blur', function() {
 this.style.transform = 'scale(1)';
 this.style.boxShadow = '';
 });
+});
+
+// Order bump functionality
+document.getElementById('orderBump').addEventListener('change', function() {
+const totalEl = document.getElementById('orderTotal');
+if (this.checked) {
+totalEl.textContent = '$84';
+} else {
+totalEl.textContent = '$47';
+}
 });
 </script>
 

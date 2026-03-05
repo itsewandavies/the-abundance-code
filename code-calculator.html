@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Personal Abundance Code Calculator</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg-deep:#0a0a2e;--bg-mid:#0d0d3a;--violet:#7c3aed;--violet-light:#a855f7;--gold:#f5c542;--text:#e0dff0;--text-dim:#8888a8;--glass:rgba(255,255,255,.06);--glass-border:rgba(255,255,255,.1)}
+body{font-family:'Inter',-apple-system,sans-serif;background:linear-gradient(135deg,var(--bg-deep),var(--bg-mid));color:var(--text);line-height:1.6;min-height:100vh;padding:20px}
+
+.container{max-width:800px;margin:0 auto}
+.header{text-align:center;margin-bottom:40px}
+.header h1{font-size:36px;font-weight:900;color:#fff;margin-bottom:16px}
+.header p{font-size:18px;color:var(--text-dim)}
+
+.calculator-card{background:rgba(255,255,255,.04);backdrop-filter:blur(20px);border:1px solid var(--glass-border);border-radius:24px;padding:40px;margin-bottom:30px}
+
+.input-group{margin-bottom:25px}
+.input-label{display:block;font-size:14px;font-weight:600;color:var(--text);margin-bottom:8px;text-transform:uppercase;letter-spacing:1px}
+.input-field{width:100%;background:rgba(255,255,255,.06);border:2px solid rgba(255,255,255,.1);color:var(--text);font-size:18px;padding:16px 20px;border-radius:12px;outline:none;transition:all .3s;font-family:inherit}
+.input-field:focus{border-color:var(--violet);box-shadow:0 0 20px rgba(124,58,237,.2)}
+
+.date-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:16px;margin-bottom:25px}
+@media(max-width:600px){.date-grid{grid-template-columns:1fr}}
+
+.calculate-btn{background:linear-gradient(135deg,var(--violet),var(--violet-light));color:#fff;font-size:18px;font-weight:800;padding:18px 40px;border-radius:12px;border:none;cursor:pointer;transition:all .3s;box-shadow:0 4px 20px rgba(124,58,237,.4);width:100%;margin-top:20px}
+.calculate-btn:hover{transform:translateY(-2px);box-shadow:0 6px 25px rgba(124,58,237,.5)}
+.calculate-btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+
+.result-card{background:linear-gradient(135deg,rgba(245,197,66,.15),rgba(245,197,66,.05));border:2px solid var(--gold);border-radius:20px;padding:40px;text-align:center;margin-top:30px;display:none}
+.result-card.show{display:block;animation:slideIn .5s ease-out}
+
+.code-display{font-size:120px;font-weight:900;color:#fff;letter-spacing:30px;margin:30px 0;text-shadow:0 0 40px rgba(245,197,66,.5);font-family:monospace}
+
+.code-breakdown{margin-top:30px;text-align:left}
+.code-breakdown h3{color:var(--gold);margin-bottom:20px;font-size:20px;font-weight:700}
+.digit-explanation{margin:15px 0;padding:20px;background:rgba(255,255,255,.03);border-radius:12px;border-left:4px solid var(--violet)}
+.digit-explanation h4{color:#fff;font-size:16px;font-weight:700;margin-bottom:8px}
+.digit-explanation p{color:var(--text-dim);font-size:14px;line-height:1.5}
+
+.life-path-info{margin-top:30px;padding:25px;background:rgba(124,58,237,.1);border-radius:16px;border:1px solid rgba(124,58,237,.2)}
+.life-path-info h3{color:var(--violet-light);margin-bottom:15px;font-size:18px}
+
+.optimal-times{margin-top:25px}
+.time-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:15px;margin-top:15px}
+.time-card{background:rgba(255,255,255,.03);padding:20px;border-radius:12px;text-align:center}
+.time-card h4{color:var(--gold);margin-bottom:8px;font-size:14px;font-weight:700}
+.time-card p{color:#fff;font-size:20px;font-weight:800}
+
+@keyframes slideIn{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+</style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h1>🔮 Personal Abundance Code Calculator</h1>
+        <p>Enter your birth details to reveal your unique 3-digit abundance frequency</p>
+    </div>
+    
+    <div class="calculator-card">
+        <form id="calculatorForm">
+            <div class="input-group">
+                <label class="input-label">Full Name</label>
+                <input type="text" class="input-field" id="fullName" placeholder="Enter your full name" required>
+            </div>
+            
+            <div class="date-grid">
+                <div class="input-group">
+                    <label class="input-label">Month</label>
+                    <select class="input-field" id="birthMonth" required>
+                        <option value="">Select Month</option>
+                        <option value="1">January</option>
+                        <option value="2">February</option>
+                        <option value="3">March</option>
+                        <option value="4">April</option>
+                        <option value="5">May</option>
+                        <option value="6">June</option>
+                        <option value="7">July</option>
+                        <option value="8">August</option>
+                        <option value="9">September</option>
+                        <option value="10">October</option>
+                        <option value="11">November</option>
+                        <option value="12">December</option>
+                    </select>
+                </div>
+                
+                <div class="input-group">
+                    <label class="input-label">Day</label>
+                    <input type="number" class="input-field" id="birthDay" placeholder="Day" min="1" max="31" required>
+                </div>
+                
+                <div class="input-group">
+                    <label class="input-label">Year</label>
+                    <input type="number" class="input-field" id="birthYear" placeholder="Year" min="1930" max="2010" required>
+                </div>
+            </div>
+            
+            <div class="input-group">
+                <label class="input-label">Current Life Goal</label>
+                <select class="input-field" id="lifeGoal" required>
+                    <option value="">Select your primary goal</option>
+                    <option value="financial">Financial Freedom</option>
+                    <option value="love">Love & Relationships</option>
+                    <option value="career">Career Success</option>
+                    <option value="health">Health & Vitality</option>
+                    <option value="purpose">Life Purpose</option>
+                </select>
+            </div>
+            
+            <button type="submit" class="calculate-btn">🔍 Calculate My Abundance Code</button>
+        </form>
+    </div>
+    
+    <div class="result-card" id="resultCard">
+        <h2>Your Personal Abundance Code</h2>
+        <div class="code-display" id="codeDisplay">000</div>
+        <p><strong>Congratulations!</strong> This is your unique 3-digit abundance frequency, calculated from your birth data and current life energy.</p>
+        
+        <div class="code-breakdown">
+            <h3>🔬 Code Breakdown</h3>
+            <div class="digit-explanation" id="digit1Explanation">
+                <h4>First Digit: Foundation Frequency</h4>
+                <p>This digit determines your core abundance approach and natural wealth-building style.</p>
+            </div>
+            <div class="digit-explanation" id="digit2Explanation">
+                <h4>Second Digit: Manifestation Amplifier</h4>
+                <p>This controls the speed and intensity of your abundance manifestations.</p>
+            </div>
+            <div class="digit-explanation" id="digit3Explanation">
+                <h4>Third Digit: Flow Activator</h4>
+                <p>This determines how abundance flows to you and through which channels.</p>
+            </div>
+        </div>
+        
+        <div class="life-path-info" id="lifePathInfo">
+            <h3>📊 Your Abundance Profile</h3>
+            <p id="abundanceProfile">Loading your personalized abundance profile...</p>
+        </div>
+        
+        <div class="optimal-times">
+            <h3>⏰ Your Optimal Activation Times</h3>
+            <p>Based on your code, these are the most powerful times for your daily 7-minute ritual:</p>
+            <div class="time-grid">
+                <div class="time-card">
+                    <h4>Primary Window</h4>
+                    <p id="primaryTime">6:00-7:00 AM</p>
+                </div>
+                <div class="time-card">
+                    <h4>Secondary Window</h4>
+                    <p id="secondaryTime">9:00-10:00 PM</p>
+                </div>
+                <div class="time-card">
+                    <h4>Power Hour</h4>
+                    <p id="powerHour">3:33 PM</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// Abundance code calculation system
+const abundanceProfiles = {
+    financial: {
+        description: "Financial Abundance Frequency - Your code is optimized for wealth creation, investment opportunities, and monetary manifestation.",
+        traits: ["Money magnetism", "Investment intuition", "Opportunity recognition", "Wealth building energy"]
+    },
+    love: {
+        description: "Relationship Abundance Frequency - Your code attracts loving relationships, deep connections, and romantic manifestation.",
+        traits: ["Heart-centered magnetism", "Emotional harmony", "Soul connection attraction", "Love multiplication energy"]
+    },
+    career: {
+        description: "Success Abundance Frequency - Your code manifests career opportunities, professional growth, and achievement energy.",
+        traits: ["Leadership magnetism", "Success attraction", "Goal manifestation", "Achievement acceleration"]
+    },
+    health: {
+        description: "Vitality Abundance Frequency - Your code optimizes health, energy, wellness, and physical manifestation.",
+        traits: ["Healing acceleration", "Energy optimization", "Wellness magnetism", "Vitality enhancement"]
+    },
+    purpose: {
+        description: "Purpose Abundance Frequency - Your code reveals life mission, spiritual growth, and meaning manifestation.",
+        traits: ["Purpose clarity", "Mission magnetism", "Spiritual acceleration", "Meaning manifestation"]
+    }
+};
+
+const digitMeanings = {
+    1: {
+        foundation: "Leadership & Independence - You manifest abundance through taking charge and pioneering new paths.",
+        amplifier: "Rapid Manifestation - Your desires manifest quickly through decisive action and unwavering focus.",
+        flow: "Direct Creation - Abundance flows to you through your own efforts and leadership initiatives."
+    },
+    2: {
+        foundation: "Cooperation & Intuition - You attract abundance through partnerships and intuitive decision-making.",
+        amplifier: "Gentle Persistence - Your manifestations build gradually through consistent, patient energy.",
+        flow: "Relationship Channel - Abundance flows through other people and collaborative opportunities."
+    },
+    3: {
+        foundation: "Creativity & Expression - You manifest abundance through creative ventures and self-expression.",
+        amplifier: "Inspirational Bursts - Your manifestations come in waves of creative inspiration and joy.",
+        flow: "Creative Channel - Abundance flows through artistic, communication, and expressive activities."
+    },
+    4: {
+        foundation: "Structure & Discipline - You build abundance through systematic approaches and hard work.",
+        amplifier: "Steady Building - Your manifestations grow consistently through disciplined, organized effort.",
+        flow: "Work Channel - Abundance flows through career, business systems, and structured activities."
+    },
+    5: {
+        foundation: "Freedom & Adventure - You attract abundance through variety, change, and new experiences.",
+        amplifier: "Dynamic Shifts - Your manifestations come through sudden changes and unexpected opportunities.",
+        flow: "Movement Channel - Abundance flows when you embrace change and stay in motion."
+    },
+    6: {
+        foundation: "Service & Nurturing - You manifest abundance through helping others and creating harmony.",
+        amplifier: "Heart-Centered Growth - Your manifestations expand through love, care, and service to others.",
+        flow: "Nurturing Channel - Abundance flows through caring professions and community service."
+    },
+    7: {
+        foundation: "Wisdom & Analysis - You create abundance through knowledge, research, and spiritual insight.",
+        amplifier: "Deep Understanding - Your manifestations come through study, meditation, and inner work.",
+        flow: "Knowledge Channel - Abundance flows through expertise, teaching, and spiritual practices."
+    },
+    8: {
+        foundation: "Power & Achievement - You manifest abundance through ambition, authority, and material success.",
+        amplifier: "Exponential Growth - Your manifestations multiply rapidly once momentum builds.",
+        flow: "Power Channel - Abundance flows through business, leadership, and material achievements."
+    },
+    9: {
+        foundation: "Compassion & Completion - You attract abundance through humanitarian service and wisdom sharing.",
+        amplifier: "Universal Connection - Your manifestations align with higher purpose and collective good.",
+        flow: "Service Channel - Abundance flows through helping others and universal service."
+    }
+};
+
+function reduceToSingleDigit(num) {
+    while (num > 9) {
+        num = num.toString().split('').reduce((sum, digit) => sum + parseInt(digit), 0);
+    }
+    return num;
+}
+
+function calculateAbundanceCode(month, day, year, goal) {
+    // Abundance code algorithm - combines birthdate numerology with goal energy
+    const lifePath = reduceToSingleDigit(reduceToSingleDigit(month) + reduceToSingleDigit(day) + reduceToSingleDigit(year));
+    
+    // Goal modifiers
+    const goalValues = {
+        financial: 8,
+        love: 6,
+        career: 1,
+        health: 3,
+        purpose: 9
+    };
+    
+    const goalModifier = goalValues[goal] || 5;
+    
+    // Calculate the three digits
+    const digit1 = reduceToSingleDigit(lifePath + day % 10);
+    const digit2 = reduceToSingleDigit(month + goalModifier);
+    const digit3 = reduceToSingleDigit(year % 100 + lifePath);
+    
+    // Ensure no zeros (replace with 1)
+    return [
+        digit1 === 0 ? 1 : digit1,
+        digit2 === 0 ? 1 : digit2,
+        digit3 === 0 ? 1 : digit3
+    ];
+}
+
+function getOptimalTimes(code) {
+    const [d1, d2, d3] = code;
+    
+    // Calculate optimal times based on code
+    const primaryHour = (d1 + 5) % 12 + 6; // 6 AM - 6 PM range
+    const secondaryHour = (d2 + 8) % 12 + 18; // 6 PM - 6 AM range (convert to 24h)
+    const powerMinute = d3 * 11; // Power minute within hour
+    
+    return {
+        primary: `${primaryHour}:00-${primaryHour + 1}:00 ${primaryHour < 12 ? 'AM' : 'PM'}`,
+        secondary: `${secondaryHour % 12 || 12}:00-${(secondaryHour + 1) % 12 || 12}:00 ${secondaryHour >= 12 ? 'PM' : 'AM'}`,
+        power: `${Math.floor(powerMinute / 60)}:${(powerMinute % 60).toString().padStart(2, '0')} ${Math.floor(powerMinute / 60) < 12 ? 'AM' : 'PM'}`
+    };
+}
+
+document.getElementById('calculatorForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const name = document.getElementById('fullName').value;
+    const month = parseInt(document.getElementById('birthMonth').value);
+    const day = parseInt(document.getElementById('birthDay').value);
+    const year = parseInt(document.getElementById('birthYear').value);
+    const goal = document.getElementById('lifeGoal').value;
+    
+    // Calculate the abundance code
+    const code = calculateAbundanceCode(month, day, year, goal);
+    const codeString = code.join('');
+    
+    // Display the code
+    document.getElementById('codeDisplay').textContent = codeString;
+    
+    // Update digit explanations
+    document.getElementById('digit1Explanation').querySelector('p').textContent = digitMeanings[code[0]].foundation;
+    document.getElementById('digit2Explanation').querySelector('p').textContent = digitMeanings[code[1]].amplifier;
+    document.getElementById('digit3Explanation').querySelector('p').textContent = digitMeanings[code[2]].flow;
+    
+    // Update abundance profile
+    const profile = abundanceProfiles[goal];
+    document.getElementById('abundanceProfile').textContent = profile.description;
+    
+    // Calculate and display optimal times
+    const optimalTimes = getOptimalTimes(code);
+    document.getElementById('primaryTime').textContent = optimalTimes.primary;
+    document.getElementById('secondaryTime').textContent = optimalTimes.secondary;
+    document.getElementById('powerHour').textContent = optimalTimes.power;
+    
+    // Show result card with animation
+    const resultCard = document.getElementById('resultCard');
+    resultCard.classList.add('show');
+    resultCard.scrollIntoView({ behavior: 'smooth' });
+    
+    // Store data for use in other parts of the system
+    localStorage.setItem('abundanceCode', JSON.stringify({
+        name: name,
+        code: codeString,
+        birthdate: { month, day, year },
+        goal: goal,
+        profile: profile,
+        optimalTimes: optimalTimes
+    }));
+});
+
+// Auto-populate if data exists
+window.addEventListener('load', function() {
+    const storedData = localStorage.getItem('abundanceUserData');
+    if (storedData) {
+        const data = JSON.parse(storedData);
+        if (data.birthdate) {
+            const [month, day, year] = data.birthdate.split(' ');
+            document.getElementById('birthMonth').value = getMonthNumber(month);
+            document.getElementById('birthDay').value = parseInt(day.replace(',', ''));
+            document.getElementById('birthYear').value = year;
+        }
+    }
+});
+
+function getMonthNumber(monthName) {
+    const months = {
+        'January': 1, 'February': 2, 'March': 3, 'April': 4,
+        'May': 5, 'June': 6, 'July': 7, 'August': 8,
+        'September': 9, 'October': 10, 'November': 11, 'December': 12
+    };
+    return months[monthName] || '';
+}
+</script>
+
+</body>
+</html>"
