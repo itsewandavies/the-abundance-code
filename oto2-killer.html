@@ -1,689 +1,417 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Abundance Accelerator Toolkit - Last Chance Upgrade</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-<style>
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-    line-height: 1.7;
-    color: #333;
-    background: #fff;
-}
-
-.container {
-    max-width: 750px;
-    margin: 0 auto;
-    padding: 0 20px;
-}
-
-/* Header */
-.header {
-    background: #dc2626;
-    color: white;
-    padding: 30px 0;
-    text-align: center;
-}
-
-.header h1 {
-    font-size: 38px;
-    font-weight: 900;
-    line-height: 1.1;
-    margin-bottom: 12px;
-}
-
-.header .subheading {
-    font-size: 20px;
-    font-weight: 600;
-    opacity: 0.95;
-}
-
-/* Alert Banner */
-.alert-banner {
-    background: #f59e0b;
-    color: white;
-    text-align: center;
-    padding: 16px 0;
-    font-weight: 700;
-    font-size: 18px;
-}
-
-/* Main Content */
-.content {
-    padding: 50px 0;
-}
-
-.section {
-    margin-bottom: 40px;
-}
-
-h2 {
-    font-size: 32px;
-    font-weight: 800;
-    line-height: 1.2;
-    margin-bottom: 18px;
-    color: #1a1a1a;
-}
-
-h3 {
-    font-size: 26px;
-    font-weight: 700;
-    margin-bottom: 14px;
-    color: #dc2626;
-}
-
-h4 {
-    font-size: 20px;
-    font-weight: 600;
-    margin-bottom: 10px;
-    color: #374151;
-}
-
-p {
-    font-size: 17px;
-    margin-bottom: 16px;
-    line-height: 1.7;
-}
-
-/* Highlight Elements */
-.highlight {
-    background: linear-gradient(120deg, #dc2626 0%, #ef4444 100%);
-    color: white;
-    padding: 3px 8px;
-    border-radius: 4px;
-    font-weight: 700;
-}
-
-.callout {
-    background: linear-gradient(135deg, #fee2e2, #fecaca);
-    border-left: 4px solid #dc2626;
-    padding: 25px;
-    margin: 25px 0;
-    border-radius: 0 12px 12px 0;
-    font-size: 18px;
-    font-weight: 600;
-    color: #7f1d1d;
-}
-
-/* Product Grid */
-.toolkit-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 25px;
-    margin: 35px 0;
-}
-
-.toolkit-item {
-    background: #f9fafb;
-    border: 2px solid #e5e7eb;
-    border-radius: 15px;
-    padding: 25px;
-    transition: all 0.3s ease;
-}
-
-.toolkit-item:hover {
-    border-color: #dc2626;
-    transform: translateY(-3px);
-    box-shadow: 0 8px 20px rgba(220, 38, 38, 0.15);
-}
-
-.toolkit-icon {
-    font-size: 40px;
-    margin-bottom: 15px;
-    display: block;
-}
-
-.toolkit-title {
-    font-size: 20px;
-    font-weight: 700;
-    margin-bottom: 10px;
-    color: #1a1a1a;
-}
-
-.toolkit-description {
-    font-size: 15px;
-    color: #6b7280;
-    line-height: 1.6;
-    margin-bottom: 15px;
-}
-
-.toolkit-value {
-    background: #dc2626;
-    color: white;
-    padding: 8px 15px;
-    border-radius: 20px;
-    font-weight: 600;
-    font-size: 14px;
-    display: inline-block;
-}
-
-/* Price Section */
-.price-section {
-    background: linear-gradient(135deg, #1f2937, #374151);
-    color: white;
-    padding: 40px;
-    border-radius: 20px;
-    text-align: center;
-    margin: 40px 0;
-}
-
-.price-label {
-    font-size: 20px;
-    opacity: 0.9;
-    margin-bottom: 15px;
-}
-
-.strike-price {
-    font-size: 24px;
-    text-decoration: line-through;
-    opacity: 0.7;
-    margin-bottom: 10px;
-}
-
-.final-price {
-    font-size: 56px;
-    font-weight: 900;
-    margin-bottom: 15px;
-    color: #fbbf24;
-}
-
-.price-note {
-    font-size: 16px;
-    opacity: 0.8;
-    margin-bottom: 25px;
-}
-
-.discount-badge {
-    background: #dc2626;
-    color: white;
-    padding: 10px 20px;
-    border-radius: 25px;
-    font-weight: 700;
-    display: inline-block;
-    margin-bottom: 25px;
-    animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.05); }
-}
-
-/* Buttons */
-.cta-button {
-    background: linear-gradient(135deg, #dc2626, #ef4444);
-    color: white;
-    font-size: 22px;
-    font-weight: 800;
-    padding: 18px 35px;
-    border: none;
-    border-radius: 50px;
-    cursor: pointer;
-    text-decoration: none;
-    display: inline-block;
-    transition: all 0.3s ease;
-    text-align: center;
-    letter-spacing: 0.5px;
-    box-shadow: 0 4px 15px rgba(220, 38, 38, 0.4);
-}
-
-.cta-button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(220, 38, 38, 0.6);
-}
-
-.decline-link {
-    color: #6b7280;
-    font-size: 16px;
-    text-decoration: underline;
-    display: block;
-    margin-top: 20px;
-    text-align: center;
-}
-
-.decline-link:hover {
-    color: #374151;
-}
-
-/* Lists */
-.benefit-list {
-    list-style: none;
-    margin: 25px 0;
-}
-
-.benefit-list li {
-    font-size: 17px;
-    padding: 10px 0;
-    position: relative;
-    padding-left: 35px;
-}
-
-.benefit-list li:before {
-    content: "⚡";
-    position: absolute;
-    left: 0;
-    font-size: 18px;
-}
-
-/* Testimonials */
-.testimonial {
-    background: #f3f4f6;
-    border-left: 4px solid #dc2626;
-    padding: 25px;
-    margin: 25px 0;
-    border-radius: 0 12px 12px 0;
-    font-style: italic;
-}
-
-.testimonial-text {
-    font-size: 16px;
-    margin-bottom: 15px;
-    color: #374151;
-}
-
-.testimonial-author {
-    font-weight: 700;
-    color: #dc2626;
-    font-style: normal;
-}
-
-.testimonial-result {
-    background: #dcfce7;
-    color: #166534;
-    padding: 6px 12px;
-    border-radius: 15px;
-    display: inline-block;
-    margin-top: 10px;
-    font-weight: 600;
-    font-size: 13px;
-    font-style: normal;
-}
-
-/* Guarantee Box */
-.guarantee-box {
-    background: linear-gradient(135deg, #065f46, #047857);
-    color: white;
-    padding: 30px;
-    border-radius: 15px;
-    text-align: center;
-    margin: 35px 0;
-}
-
-.guarantee-icon {
-    font-size: 50px;
-    margin-bottom: 15px;
-    display: block;
-}
-
-.guarantee-title {
-    color: white;
-    margin-bottom: 15px;
-}
-
-/* Scarcity Elements */
-.scarcity-box {
-    background: #fef2f2;
-    border: 2px solid #fecaca;
-    border-radius: 12px;
-    padding: 25px;
-    margin: 30px 0;
-    text-align: center;
-}
-
-.scarcity-title {
-    font-size: 22px;
-    font-weight: 700;
-    color: #dc2626;
-    margin-bottom: 15px;
-}
-
-/* Timer */
-.timer-box {
-    background: #1f2937;
-    color: white;
-    padding: 25px;
-    border-radius: 12px;
-    text-align: center;
-    margin: 25px 0;
-}
-
-.timer-text {
-    font-size: 16px;
-    margin-bottom: 15px;
-}
-
-.timer {
-    font-size: 28px;
-    font-weight: 900;
-    color: #fbbf24;
-    font-family: 'Courier New', monospace;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-    .header h1 {
-        font-size: 30px;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Abundance Accelerator Toolkit | The Abundance Code</title>
     
-    .header .subheading {
-        font-size: 16px;
-    }
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
     
-    h2 {
-        font-size: 26px;
-    }
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&family=Cinzel:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
-    .final-price {
-        font-size: 44px;
-    }
-    
-    .cta-button {
-        font-size: 20px;
-        padding: 16px 30px;
-    }
-    
-    .toolkit-grid {
-        grid-template-columns: 1fr;
-    }
-}
-</style>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                        serif: ['Cinzel', 'serif'],
+                    },
+                    colors: {
+                        cosmic: {
+                            950: '#06010D',
+                            900: '#0E0320',
+                            800: '#1A063C',
+                            700: '#2A0A5E'
+                        },
+                        gold: {
+                            200: '#FEF0C7',
+                            300: '#FDE08B',
+                            400: '#F6C358',
+                            500: '#D99B28',
+                            600: '#B2761A'
+                        },
+                        mystic: {
+                            glow: '#9D4EDD',
+                            teal: '#2DD4BF'
+                        }
+                    },
+                    animation: {
+                        'float': 'float 8s ease-in-out infinite',
+                        'float-delayed': 'float 8s ease-in-out 4s infinite',
+                        'pulse-glow': 'pulse-glow 4s ease-in-out infinite',
+                        'spin-slow': 'spin 40s linear infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-15px)' },
+                        },
+                        'pulse-glow': {
+                            '0%, 100%': { opacity: 0.3, transform: 'scale(1)' },
+                            '50%': { opacity: 0.6, transform: 'scale(1.05)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #06010D;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        .noise-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 50;
+            opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .mystical-glow {
+            box-shadow: 0 0 30px rgba(157, 78, 221, 0.3), 0 0 60px rgba(157, 78, 221, 0.1);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #FDE08B 0%, #D99B28 50%, #B2761A 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn-primary:hover::before {
+            left: 100%;
+        }
+
+        .strikethrough {
+            position: relative;
+        }
+
+        .strikethrough::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: #ef4444;
+            transform: rotate(-5deg);
+        }
+    </style>
 </head>
-<body>
-
-<!-- Alert Banner -->
-<div class="alert-banner">
-    🚨 FINAL OFFER: This is your last opportunity to add the Accelerator Toolkit at this special price
-</div>
-
-<!-- Header -->
-<div class="header">
-    <div class="container">
-        <h1>Abundance Accelerator Toolkit</h1>
-        <p class="subheading">The shortcut system that compresses months of work into days</p>
+<body class="bg-cosmic-950 text-white">
+    <!-- Noise Overlay -->
+    <div class="noise-overlay"></div>
+    
+    <!-- Animated Background -->
+    <div class="fixed inset-0 overflow-hidden z-0">
+        <!-- Cosmic orbs -->
+        <div class="absolute top-20 left-10 w-32 h-32 bg-mystic-glow opacity-10 rounded-full blur-xl animate-float"></div>
+        <div class="absolute top-40 right-20 w-24 h-24 bg-gold-400 opacity-15 rounded-full blur-lg animate-float-delayed"></div>
+        <div class="absolute bottom-32 left-1/4 w-20 h-20 bg-mystic-teal opacity-20 rounded-full blur-md animate-float"></div>
     </div>
-</div>
 
-<!-- Main Content -->
-<div class="content">
-    <div class="container">
-        
-        <!-- Hook -->
-        <div class="section">
-            <h2>Wait! I Have One More Thing For You...</h2>
-            <p>
-                I know you're excited to start working with your abundance code, but before you go, 
-                I want to offer you something that could <span class="highlight">save you months of trial and error</span>.
-            </p>
-            
-            <p>
-                You see, while your abundance code is powerful, there's a common mistake that 95% of people make 
-                when they first start using it. They try to figure everything out on their own.
-            </p>
-            
-            <div class="callout">
-                What if I could give you the exact shortcuts, templates, and tools that our most successful 
-                students use to get results 10X faster?
+    <!-- Main Content -->
+    <div class="relative z-10">
+        <!-- Header -->
+        <header class="relative pt-8 pb-4">
+            <div class="container mx-auto px-6">
+                <div class="flex items-center justify-center">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-8 h-8 border-2 border-gold-300 rotate-45 mystical-glow"></div>
+                        <span class="font-serif font-bold text-xl tracking-wide text-gold-300">THE ABUNDANCE CODE</span>
+                    </div>
+                </div>
             </div>
-            
-            <p>
-                That's exactly what the <strong>Abundance Accelerator Toolkit</strong> does. It's like having a GPS 
-                for your abundance journey instead of wandering around with a basic map.
-            </p>
-        </div>
+        </header>
 
-        <!-- Problem/Solution -->
-        <div class="section">
-            <h2>The "Abundance Plateau" Problem</h2>
-            <p>
-                Here's what typically happens when people start working with their abundance code:
-            </p>
-            
-            <ul class="benefit-list">
-                <li>Week 1: Initial excitement and maybe some small signs</li>
-                <li>Week 2-3: Confusion about what they're supposed to do next</li>
-                <li>Week 4+: Frustration as results slow down or stop</li>
-            </ul>
-            
-            <p>
-                This is called the "Abundance Plateau" and it happens because people don't have the right tools 
-                and systems to maintain momentum.
-            </p>
-            
-            <p>
-                The Accelerator Toolkit eliminates this problem completely by giving you:
-            </p>
-            
-            <ul class="benefit-list">
-                <li>Ready-made templates for every situation</li>
-                <li>Quick reference guides that answer your questions instantly</li>
-                <li>Troubleshooting tools when things aren't working</li>
-                <li>Advanced techniques to break through plateaus</li>
-            </ul>
-        </div>
+        <!-- Main Offer -->
+        <section class="relative py-16 px-6">
+            <div class="container mx-auto max-w-4xl text-center">
+                <!-- Badge -->
+                <div class="inline-flex items-center space-x-2 bg-mystic-teal/10 border border-mystic-teal/20 rounded-full px-4 py-2 mb-8">
+                    <i data-lucide="rocket" class="w-4 h-4 text-mystic-teal"></i>
+                    <span class="text-sm font-medium text-mystic-teal tracking-wide">ACCELERATION TOOLKIT</span>
+                </div>
+
+                <!-- Headline -->
+                <h1 class="font-serif font-bold text-4xl md:text-5xl lg:text-6xl leading-tight mb-6 mystical-glow">
+                    The <span class="text-gold-300">Abundance Accelerator</span><br>
+                    Toolkit
+                </h1>
+
+                <!-- Subheadline -->
+                <p class="text-xl md:text-2xl text-gray-300 mb-8 max-w-3xl mx-auto">
+                    Essential shortcuts and power tools to compress decades of abundance work 
+                    into <strong class="text-gold-300">90 days or less</strong>
+                </p>
+
+                <!-- Price Display -->
+                <div class="mb-12">
+                    <div class="glass-panel rounded-2xl p-8 max-w-md mx-auto">
+                        <p class="text-gray-400 mb-2">Regular Price:</p>
+                        <p class="text-2xl text-gray-500 strikethrough mb-2">$297</p>
+                        <p class="text-gray-400 mb-2">Complete Your Mastery Today:</p>
+                        <p class="font-serif text-5xl font-bold text-gold-300 mystical-glow">$97</p>
+                        <p class="text-sm text-gray-400 mt-2">Final piece • Instant access</p>
+                    </div>
+                </div>
+
+                <!-- CTA Button -->
+                <a href="clean-checkout.html?product=oto2" class="inline-block btn-primary text-black font-bold text-xl px-8 py-4 rounded-lg hover:transform hover:scale-105 transition-all duration-300 mystical-glow mb-8">
+                    Complete My Abundance Arsenal →
+                </a>
+
+                <div class="flex items-center justify-center space-x-2 mb-12">
+                    <i data-lucide="shield-check" class="w-5 h-5 text-green-400"></i>
+                    <span class="text-gray-400 text-sm">60-Day Money-Back Guarantee</span>
+                </div>
+            </div>
+        </section>
 
         <!-- What's Included -->
-        <div class="section">
-            <h2>Here's Everything in the Accelerator Toolkit:</h2>
-            
-            <div class="toolkit-grid">
-                <div class="toolkit-item">
-                    <div class="toolkit-icon">📋</div>
-                    <div class="toolkit-title">Quick Reference Guide</div>
-                    <div class="toolkit-description">
-                        Laminated pocket guide with your abundance code meanings, activation techniques, 
-                        and troubleshooting tips. Take it anywhere!
-                    </div>
-                    <div class="toolkit-value">Value: $47</div>
-                </div>
+        <section class="relative py-16 px-6">
+            <div class="container mx-auto max-w-4xl">
+                <h2 class="font-serif text-3xl font-bold text-center mb-12 mystical-glow">Accelerator Tools Include:</h2>
                 
-                <div class="toolkit-item">
-                    <div class="toolkit-icon">📱</div>
-                    <div class="toolkit-title">Signal Alert App</div>
-                    <div class="toolkit-description">
-                        Mobile app that sends push notifications when your abundance code appears in 
-                        news, stock prices, or trending topics.
+                <div class="space-y-6">
+                    <!-- Tool 1 -->
+                    <div class="glass-panel rounded-xl p-6">
+                        <div class="flex items-start space-x-4">
+                            <div class="flex-shrink-0 w-12 h-12 bg-mystic-teal/20 rounded-lg flex items-center justify-center">
+                                <i data-lucide="timer" class="w-6 h-6 text-mystic-teal"></i>
+                            </div>
+                            <div class="flex-1">
+                                <h3 class="font-serif text-xl font-bold mb-2">7-Day Quick Start Intensive</h3>
+                                <p class="text-gray-300 mb-2">
+                                    Compressed version of the complete system designed to produce noticeable 
+                                    abundance shifts within your first week. Perfect for those who want 
+                                    immediate momentum.
+                                </p>
+                                <div class="text-sm text-mystic-teal">Value: $147</div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="toolkit-value">Value: $97</div>
+
+                    <!-- Tool 2 -->
+                    <div class="glass-panel rounded-xl p-6">
+                        <div class="flex items-start space-x-4">
+                            <div class="flex-shrink-0 w-12 h-12 bg-mystic-teal/20 rounded-lg flex items-center justify-center">
+                                <i data-lucide="clipboard-check" class="w-6 h-6 text-mystic-teal"></i>
+                            </div>
+                            <div class="flex-1">
+                                <h3 class="font-serif text-xl font-bold mb-2">Done-For-You Templates Library</h3>
+                                <p class="text-gray-300 mb-2">
+                                    50+ ready-to-use manifestation scripts, affirmation sequences, and 
+                                    visualization templates. Simply fill in your specific details and use 
+                                    immediately.
+                                </p>
+                                <div class="text-sm text-mystic-teal">Value: $97</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tool 3 -->
+                    <div class="glass-panel rounded-xl p-6">
+                        <div class="flex items-start space-x-4">
+                            <div class="flex-shrink-0 w-12 h-12 bg-mystic-teal/20 rounded-lg flex items-center justify-center">
+                                <i data-lucide="gauge" class="w-6 h-6 text-mystic-teal"></i>
+                            </div>
+                            <div class="flex-1">
+                                <h3 class="font-serif text-xl font-bold mb-2">Abundance Frequency Analyzer</h3>
+                                <p class="text-gray-300 mb-2">
+                                    Advanced diagnostic tool to measure your current abundance frequency 
+                                    and track improvements. Know exactly where you stand and what to 
+                                    focus on next.
+                                </p>
+                                <div class="text-sm text-mystic-teal">Value: $127</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tool 4 -->
+                    <div class="glass-panel rounded-xl p-6">
+                        <div class="flex items-start space-x-4">
+                            <div class="flex-shrink-0 w-12 h-12 bg-mystic-teal/20 rounded-lg flex items-center justify-center">
+                                <i data-lucide="smartphone" class="w-6 h-6 text-mystic-teal"></i>
+                            </div>
+                            <div class="flex-1">
+                                <h3 class="font-serif text-xl font-bold mb-2">Mobile Manifestation App</h3>
+                                <p class="text-gray-300 mb-2">
+                                    Exclusive mobile app with guided meditations, frequency activations, 
+                                    and daily manifestation prompts. Turn any spare moment into abundance 
+                                    building time.
+                                </p>
+                                <div class="text-sm text-mystic-teal">Value: $197</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bonus -->
+                    <div class="glass-panel rounded-xl p-6 border-l-4 border-l-gold-300">
+                        <div class="flex items-start space-x-4">
+                            <div class="flex-shrink-0 w-12 h-12 bg-gold-300/20 rounded-lg flex items-center justify-center">
+                                <i data-lucide="gift" class="w-6 h-6 text-gold-300"></i>
+                            </div>
+                            <div class="flex-1">
+                                <h3 class="font-serif text-xl font-bold mb-2 text-gold-300">BONUS: Emergency Abundance Protocol</h3>
+                                <p class="text-gray-300 mb-2">
+                                    Step-by-step guide for manifesting urgent financial needs within 24-48 hours. 
+                                    This "panic button" protocol has helped thousands in crisis situations.
+                                </p>
+                                <div class="text-sm text-gold-300">Bonus Value: $97</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                
-                <div class="toolkit-item">
-                    <div class="toolkit-icon">📝</div>
-                    <div class="toolkit-title">30 Fill-in-the-Blank Templates</div>
-                    <div class="toolkit-description">
-                        Pre-written affirmations, visualizations, and manifestation scripts. Just fill in 
-                        your code and use immediately.
-                    </div>
-                    <div class="toolkit-value">Value: $127</div>
-                </div>
-                
-                <div class="toolkit-item">
-                    <div class="toolkit-icon">🎯</div>
-                    <div class="toolkit-title">7-Day Quick Start Challenge</div>
-                    <div class="toolkit-description">
-                        Step-by-step daily actions for your first week. Guaranteed to generate your 
-                        first abundance signal within 7 days.
-                    </div>
-                    <div class="toolkit-value">Value: $197</div>
-                </div>
-                
-                <div class="toolkit-item">
-                    <div class="toolkit-icon">🔧</div>
-                    <div class="toolkit-title">Troubleshooting Toolkit</div>
-                    <div class="toolkit-description">
-                        What to do when your code isn't working, how to overcome blocks, and emergency 
-                        activation techniques for urgent situations.
-                    </div>
-                    <div class="toolkit-value">Value: $87</div>
-                </div>
-                
-                <div class="toolkit-item">
-                    <div class="toolkit-icon">⚡</div>
-                    <div class="toolkit-title">Speed Manifestation Hacks</div>
-                    <div class="toolkit-description">
-                        Advanced techniques used by our fastest-manifesting students. Compress weeks 
-                        of work into hours.
-                    </div>
-                    <div class="toolkit-value">Value: $167</div>
+
+                <!-- Total Value -->
+                <div class="glass-panel rounded-2xl p-8 mt-12 text-center border-2 border-mystic-teal/30">
+                    <h3 class="font-serif text-2xl font-bold mb-4 text-mystic-teal">Total Toolkit Value: $665</h3>
+                    <p class="text-xl text-gray-300 mb-4">Your Investment Today:</p>
+                    <p class="font-serif text-5xl font-bold text-gold-300 mystical-glow">Only $97</p>
+                    <p class="text-gray-400 mt-2">Save $568 and complete your mastery</p>
                 </div>
             </div>
-        </div>
+        </section>
 
-        <!-- Social Proof -->
-        <div class="section">
-            <h3>Success Stories from Toolkit Users</h3>
-            
-            <div class="testimonial">
-                <div class="testimonial-text">
-                    "The Quick Reference Guide saved me so much time. Instead of re-reading the whole system, 
-                    I could just check the guide and know exactly what to do. Got my first $500 manifestation 
-                    in 5 days using the templates!"
+        <!-- Why This Matters -->
+        <section class="relative py-16 px-6">
+            <div class="container mx-auto max-w-4xl">
+                <div class="glass-panel rounded-2xl p-8">
+                    <h2 class="font-serif text-3xl font-bold text-center mb-8 mystical-glow">Why Speed Matters</h2>
+                    <div class="grid md:grid-cols-3 gap-6 text-center">
+                        <div>
+                            <div class="w-16 h-16 bg-red-500/20 rounded-full mx-auto mb-4 flex items-center justify-center">
+                                <i data-lucide="clock" class="w-8 h-8 text-red-400"></i>
+                            </div>
+                            <h3 class="font-bold mb-2 text-red-400">Without Acceleration</h3>
+                            <p class="text-gray-400 text-sm">Most people take 2-5 years to see significant abundance shifts using traditional methods</p>
+                        </div>
+                        <div>
+                            <div class="w-16 h-16 bg-mystic-teal/20 rounded-full mx-auto mb-4 flex items-center justify-center">
+                                <i data-lucide="zap" class="w-8 h-8 text-mystic-teal"></i>
+                            </div>
+                            <h3 class="font-bold mb-2 text-mystic-teal">With Accelerator Tools</h3>
+                            <p class="text-gray-400 text-sm">Compress that same transformation into 90 days or less with our proven shortcuts</p>
+                        </div>
+                        <div>
+                            <div class="w-16 h-16 bg-gold-300/20 rounded-full mx-auto mb-4 flex items-center justify-center">
+                                <i data-lucide="trophy" class="w-8 h-8 text-gold-300"></i>
+                            </div>
+                            <h3 class="font-bold mb-2 text-gold-300">Your Advantage</h3>
+                            <p class="text-gray-400 text-sm">Be in the top 1% who actually achieve rapid, lasting abundance transformation</p>
+                        </div>
+                    </div>
                 </div>
-                <div class="testimonial-author">- Lisa Chen, Marketing Manager</div>
-                <div class="testimonial-result">Result: $500 in 5 days</div>
             </div>
-            
-            <div class="testimonial">
-                <div class="testimonial-text">
-                    "The Signal Alert App is genius. It caught my code appearing in a Bitcoin price spike 
-                    before I would have noticed. Bought in and made $1,200 in 2 hours."
+        </section>
+
+        <!-- Success Stories -->
+        <section class="relative py-16 px-6">
+            <div class="container mx-auto max-w-4xl">
+                <h2 class="font-serif text-3xl font-bold text-center mb-12 mystical-glow">Accelerated Results:</h2>
+                
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="glass-panel rounded-xl p-6">
+                        <div class="flex items-center space-x-1 mb-4">
+                            <i data-lucide="star" class="w-5 h-5 text-gold-300 fill-current"></i>
+                            <i data-lucide="star" class="w-5 h-5 text-gold-300 fill-current"></i>
+                            <i data-lucide="star" class="w-5 h-5 text-gold-300 fill-current"></i>
+                            <i data-lucide="star" class="w-5 h-5 text-gold-300 fill-current"></i>
+                            <i data-lucide="star" class="w-5 h-5 text-gold-300 fill-current"></i>
+                        </div>
+                        <p class="text-gray-300 mb-4 italic">
+                            "The 7-Day Quick Start got me $3,200 in just 5 days. The mobile app keeps me 
+                            aligned even during my busy schedule. Game changer!"
+                        </p>
+                        <p class="font-bold text-mystic-teal">- Jennifer K., Real Estate Agent</p>
+                    </div>
+                    
+                    <div class="glass-panel rounded-xl p-6">
+                        <div class="flex items-center space-x-1 mb-4">
+                            <i data-lucide="star" class="w-5 h-5 text-gold-300 fill-current"></i>
+                            <i data-lucide="star" class="w-5 h-5 text-gold-300 fill-current"></i>
+                            <i data-lucide="star" class="w-5 h-5 text-gold-300 fill-current"></i>
+                            <i data-lucide="star" class="w-5 h-5 text-gold-300 fill-current"></i>
+                            <i data-lucide="star" class="w-5 h-5 text-gold-300 fill-current"></i>
+                        </div>
+                        <p class="text-gray-300 mb-4 italic">
+                            "The templates saved me months of trial and error. Used the emergency protocol 
+                            and manifested rent money in 36 hours when I was desperate."
+                        </p>
+                        <p class="font-bold text-mystic-teal">- David L., Freelance Designer</p>
+                    </div>
                 </div>
-                <div class="testimonial-author">- Mike Rodriguez, Day Trader</div>
-                <div class="testimonial-result">Result: $1,200 in 2 hours</div>
             </div>
-        </div>
+        </section>
 
-        <!-- Urgency -->
-        <div class="scarcity-box">
-            <div class="scarcity-title">This is Your LAST Chance</div>
-            <p>
-                I can only offer the Accelerator Toolkit at this price to people who are actively getting 
-                their abundance code today. Once you leave this page, the offer disappears forever.
-            </p>
-            <p>
-                <strong>Regular price: $297 | Today only: $97</strong>
-            </p>
-        </div>
-
-        <!-- Timer -->
-        <div class="timer-box">
-            <div class="timer-text">This offer expires when you leave this page</div>
-            <div class="timer">
-                ⏰ Don't let this opportunity slip away...
+        <!-- Final CTA -->
+        <section class="relative py-16 px-6">
+            <div class="container mx-auto max-w-2xl text-center">
+                <div class="glass-panel rounded-2xl p-8">
+                    <h3 class="font-serif text-3xl font-bold mb-6 mystical-glow">Complete Your Abundance Mastery</h3>
+                    
+                    <p class="text-lg text-gray-300 mb-8">
+                        You have the core system. Now add the acceleration tools to compress years 
+                        of progress into weeks and join the ranks of rapid manifesters.
+                    </p>
+                    
+                    <a href="clean-checkout.html?product=oto2" class="block w-full btn-primary text-black font-bold text-xl py-4 rounded-lg hover:transform hover:scale-105 transition-all duration-300 mystical-glow mb-4">
+                        Add Accelerator Toolkit - $97
+                    </a>
+                    
+                    <div class="flex items-center justify-center space-x-4 text-sm text-gray-400">
+                        <div class="flex items-center space-x-1">
+                            <i data-lucide="shield-check" class="w-4 h-4 text-green-400"></i>
+                            <span>60-Day Guarantee</span>
+                        </div>
+                        <div class="flex items-center space-x-1">
+                            <i data-lucide="download" class="w-4 h-4 text-green-400"></i>
+                            <span>Instant Download</span>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
-
-        <!-- Price & CTA -->
-        <div class="price-section">
-            <div class="price-label">Abundance Accelerator Toolkit</div>
-            <div class="strike-price">Regular Price: $297</div>
-            <div class="final-price">$97</div>
-            <div class="discount-badge">Save $200 Today Only</div>
-            <div class="price-note">One-time payment • Instant download • 30-day guarantee</div>
-            
-            <a href="#" class="cta-button" onclick="addToolkit()">
-                YES! Add the Accelerator Toolkit
-            </a>
-            
-            <a href="thankyou.html" class="decline-link">
-                No thanks, I'll figure it out on my own
-            </a>
-        </div>
-
-        <!-- Guarantee -->
-        <div class="guarantee-box">
-            <div class="guarantee-icon">🛡️</div>
-            <h3 class="guarantee-title">30-Day Money-Back Guarantee</h3>
-            <p>
-                Try the Accelerator Toolkit for 30 days. If it doesn't accelerate your results and save you 
-                time, I'll refund your $97 immediately. No questions asked.
-            </p>
-        </div>
-
-        <!-- Final Push -->
-        <div class="section">
-            <h2>Here's What You're Really Deciding...</h2>
-            <p>
-                You can start your abundance code journey with just the basics and spend weeks or months 
-                trying to figure out the details on your own...
-            </p>
-            
-            <p>
-                <strong>OR</strong>
-            </p>
-            
-            <p>
-                You can get the <span class="highlight">exact shortcuts and tools</span> that have helped thousands 
-                of students get results faster, avoid common mistakes, and break through plateaus quickly.
-            </p>
-            
-            <div class="callout">
-                Which path sounds better to you?
-            </div>
-            
-            <p style="text-align: center; margin-top: 30px;">
-                <a href="#" class="cta-button" onclick="addToolkit()">
-                    Add Accelerator Toolkit - $97
-                </a>
-            </p>
-            
-            <p style="text-align: center; margin-top: 20px;">
-                <a href="thankyou.html" class="decline-link">
-                    Continue without toolkit
-                </a>
-            </p>
-        </div>
-
-        <!-- Final Warning -->
-        <div class="section" style="text-align: center; color: #666; font-size: 16px; border-top: 1px solid #e5e7eb; padding-top: 30px;">
-            <p>
-                <em>Remember: This toolkit offer is only available right now. Once you access your abundance code, 
-                this opportunity disappears forever.</em>
-            </p>
-        </div>
-
+        </section>
     </div>
-</div>
 
-<script>
-function addToolkit() {
-    alert('Adding Accelerator Toolkit to your order...');
-    // In real implementation: window.location.href = 'thankyou.html?toolkit=yes';
-}
-
-// Exit intent detection
-let mouseLeaveCount = 0;
-
-document.addEventListener('mouseleave', function() {
-    mouseLeaveCount++;
-    if (mouseLeaveCount === 1) {
-        if (confirm('WAIT! Are you sure you want to miss out on the shortcuts that could save you months of trial and error? Click OK to secure your toolkit for just $97, or Cancel to continue without it.')) {
-            document.querySelector('.price-section').scrollIntoView({ behavior: 'smooth' });
-        }
-    }
-});
-
-// Highlight price when scrolling
-window.addEventListener('scroll', function() {
-    const priceSection = document.querySelector('.price-section');
-    const rect = priceSection.getBoundingClientRect();
-    const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
-    
-    if (isVisible) {
-        priceSection.style.transform = 'scale(1.02)';
-        priceSection.style.transition = 'transform 0.3s ease';
-    } else {
-        priceSection.style.transform = 'scale(1)';
-    }
-});
-</script>
-
+    <!-- Initialize Lucide Icons -->
+    <script>
+        lucide.createIcons();
+    </script>
 </body>
 </html>

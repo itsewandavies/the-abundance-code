@@ -1,814 +1,438 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Complete Abundance Mastery System - Limited Time Upgrade</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-<style>
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-    line-height: 1.7;
-    color: #333;
-    background: #fff;
-}
-
-.container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 0 20px;
-}
-
-/* Header */
-.header {
-    background: linear-gradient(135deg, #7c3aed, #a855f7);
-    color: white;
-    padding: 40px 0;
-    text-align: center;
-}
-
-.header h1 {
-    font-size: 42px;
-    font-weight: 900;
-    line-height: 1.1;
-    margin-bottom: 16px;
-}
-
-.header .subheading {
-    font-size: 22px;
-    font-weight: 600;
-    opacity: 0.95;
-}
-
-/* Urgency Banner */
-.urgency-banner {
-    background: #ff4444;
-    color: white;
-    text-align: center;
-    padding: 16px 0;
-    font-weight: 700;
-    font-size: 18px;
-    animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.8; }
-}
-
-/* Main Content */
-.content {
-    padding: 60px 0;
-}
-
-.section {
-    margin-bottom: 50px;
-}
-
-h2 {
-    font-size: 36px;
-    font-weight: 800;
-    line-height: 1.2;
-    margin-bottom: 20px;
-    color: #1a1a1a;
-}
-
-h3 {
-    font-size: 28px;
-    font-weight: 700;
-    margin-bottom: 16px;
-    color: #2563eb;
-}
-
-h4 {
-    font-size: 22px;
-    font-weight: 600;
-    margin-bottom: 12px;
-    color: #374151;
-}
-
-p {
-    font-size: 18px;
-    margin-bottom: 16px;
-    line-height: 1.7;
-}
-
-/* Highlight Text */
-.highlight {
-    background: linear-gradient(120deg, #fbbf24 0%, #f59e0b 100%);
-    color: white;
-    padding: 2px 8px;
-    border-radius: 4px;
-    font-weight: 700;
-}
-
-.big-highlight {
-    background: linear-gradient(135deg, #7c3aed, #a855f7);
-    color: white;
-    padding: 20px;
-    border-radius: 12px;
-    margin: 30px 0;
-    text-align: center;
-    font-size: 22px;
-    font-weight: 700;
-    line-height: 1.4;
-}
-
-/* Product Features */
-.features-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 30px;
-    margin: 40px 0;
-}
-
-.feature-card {
-    border: 2px solid #e5e7eb;
-    border-radius: 16px;
-    padding: 30px;
-    text-align: center;
-    transition: all 0.3s ease;
-}
-
-.feature-card:hover {
-    border-color: #7c3aed;
-    transform: translateY(-4px);
-    box-shadow: 0 10px 25px rgba(124, 58, 237, 0.15);
-}
-
-.feature-icon {
-    font-size: 48px;
-    margin-bottom: 20px;
-    display: block;
-}
-
-.feature-title {
-    font-size: 22px;
-    font-weight: 700;
-    margin-bottom: 12px;
-    color: #1a1a1a;
-}
-
-.feature-description {
-    font-size: 16px;
-    color: #6b7280;
-    line-height: 1.6;
-}
-
-.feature-value {
-    background: #f3f4f6;
-    padding: 12px;
-    border-radius: 8px;
-    margin-top: 16px;
-    font-weight: 600;
-    color: #059669;
-}
-
-/* Testimonials */
-.testimonial {
-    background: #f9fafb;
-    border-left: 4px solid #7c3aed;
-    padding: 30px;
-    margin: 30px 0;
-    border-radius: 0 12px 12px 0;
-}
-
-.testimonial-text {
-    font-size: 18px;
-    font-style: italic;
-    margin-bottom: 16px;
-    color: #374151;
-}
-
-.testimonial-author {
-    font-weight: 700;
-    color: #7c3aed;
-}
-
-.testimonial-result {
-    background: #d1fae5;
-    color: #065f46;
-    padding: 8px 16px;
-    border-radius: 20px;
-    display: inline-block;
-    margin-top: 12px;
-    font-weight: 600;
-    font-size: 14px;
-}
-
-/* Price Box */
-.price-container {
-    background: linear-gradient(135deg, #f3f4f6, #e5e7eb);
-    border-radius: 20px;
-    padding: 40px;
-    text-align: center;
-    margin: 40px 0;
-    border: 3px solid #7c3aed;
-}
-
-.price-header {
-    font-size: 24px;
-    font-weight: 700;
-    margin-bottom: 20px;
-    color: #1a1a1a;
-}
-
-.original-price {
-    font-size: 28px;
-    color: #9ca3af;
-    text-decoration: line-through;
-    margin-bottom: 8px;
-}
-
-.current-price {
-    font-size: 64px;
-    font-weight: 900;
-    color: #7c3aed;
-    line-height: 1;
-    margin-bottom: 16px;
-}
-
-.price-description {
-    font-size: 18px;
-    color: #6b7280;
-    margin-bottom: 30px;
-}
-
-.savings {
-    background: #dc2626;
-    color: white;
-    padding: 12px 24px;
-    border-radius: 25px;
-    display: inline-block;
-    font-weight: 700;
-    margin-bottom: 20px;
-    animation: bounce 2s infinite;
-}
-
-@keyframes bounce {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-4px); }
-}
-
-/* Buttons */
-.cta-button {
-    background: linear-gradient(135deg, #dc2626, #ef4444);
-    color: white;
-    font-size: 24px;
-    font-weight: 800;
-    padding: 20px 40px;
-    border: none;
-    border-radius: 50px;
-    cursor: pointer;
-    text-decoration: none;
-    display: inline-block;
-    transition: all 0.3s ease;
-    text-align: center;
-    letter-spacing: 0.5px;
-    box-shadow: 0 4px 15px rgba(220, 38, 38, 0.4);
-}
-
-.cta-button:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 25px rgba(220, 38, 38, 0.6);
-}
-
-.cta-button-secondary {
-    background: #6b7280;
-    font-size: 18px;
-    padding: 16px 32px;
-    margin-top: 20px;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-/* Lists */
-.benefit-list {
-    list-style: none;
-    margin: 30px 0;
-}
-
-.benefit-list li {
-    font-size: 18px;
-    padding: 12px 0;
-    border-bottom: 1px solid #e5e7eb;
-    position: relative;
-    padding-left: 40px;
-}
-
-.benefit-list li:before {
-    content: "✓";
-    position: absolute;
-    left: 0;
-    color: #22c55e;
-    font-weight: 900;
-    font-size: 20px;
-}
-
-/* Guarantee */
-.guarantee {
-    background: linear-gradient(135deg, #22c55e, #16a34a);
-    color: white;
-    padding: 40px;
-    border-radius: 20px;
-    text-align: center;
-    margin: 50px 0;
-}
-
-.guarantee h3 {
-    color: white;
-    margin-bottom: 20px;
-}
-
-.guarantee-icon {
-    font-size: 60px;
-    margin-bottom: 20px;
-    display: block;
-}
-
-/* Timer */
-.countdown-timer {
-    background: #1f2937;
-    color: white;
-    padding: 30px;
-    border-radius: 15px;
-    text-align: center;
-    margin: 30px 0;
-}
-
-.timer-text {
-    font-size: 18px;
-    margin-bottom: 20px;
-    font-weight: 600;
-}
-
-.timer-display {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    flex-wrap: wrap;
-}
-
-.timer-unit {
-    background: #374151;
-    padding: 15px;
-    border-radius: 10px;
-    min-width: 80px;
-}
-
-.timer-number {
-    font-size: 32px;
-    font-weight: 900;
-    display: block;
-    line-height: 1;
-}
-
-.timer-label {
-    font-size: 12px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-top: 5px;
-    opacity: 0.8;
-}
-
-/* FAQ Section */
-.faq-item {
-    border-bottom: 1px solid #e5e7eb;
-    padding: 20px 0;
-}
-
-.faq-question {
-    font-size: 20px;
-    font-weight: 700;
-    margin-bottom: 12px;
-    color: #1a1a1a;
-}
-
-.faq-answer {
-    font-size: 16px;
-    color: #6b7280;
-    line-height: 1.6;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-    .header h1 {
-        font-size: 32px;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complete Abundance Mastery System | The Abundance Code</title>
     
-    .header .subheading {
-        font-size: 18px;
-    }
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
     
-    h2 {
-        font-size: 28px;
-    }
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&family=Cinzel:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
-    .current-price {
-        font-size: 48px;
-    }
-    
-    .cta-button {
-        font-size: 20px;
-        padding: 18px 32px;
-    }
-    
-    .features-grid {
-        grid-template-columns: 1fr;
-    }
-    
-    .timer-display {
-        gap: 10px;
-    }
-    
-    .timer-unit {
-        min-width: 70px;
-        padding: 12px;
-    }
-    
-    .timer-number {
-        font-size: 24px;
-    }
-}
-</style>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                        serif: ['Cinzel', 'serif'],
+                    },
+                    colors: {
+                        cosmic: {
+                            950: '#06010D',
+                            900: '#0E0320',
+                            800: '#1A063C',
+                            700: '#2A0A5E'
+                        },
+                        gold: {
+                            200: '#FEF0C7',
+                            300: '#FDE08B',
+                            400: '#F6C358',
+                            500: '#D99B28',
+                            600: '#B2761A'
+                        },
+                        mystic: {
+                            glow: '#9D4EDD',
+                            teal: '#2DD4BF'
+                        }
+                    },
+                    animation: {
+                        'float': 'float 8s ease-in-out infinite',
+                        'float-delayed': 'float 8s ease-in-out 4s infinite',
+                        'pulse-glow': 'pulse-glow 4s ease-in-out infinite',
+                        'spin-slow': 'spin 40s linear infinite',
+                        'countdown': 'countdown 1s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-15px)' },
+                        },
+                        'pulse-glow': {
+                            '0%, 100%': { opacity: 0.3, transform: 'scale(1)' },
+                            '50%': { opacity: 0.6, transform: 'scale(1.05)' },
+                        },
+                        countdown: {
+                            '0%': { transform: 'scale(1)', opacity: 1 },
+                            '50%': { transform: 'scale(1.05)', opacity: 0.8 },
+                            '100%': { transform: 'scale(1)', opacity: 1 },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #06010D;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        .noise-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 50;
+            opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .mystical-glow {
+            box-shadow: 0 0 30px rgba(157, 78, 221, 0.3), 0 0 60px rgba(157, 78, 221, 0.1);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #FDE08B 0%, #D99B28 50%, #B2761A 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn-primary:hover::before {
+            left: 100%;
+        }
+
+        .strikethrough {
+            position: relative;
+        }
+
+        .strikethrough::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: #ef4444;
+            transform: rotate(-5deg);
+        }
+    </style>
 </head>
-<body>
-
-<!-- Urgency Banner -->
-<div class="urgency-banner">
-    ⚠️ LIMITED TIME: This upgrade offer expires in 15 minutes or when you leave this page
-</div>
-
-<!-- Header -->
-<div class="header">
-    <div class="container">
-        <h1>Complete Abundance Mastery System</h1>
-        <p class="subheading">Upgrade to the Complete Mastery System and 10X your results in the next 30 days</p>
+<body class="bg-cosmic-950 text-white">
+    <!-- Noise Overlay -->
+    <div class="noise-overlay"></div>
+    
+    <!-- Animated Background -->
+    <div class="fixed inset-0 overflow-hidden z-0">
+        <!-- Cosmic orbs -->
+        <div class="absolute top-20 left-10 w-32 h-32 bg-mystic-glow opacity-10 rounded-full blur-xl animate-float"></div>
+        <div class="absolute top-40 right-20 w-24 h-24 bg-gold-400 opacity-15 rounded-full blur-lg animate-float-delayed"></div>
+        <div class="absolute bottom-32 left-1/4 w-20 h-20 bg-mystic-teal opacity-20 rounded-full blur-md animate-float"></div>
     </div>
-</div>
 
-<!-- Main Content -->
-<div class="content">
-    <div class="container">
-        
-        <!-- Opening Hook -->
-        <div class="section">
-            <h2>STOP! Before You Access Your Abundance Code...</h2>
-            <p>
-                You're just seconds away from discovering your personal abundance code. But before you do, 
-                I need to share something <span class="highlight">CRITICAL</span> with you that could be the 
-                difference between modest results and <strong>life-changing transformation</strong>.
-            </p>
-            
-            <p>
-                The truth is, your basic abundance code is just the <em>beginning</em>. It's like having the key to a treasure chest, 
-                but only unlocking the first chamber when there are 10 more chambers filled with even greater riches waiting for you.
-            </p>
-            
-            <div class="big-highlight">
-                What if I told you there's a way to amplify your abundance code by 1000% and compress 
-                years of manifestation work into just 30 days?
-            </div>
-            
-            <p>
-                My name is Dr. Michael Chen, and I've spent the last 7 years studying abundance codes with over 50,000 students worldwide. 
-                What I've discovered will shock you...
-            </p>
-        </div>
-
-        <!-- The Discovery -->
-        <div class="section">
-            <h2>The "Amplification Secret" That Changes Everything</h2>
-            <p>
-                Through extensive research with our most successful students, I made a startling discovery:
-            </p>
-            
-            <p>
-                <strong>The people getting the most dramatic results weren't just using their basic abundance code.</strong>
-            </p>
-            
-            <p>
-                They had access to what I call the <span class="highlight">"Complete Mastery System"</span> - a comprehensive 
-                suite of advanced techniques, tools, and resources that amplify the basic abundance code by 
-                <strong>orders of magnitude</strong>.
-            </p>
-            
-            <div class="testimonial">
-                <div class="testimonial-text">
-                    "I was getting small results with my basic code - maybe $50-100 here and there. But after getting 
-                    the Complete Mastery System, I manifested $47,000 in new business in 30 days. This is insane!"
+    <!-- Main Content -->
+    <div class="relative z-10">
+        <!-- Header -->
+        <header class="relative pt-8 pb-4">
+            <div class="container mx-auto px-6">
+                <div class="flex items-center justify-center">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-8 h-8 border-2 border-gold-300 rotate-45 mystical-glow"></div>
+                        <span class="font-serif font-bold text-xl tracking-wide text-gold-300">THE ABUNDANCE CODE</span>
+                    </div>
                 </div>
-                <div class="testimonial-author">- Sarah Martinez, Online Entrepreneur</div>
-                <div class="testimonial-result">Result: $47,000 in 30 days</div>
             </div>
-            
-            <p>
-                These students weren't special. They weren't "natural manifestors." They simply had access to the 
-                complete system instead of just the basic code.
-            </p>
-            
-            <p>
-                And today, for the first and only time, I'm making this complete system available to you at a 
-                massive discount.
-            </p>
-        </div>
+        </header>
+
+        <!-- Urgent Banner -->
+        <section class="relative py-4 px-6">
+            <div class="container mx-auto max-w-4xl">
+                <div class="glass-panel border-l-4 border-l-red-500 rounded-lg p-4 text-center">
+                    <div class="flex items-center justify-center space-x-2 text-red-400 mb-2">
+                        <i data-lucide="clock" class="w-5 h-5 animate-countdown"></i>
+                        <span class="font-bold text-sm tracking-wide">LIMITED TIME OFFER</span>
+                        <i data-lucide="clock" class="w-5 h-5 animate-countdown"></i>
+                    </div>
+                    <p class="text-gray-300">This page will expire in <span class="text-gold-300 font-bold" id="countdown">14:59</span></p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Main Offer -->
+        <section class="relative py-16 px-6">
+            <div class="container mx-auto max-w-4xl text-center">
+                <!-- Headline -->
+                <h1 class="font-serif font-bold text-4xl md:text-5xl lg:text-6xl leading-tight mb-6 mystical-glow">
+                    Get The <span class="text-gold-300">Complete</span><br>
+                    Abundance Mastery System
+                </h1>
+
+                <!-- Subheadline -->
+                <p class="text-xl md:text-2xl text-gray-300 mb-8 max-w-3xl mx-auto">
+                    The advanced training system used by our most successful practitioners to 
+                    manifest abundance <strong class="text-gold-300">10x faster</strong> than the basic method
+                </p>
+
+                <!-- Price Display -->
+                <div class="mb-12">
+                    <div class="glass-panel rounded-2xl p-8 max-w-md mx-auto">
+                        <p class="text-gray-400 mb-2">Regular Price:</p>
+                        <p class="text-3xl text-gray-500 strikethrough mb-2">$997</p>
+                        <p class="text-gray-400 mb-2">Today Only:</p>
+                        <p class="font-serif text-6xl font-bold text-gold-300 mystical-glow">$197</p>
+                        <p class="text-sm text-gray-400 mt-2">One-time payment • Instant access</p>
+                    </div>
+                </div>
+
+                <!-- CTA Button -->
+                <a href="clean-checkout.html" class="inline-block btn-primary text-black font-bold text-xl px-8 py-4 rounded-lg hover:transform hover:scale-105 transition-all duration-300 mystical-glow mb-8">
+                    Get Instant Access Now →
+                </a>
+
+                <div class="flex items-center justify-center space-x-2 mb-12">
+                    <i data-lucide="shield-check" class="w-5 h-5 text-green-400"></i>
+                    <span class="text-gray-400 text-sm">60-Day Money-Back Guarantee</span>
+                </div>
+            </div>
+        </section>
 
         <!-- What's Included -->
-        <div class="section">
-            <h2>Here's Everything You Get When You Upgrade Today:</h2>
-            
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">🎵</div>
-                    <div class="feature-title">Quantum Audio Activations (6 Tracks)</div>
-                    <div class="feature-description">
-                        Specially designed binaural beats and frequency therapy tracks that activate your abundance 
-                        code at the quantum level while you sleep, meditate, or work.
-                    </div>
-                    <div class="feature-value">Value: $297</div>
-                </div>
+        <section class="relative py-16 px-6">
+            <div class="container mx-auto max-w-4xl">
+                <h2 class="font-serif text-3xl font-bold text-center mb-12 mystical-glow">What's Included:</h2>
                 
-                <div class="feature-card">
-                    <div class="feature-icon">📱</div>
-                    <div class="feature-title">Mobile App Suite</div>
-                    <div class="feature-description">
-                        Custom mobile app with code tracking, manifestation reminders, and real-time abundance 
-                        alerts sent directly to your phone when your code appears.
+                <div class="space-y-6">
+                    <!-- Module 1 -->
+                    <div class="glass-panel rounded-xl p-6">
+                        <div class="flex items-start space-x-4">
+                            <div class="flex-shrink-0 w-12 h-12 bg-gold-300/20 rounded-lg flex items-center justify-center">
+                                <i data-lucide="brain" class="w-6 h-6 text-gold-300"></i>
+                            </div>
+                            <div class="flex-1">
+                                <h3 class="font-serif text-xl font-bold mb-2">Advanced Frequency Activation Protocol</h3>
+                                <p class="text-gray-300 mb-2">
+                                    The exact 21-day protocol used by millionaire practitioners to permanently 
+                                    reprogram their abundance frequency. Includes precise timing, specific 
+                                    visualization sequences, and energetic alignment techniques.
+                                </p>
+                                <div class="text-sm text-gold-300">Value: $297</div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="feature-value">Value: $497</div>
+
+                    <!-- Module 2 -->
+                    <div class="glass-panel rounded-xl p-6">
+                        <div class="flex items-start space-x-4">
+                            <div class="flex-shrink-0 w-12 h-12 bg-gold-300/20 rounded-lg flex items-center justify-center">
+                                <i data-lucide="zap" class="w-6 h-6 text-gold-300"></i>
+                            </div>
+                            <div class="flex-1">
+                                <h3 class="font-serif text-xl font-bold mb-2">Instant Manifestation Triggers</h3>
+                                <p class="text-gray-300 mb-2">
+                                    12 powerful techniques to manifest specific amounts of money within 72 hours. 
+                                    These "emergency protocols" have been used to generate everything from 
+                                    $500 to $50,000 in urgent situations.
+                                </p>
+                                <div class="text-sm text-gold-300">Value: $197</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Module 3 -->
+                    <div class="glass-panel rounded-xl p-6">
+                        <div class="flex items-start space-x-4">
+                            <div class="flex-shrink-0 w-12 h-12 bg-gold-300/20 rounded-lg flex items-center justify-center">
+                                <i data-lucide="shield" class="w-6 h-6 text-gold-300"></i>
+                            </div>
+                            <div class="flex-1">
+                                <h3 class="font-serif text-xl font-bold mb-2">Block Removal & Protection System</h3>
+                                <p class="text-gray-300 mb-2">
+                                    Advanced techniques to identify and permanently remove the 7 most common 
+                                    abundance blocks, plus energetic protection methods to prevent new 
+                                    blocks from forming.
+                                </p>
+                                <div class="text-sm text-gold-300">Value: $247</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Module 4 -->
+                    <div class="glass-panel rounded-xl p-6">
+                        <div class="flex items-start space-x-4">
+                            <div class="flex-shrink-0 w-12 h-12 bg-gold-300/20 rounded-lg flex items-center justify-center">
+                                <i data-lucide="target" class="w-6 h-6 text-gold-300"></i>
+                            </div>
+                            <div class="flex-1">
+                                <h3 class="font-serif text-xl font-bold mb-2">Precision Abundance Targeting</h3>
+                                <p class="text-gray-300 mb-2">
+                                    How to manifest specific amounts, from specific sources, by specific dates. 
+                                    This is the "sniper" approach used by advanced practitioners to create 
+                                    exactly what they want, when they want it.
+                                </p>
+                                <div class="text-sm text-gold-300">Value: $197</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bonus 1 -->
+                    <div class="glass-panel rounded-xl p-6 border-l-4 border-l-mystic-glow">
+                        <div class="flex items-start space-x-4">
+                            <div class="flex-shrink-0 w-12 h-12 bg-mystic-glow/20 rounded-lg flex items-center justify-center">
+                                <i data-lucide="gift" class="w-6 h-6 text-mystic-glow"></i>
+                            </div>
+                            <div class="flex-1">
+                                <h3 class="font-serif text-xl font-bold mb-2 text-mystic-glow">BONUS: Millionaire Mindset Audio Series</h3>
+                                <p class="text-gray-300 mb-2">
+                                    6 professionally recorded audio sessions designed to install the exact 
+                                    thought patterns and beliefs of self-made millionaires while you sleep.
+                                </p>
+                                <div class="text-sm text-mystic-glow">Bonus Value: $147</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bonus 2 -->
+                    <div class="glass-panel rounded-xl p-6 border-l-4 border-l-mystic-glow">
+                        <div class="flex items-start space-x-4">
+                            <div class="flex-shrink-0 w-12 h-12 bg-mystic-glow/20 rounded-lg flex items-center justify-center">
+                                <i data-lucide="users" class="w-6 h-6 text-mystic-glow"></i>
+                            </div>
+                            <div class="flex-1">
+                                <h3 class="font-serif text-xl font-bold mb-2 text-mystic-glow">BONUS: Private Mastermind Access</h3>
+                                <p class="text-gray-300 mb-2">
+                                    90 days of access to our private mastermind community where successful 
+                                    practitioners share real-time results and advanced techniques.
+                                </p>
+                                <div class="text-sm text-mystic-glow">Bonus Value: $297</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">📊</div>
-                    <div class="feature-title">Advanced Analytics Dashboard</div>
-                    <div class="feature-description">
-                        Comprehensive tracking system that analyzes your manifestation patterns and provides 
-                        AI-powered recommendations to optimize your results.
-                    </div>
-                    <div class="feature-value">Value: $397</div>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">🎯</div>
-                    <div class="feature-title">Rapid Manifestation Protocols</div>
-                    <div class="feature-description">
-                        Step-by-step protocols for manifesting specific amounts of money within specific timeframes. 
-                        Used by our highest-earning students.
-                    </div>
-                    <div class="feature-value">Value: $597</div>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">🔮</div>
-                    <div class="feature-title">Quantum Amplification Techniques</div>
-                    <div class="feature-description">
-                        Advanced visualization and frequency modulation techniques that amplify your code's 
-                        power by 500-1000%. Exclusive to mastery students.
-                    </div>
-                    <div class="feature-value">Value: $697</div>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">👥</div>
-                    <div class="feature-title">Private Mastermind Community</div>
-                    <div class="feature-description">
-                        Exclusive access to our private online community of successful abundance code practitioners. 
-                        Network, share results, get support 24/7.
-                    </div>
-                    <div class="feature-value">Value: $297</div>
+
+                <!-- Total Value -->
+                <div class="glass-panel rounded-2xl p-8 mt-12 text-center border-2 border-gold-300/30">
+                    <h3 class="font-serif text-2xl font-bold mb-4 text-gold-300">Total Value: $1,382</h3>
+                    <p class="text-xl text-gray-300 mb-4">Your Investment Today:</p>
+                    <p class="font-serif text-5xl font-bold text-gold-300 mystical-glow">Only $197</p>
+                    <p class="text-gray-400 mt-2">Save $1,185 when you act now</p>
                 </div>
             </div>
-            
-            <div class="big-highlight">
-                Total Value: $2,782 | Today Only: $197 (93% OFF)
-            </div>
-        </div>
+        </section>
 
         <!-- Social Proof -->
-        <div class="section">
-            <h2>Real Results From Real People</h2>
-            
-            <div class="testimonial">
-                <div class="testimonial-text">
-                    "The audio activations alone changed my life. I listen to them every night and started seeing 
-                    my code 847 everywhere. Within 2 weeks, I got promoted and received a $15,000 bonus."
-                </div>
-                <div class="testimonial-author">- Marcus Thompson, Sales Manager</div>
-                <div class="testimonial-result">Result: $15,000 bonus + promotion</div>
-            </div>
-            
-            <div class="testimonial">
-                <div class="testimonial-text">
-                    "I was skeptical about spending $197, but the mobile app paid for itself in 3 days. It alerted me 
-                    when my code appeared on a lottery ticket. I won $2,500!"
-                </div>
-                <div class="testimonial-author">- Jennifer Liu, Teacher</div>
-                <div class="testimonial-result">Result: $2,500 lottery win</div>
-            </div>
-            
-            <div class="testimonial">
-                <div class="testimonial-text">
-                    "The rapid manifestation protocols are unreal. I followed the '$10,000 in 30 days' protocol 
-                    exactly and manifested $11,847 through unexpected opportunities and new clients."
-                </div>
-                <div class="testimonial-author">- David Rodriguez, Consultant</div>
-                <div class="testimonial-result">Result: $11,847 in 30 days</div>
-            </div>
-        </div>
-
-        <!-- Urgency & Scarcity -->
-        <div class="section">
-            <h2>Why This Offer May Never Be Available Again</h2>
-            <p>
-                I'm only making this available to the first 100 people who access their abundance code today. 
-                Here's why:
-            </p>
-            
-            <ul class="benefit-list">
-                <li>The private mastermind community has limited spots to maintain quality discussions</li>
-                <li>Our mobile app servers have capacity limits for real-time abundance alerts</li>
-                <li>Personal support and guidance can only scale to a certain number of students</li>
-                <li>I want to work closely with a select group to document case studies</li>
-            </ul>
-            
-            <p>
-                Plus, this is an <strong>introductory price</strong>. The regular price of the Complete Mastery System is $597. 
-                After this initial group of 100 students, the price goes back to full retail.
-            </p>
-            
-            <!-- Countdown Timer -->
-            <div class="countdown-timer">
-                <div class="timer-text">This offer expires in:</div>
-                <div class="timer-display">
-                    <div class="timer-unit">
-                        <span class="timer-number" id="minutes">14</span>
-                        <div class="timer-label">Minutes</div>
+        <section class="relative py-16 px-6">
+            <div class="container mx-auto max-w-4xl">
+                <h2 class="font-serif text-3xl font-bold text-center mb-12 mystical-glow">Success Stories:</h2>
+                
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="glass-panel rounded-xl p-6">
+                        <div class="flex items-center space-x-1 mb-4">
+                            <i data-lucide="star" class="w-5 h-5 text-gold-300 fill-current"></i>
+                            <i data-lucide="star" class="w-5 h-5 text-gold-300 fill-current"></i>
+                            <i data-lucide="star" class="w-5 h-5 text-gold-300 fill-current"></i>
+                            <i data-lucide="star" class="w-5 h-5 text-gold-300 fill-current"></i>
+                            <i data-lucide="star" class="w-5 h-5 text-gold-300 fill-current"></i>
+                        </div>
+                        <p class="text-gray-300 mb-4 italic">
+                            "I manifested $12,000 in unexpected income within 2 weeks of completing the advanced protocol. 
+                            The precision targeting technique is absolutely incredible."
+                        </p>
+                        <p class="font-bold text-gold-300">- Sarah M., Marketing Consultant</p>
                     </div>
-                    <div class="timer-unit">
-                        <span class="timer-number" id="seconds">59</span>
-                        <div class="timer-label">Seconds</div>
+                    
+                    <div class="glass-panel rounded-xl p-6">
+                        <div class="flex items-center space-x-1 mb-4">
+                            <i data-lucide="star" class="w-5 h-5 text-gold-300 fill-current"></i>
+                            <i data-lucide="star" class="w-5 h-5 text-gold-300 fill-current"></i>
+                            <i data-lucide="star" class="w-5 h-5 text-gold-300 fill-current"></i>
+                            <i data-lucide="star" class="w-5 h-5 text-gold-300 fill-current"></i>
+                            <i data-lucide="star" class="w-5 h-5 text-gold-300 fill-current"></i>
+                        </div>
+                        <p class="text-gray-300 mb-4 italic">
+                            "The instant manifestation triggers saved my business. Generated $25K in emergency funding 
+                            in just 72 hours when I was about to lose everything."
+                        </p>
+                        <p class="font-bold text-gold-300">- Michael R., Business Owner</p>
                     </div>
                 </div>
             </div>
-        </div>
-
-        <!-- Price & CTA -->
-        <div class="price-container">
-            <div class="price-header">Complete Abundance Mastery System</div>
-            <div class="original-price">Regular Price: $597</div>
-            <div class="current-price">$197</div>
-            <div class="savings">You Save $400 (67% OFF)</div>
-            <div class="price-description">One-time payment • Instant access • 60-day guarantee</div>
-            
-            <a href="#" class="cta-button" onclick="addToOrder()">
-                YES! Upgrade My Order Now
-            </a>
-            
-            <a href="thankyou.html" class="cta-button-secondary">
-                No thanks, just give me the basic code
-            </a>
-        </div>
-
-        <!-- Risk Reversal -->
-        <div class="guarantee">
-            <div class="guarantee-icon">🛡️</div>
-            <h3>60-Day "Results or Refund" Guarantee</h3>
-            <p>
-                Use the Complete Mastery System for a full 60 days. If you don't see at least a 10X improvement 
-                in your manifestation results compared to the basic code, simply email us and we'll refund 
-                every penny. No questions asked.
-            </p>
-            <p>
-                <strong>That's how confident I am this will transform your life.</strong>
-            </p>
-        </div>
-
-        <!-- FAQ -->
-        <div class="section">
-            <h2>Frequently Asked Questions</h2>
-            
-            <div class="faq-item">
-                <div class="faq-question">Q: Is this a monthly subscription?</div>
-                <div class="faq-answer">
-                    A: No! This is a one-time payment of $197. You get lifetime access to everything with no recurring fees.
-                </div>
-            </div>
-            
-            <div class="faq-item">
-                <div class="faq-question">Q: How quickly will I see results?</div>
-                <div class="faq-answer">
-                    A: Most students see amplified results within 48-72 hours of implementing the mastery techniques. 
-                    The average student manifests their first major breakthrough within 30 days.
-                </div>
-            </div>
-            
-            <div class="faq-item">
-                <div class="faq-question">Q: Will this work with any abundance code?</div>
-                <div class="faq-answer">
-                    A: Absolutely. The mastery system is designed to amplify ANY 3-digit abundance code. 
-                    The techniques are universal and work regardless of your specific numbers.
-                </div>
-            </div>
-            
-            <div class="faq-item">
-                <div class="faq-question">Q: What if I'm not tech-savvy?</div>
-                <div class="faq-answer">
-                    A: Everything is designed to be simple and user-friendly. The mobile app installs with one click, 
-                    and we provide step-by-step video tutorials for everything.
-                </div>
-            </div>
-        </div>
+        </section>
 
         <!-- Final CTA -->
-        <div class="section" style="text-align: center;">
-            <h2>The Choice Is Yours</h2>
-            <p>
-                You can continue with just your basic abundance code and hope for modest results...
-            </p>
-            <p>
-                Or you can upgrade to the Complete Mastery System today and potentially transform your 
-                entire financial reality in the next 30 days.
-            </p>
-            
-            <p style="font-size: 20px; font-weight: 600; margin: 30px 0;">
-                What would your life look like if you could 10X your manifestation power?
-            </p>
-            
-            <a href="#" class="cta-button" onclick="addToOrder()">
-                YES! I Want The Complete Mastery System
-            </a>
-            
-            <p style="margin-top: 20px; font-size: 14px; color: #666;">
-                Remember: 60-day guarantee • Instant access • One-time payment
-            </p>
-        </div>
-
-        <!-- Exit Intent -->
-        <div class="section">
-            <p style="text-align: center; color: #666; font-size: 16px;">
-                Still not sure? <a href="thankyou.html" style="color: #7c3aed;">Continue with basic code</a> and 
-                you'll always wonder "what if..."
-            </p>
-        </div>
-
+        <section class="relative py-16 px-6">
+            <div class="container mx-auto max-w-2xl text-center">
+                <div class="glass-panel rounded-2xl p-8">
+                    <h3 class="font-serif text-3xl font-bold mb-6 mystical-glow">Ready to 10x Your Results?</h3>
+                    
+                    <div class="mb-8">
+                        <div class="text-gray-400 mb-2">Time remaining:</div>
+                        <div class="text-4xl font-bold text-gold-300 animate-countdown" id="mainCountdown">14:59</div>
+                    </div>
+                    
+                    <a href="clean-checkout.html" class="block w-full btn-primary text-black font-bold text-xl py-4 rounded-lg hover:transform hover:scale-105 transition-all duration-300 mystical-glow mb-4">
+                        Get Instant Access - $197
+                    </a>
+                    
+                    <div class="flex items-center justify-center space-x-4 text-sm text-gray-400">
+                        <div class="flex items-center space-x-1">
+                            <i data-lucide="shield-check" class="w-4 h-4 text-green-400"></i>
+                            <span>60-Day Guarantee</span>
+                        </div>
+                        <div class="flex items-center space-x-1">
+                            <i data-lucide="lock" class="w-4 h-4 text-green-400"></i>
+                            <span>Secure Checkout</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
     </div>
-</div>
 
-<script>
-// Countdown timer
-let timeLeft = 15 * 60; // 15 minutes in seconds
-
-function updateTimer() {
-    const minutes = Math.floor(timeLeft / 60);
-    const seconds = timeLeft % 60;
-    
-    document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
-    document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
-    
-    if (timeLeft > 0) {
-        timeLeft--;
-    } else {
-        // Timer expired
-        document.querySelector('.urgency-banner').innerHTML = '⏰ EXPIRED: This offer is no longer available';
-        document.querySelector('.urgency-banner').style.background = '#666';
-    }
-}
-
-// Update timer every second
-setInterval(updateTimer, 1000);
-
-// Add to order function
-function addToOrder() {
-    // In a real implementation, this would handle the payment
-    alert('Redirecting to secure checkout...');
-    // window.location.href = 'checkout.html?product=mastery';
-}
-
-// Exit intent detection
-let mouseY = 0;
-let shown = false;
-
-document.addEventListener('mousemove', function(e) {
-    mouseY = e.clientY;
-});
-
-document.addEventListener('mouseout', function(e) {
-    if (mouseY < 100 && !shown) {
-        shown = true;
-        if (confirm('WAIT! Are you sure you want to miss out on 10Xing your abundance results? Click OK to stay and secure your upgrade, or Cancel to leave.')) {
-            // They chose to stay - scroll to CTA
-            document.querySelector('.price-container').scrollIntoView({ behavior: 'smooth' });
+    <!-- Initialize Lucide Icons -->
+    <script>
+        lucide.createIcons();
+        
+        // Countdown timer
+        let timeLeft = 15 * 60; // 15 minutes in seconds
+        
+        function updateCountdown() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            const display = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+            
+            document.getElementById('countdown').textContent = display;
+            document.getElementById('mainCountdown').textContent = display;
+            
+            if (timeLeft > 0) {
+                timeLeft--;
+            } else {
+                timeLeft = 15 * 60; // Reset to 15 minutes
+            }
         }
-    }
-});
-</script>
-
+        
+        // Update countdown every second
+        setInterval(updateCountdown, 1000);
+        updateCountdown(); // Initial call
+    </script>
 </body>
 </html>

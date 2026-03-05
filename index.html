@@ -1,657 +1,311 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-<title>The Abundance Code — Discover Your Personal Frequency</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-<style>
-/* Mobile-first approach - all styles default to mobile */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-:root {
-    --primary: #7c3aed;
-    --primary-light: #a855f7;
-    --gold: #f59e0b;
-    --gold-light: #fbbf24;
-    --text: #1f2937;
-    --text-light: #6b7280;
-    --bg: #ffffff;
-    --accent: #ec4899;
-}
-
-body {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    line-height: 1.6;
-    font-size: 16px;
-}
-
-.container {
-    max-width: 100%;
-    margin: 0 auto;
-    padding: 0 20px;
-}
-
-/* Mobile-first header */
-.header {
-    text-align: center;
-    padding: 40px 0 30px;
-    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
-}
-
-.badge {
-    display: inline-block;
-    background: linear-gradient(135deg, var(--gold), var(--gold-light));
-    color: white;
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    padding: 8px 16px;
-    border-radius: 20px;
-    margin-bottom: 20px;
-}
-
-/* Mobile headline optimized for above fold */
-.main-headline {
-    font-size: 32px;
-    font-weight: 900;
-    line-height: 1.1;
-    color: var(--text);
-    margin-bottom: 16px;
-    letter-spacing: -0.02em;
-}
-
-.headline-accent {
-    color: var(--primary);
-    font-style: italic;
-}
-
-.subheadline {
-    font-size: 18px;
-    color: var(--text-light);
-    margin-bottom: 20px;
-    line-height: 1.4;
-    font-weight: 500;
-}
-
-.description {
-    font-size: 16px;
-    color: var(--text-light);
-    margin-bottom: 30px;
-    line-height: 1.5;
-}
-
-/* Mobile-optimized social proof */
-.social-proof {
-    display: flex;
-    justify-content: space-around;
-    background: white;
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-    margin-bottom: 30px;
-}
-
-.proof-stat {
-    text-align: center;
-}
-
-.proof-number {
-    font-size: 20px;
-    font-weight: 900;
-    color: var(--primary);
-    line-height: 1;
-    margin-bottom: 4px;
-}
-
-.proof-label {
-    font-size: 11px;
-    color: var(--text-light);
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
-
-/* Benefits grid mobile-optimized */
-.benefits {
-    margin: 30px 0;
-}
-
-.benefits-title {
-    font-size: 18px;
-    font-weight: 700;
-    text-align: center;
-    margin-bottom: 20px;
-    color: var(--text);
-}
-
-.benefits-list {
-    display: grid;
-    gap: 12px;
-}
-
-.benefit-item {
-    background: white;
-    border: 1px solid #e5e7eb;
-    border-radius: 8px;
-    padding: 16px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
-.benefit-icon {
-    font-size: 20px;
-    flex-shrink: 0;
-}
-
-.benefit-text {
-    font-size: 14px;
-    color: var(--text);
-    font-weight: 500;
-}
-
-/* CRITICAL: Mobile CTA above fold */
-.cta-section {
-    margin: 30px 0 20px;
-    text-align: center;
-}
-
-.main-cta {
-    background: linear-gradient(135deg, var(--primary), var(--primary-light));
-    color: white;
-    font-size: 18px;
-    font-weight: 800;
-    padding: 18px 32px;
-    border-radius: 12px;
-    border: none;
-    width: 100%;
-    max-width: 100%;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(124, 58, 237, 0.3);
-    letter-spacing: 0.3px;
-}
-
-.main-cta:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(124, 58, 237, 0.4);
-}
-
-.main-cta:active {
-    transform: translateY(0);
-}
-
-/* Mobile urgency */
-.urgency {
-    background: #fef2f2;
-    border: 1px solid #fecaca;
-    border-radius: 8px;
-    padding: 12px;
-    margin-top: 16px;
-    text-align: center;
-}
-
-.urgency-text {
-    font-size: 13px;
-    color: #dc2626;
-    font-weight: 600;
-}
-
-/* Progress bar for quiz */
-.progress {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 3px;
-    background: rgba(124, 58, 237, 0.1);
-    z-index: 1000;
-    display: none;
-}
-
-.progress.active {
-    display: block;
-}
-
-.progress-fill {
-    height: 100%;
-    background: linear-gradient(90deg, var(--primary), var(--gold));
-    transition: width 0.3s ease;
-    width: 0%;
-}
-
-/* Quiz steps - mobile optimized */
-.step {
-    display: none;
-    min-height: 100vh;
-    padding: 20px;
-    background: #f8fafc;
-}
-
-.step.active {
-    display: block;
-}
-
-.quiz-card {
-    background: white;
-    border-radius: 16px;
-    padding: 24px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-    margin-top: 20px;
-}
-
-.step-count {
-    font-size: 12px;
-    color: var(--text-light);
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-bottom: 16px;
-}
-
-.question-title {
-    font-size: 24px;
-    font-weight: 800;
-    line-height: 1.2;
-    margin-bottom: 12px;
-    color: var(--text);
-}
-
-.question-subtitle {
-    font-size: 14px;
-    color: var(--text-light);
-    margin-bottom: 24px;
-}
-
-.options {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-
-.option {
-    background: #f9fafb;
-    border: 2px solid #e5e7eb;
-    border-radius: 12px;
-    padding: 16px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    font-size: 15px;
-    font-weight: 500;
-}
-
-.option:hover {
-    border-color: var(--primary);
-    background: #faf5ff;
-    transform: translateY(-1px);
-}
-
-.option.selected {
-    border-color: var(--primary);
-    background: #ede9fe;
-    box-shadow: 0 4px 12px rgba(124, 58, 237, 0.15);
-}
-
-.option-emoji {
-    font-size: 20px;
-    flex-shrink: 0;
-}
-
-.warning-option {
-    border-color: #fca5a5 !important;
-    background: #fef2f2 !important;
-}
-
-.warning-text {
-    font-size: 12px;
-    color: #dc2626;
-    margin-top: 16px;
-    text-align: center;
-    font-style: italic;
-}
-
-/* Results page */
-.results-card {
-    text-align: center;
-    padding: 40px 24px;
-}
-
-.completion-icon {
-    font-size: 60px;
-    margin-bottom: 20px;
-}
-
-.results-title {
-    font-size: 28px;
-    font-weight: 900;
-    margin-bottom: 16px;
-    color: var(--text);
-}
-
-.code-display {
-    font-size: 80px;
-    font-weight: 900;
-    color: var(--primary);
-    margin: 20px 0;
-    text-shadow: 0 0 20px rgba(124, 58, 237, 0.2);
-}
-
-.code-meaning {
-    background: linear-gradient(135deg, var(--primary), var(--gold));
-    color: white;
-    padding: 12px 20px;
-    border-radius: 8px;
-    font-weight: 600;
-    margin: 20px 0;
-}
-
-.results-actions {
-    margin-top: 24px;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-
-.action-btn {
-    padding: 14px 24px;
-    border-radius: 8px;
-    font-weight: 600;
-    text-decoration: none;
-    text-align: center;
-    transition: all 0.2s ease;
-}
-
-.action-btn.primary {
-    background: var(--primary);
-    color: white;
-}
-
-.action-btn.secondary {
-    background: white;
-    color: var(--text-light);
-    border: 1px solid #e5e7eb;
-}
-
-/* Tablet styles */
-@media (min-width: 768px) {
-    .container {
-        padding: 0 40px;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Abundance Code | Free Quantum Assessment</title>
+    <meta name="description" content="Discover why you haven't attracted abundance yet. Take this 2-minute quantum frequency assessment.">
     
-    .main-headline {
-        font-size: 42px;
-    }
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
     
-    .subheadline {
-        font-size: 20px;
-    }
+    <!-- Google Fonts: Cinzel for mystical/numerology vibe, Outfit for clean body -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&family=Cinzel:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
-    .benefits-list {
-        grid-template-columns: 1fr 1fr;
-    }
-    
-    .main-cta {
-        max-width: 400px;
-        margin: 0 auto;
-    }
-    
-    .results-actions {
-        flex-direction: row;
-        justify-content: center;
-    }
-}
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
 
-/* Desktop styles */
-@media (min-width: 1024px) {
-    .container {
-        max-width: 800px;
-        padding: 0 20px;
-    }
-    
-    .main-headline {
-        font-size: 52px;
-    }
-    
-    .social-proof {
-        max-width: 500px;
-        margin: 0 auto 30px;
-    }
-}
-
-.landing.hidden {
-    display: none;
-}
-</style>
-</head>
-<body>
-
-<!-- Progress Bar -->
-<div class="progress" id="progressBar">
-    <div class="progress-fill" id="progressFill"></div>
-</div>
-
-<!-- Mobile-First Landing Page -->
-<div class="landing" id="landingPage">
-    <div class="header">
-        <div class="container">
-            <div class="badge">✨ Free Abundance Analysis</div>
-            
-            <h1 class="main-headline">
-                Discover <span class="headline-accent">Why</span> You<br>
-                Haven't Attracted<br>
-                Abundance Yet
-            </h1>
-            
-            <p class="subheadline">
-                Take this 2-minute quantum frequency assessment to uncover
-                your personal 3-digit abundance code
-            </p>
-            
-            <p class="description">
-                Based on breakthrough quantum field research and validated with over 50,000 practitioners worldwide, 
-                this precision assessment reveals the exact energetic frequency blocking your prosperity flow—and 
-                the personalized activation code that will unlock it.
-            </p>
-
-            <!-- Social Proof -->
-            <div class="social-proof">
-                <div class="proof-stat">
-                    <div class="proof-number">50,127</div>
-                    <div class="proof-label">People Analyzed</div>
-                </div>
-                <div class="proof-stat">
-                    <div class="proof-number">2 Min</div>
-                    <div class="proof-label">To Complete</div>
-                </div>
-                <div class="proof-stat">
-                    <div class="proof-number">85%</div>
-                    <div class="proof-label">See Results in 72hrs</div>
-                </div>
-            </div>
-
-            <!-- Benefits -->
-            <div class="benefits">
-                <h3 class="benefits-title">You'll Discover:</h3>
-                <div class="benefits-list">
-                    <div class="benefit-item">
-                        <div class="benefit-icon">🔢</div>
-                        <div class="benefit-text">Your personal 3-digit abundance frequency code</div>
-                    </div>
-                    <div class="benefit-item">
-                        <div class="benefit-icon">🚫</div>
-                        <div class="benefit-text">The hidden energetic blocks limiting your prosperity</div>
-                    </div>
-                    <div class="benefit-item">
-                        <div class="benefit-icon">⚡</div>
-                        <div class="benefit-text">Precise activation techniques for your unique frequency</div>
-                    </div>
-                    <div class="benefit-item">
-                        <div class="benefit-icon">🎯</div>
-                        <div class="benefit-text">When and how your abundance will manifest</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- CRITICAL: Mobile CTA Above Fold -->
-            <div class="cta-section">
-                <button class="main-cta" onclick="startAssessment()">
-                    Start My Free Abundance Assessment →
-                </button>
-
-                <div class="urgency">
-                    <div class="urgency-text">
-                        ⚠️ This comprehensive analysis is temporarily free — normally $197 ⚠️
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Quiz Steps -->
-<div class="step" id="step1">
-    <div class="quiz-card">
-        <div class="step-count">Question 1 of 8</div>
-        <h2 class="question-title">When it comes to abundance, I choose to...</h2>
-        <p class="question-subtitle">Select what resonates most with your deepest desires right now</p>
-        <div class="options">
-            <div class="option" onclick="selectAnswer('wealth_freedom')">
-                <span class="option-emoji">💎</span>
-                I choose to experience complete financial freedom and never worry about money again
-            </div>
-            <div class="option" onclick="selectAnswer('time_freedom')">
-                <span class="option-emoji">🌅</span>
-                I choose to have unlimited time to do what brings me joy and fulfillment
-            </div>
-            <div class="option" onclick="selectAnswer('impact_legacy')">
-                <span class="option-emoji">🌟</span>
-                I choose to create a meaningful impact and leave a lasting legacy
-            </div>
-            <div class="option" onclick="selectAnswer('love_connection')">
-                <span class="option-emoji">💕</span>
-                I choose to be surrounded by deep love and genuine connections
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Continue with other quiz steps... -->
-<div class="step" id="step6">
-    <div class="quiz-card">
-        <div class="step-count">Question 6 of 8</div>
-        <h2 class="question-title">I have to admit, I struggle with...</h2>
-        <p class="question-subtitle">It's time to be completely honest about what's really holding you back</p>
-        <div class="options">
-            <div class="option warning-option" onclick="selectAnswer('money_stress')">
-                <span class="option-emoji">😔</span>
-                I struggle with constant money stress that keeps me up at night
-            </div>
-            <div class="option warning-option" onclick="selectAnswer('feeling_stuck')">
-                <span class="option-emoji">🔒</span>
-                I struggle with feeling completely stuck in my current situation
-            </div>
-            <div class="option warning-option" onclick="selectAnswer('self_sabotage')">
-                <span class="option-emoji">💔</span>
-                I struggle with sabotaging myself just when things start going well
-            </div>
-            <div class="option warning-option" onclick="selectAnswer('attracting_abundance')">
-                <span class="option-emoji">🌧️</span>
-                I struggle with attracting abundance no matter how hard I try
-            </div>
-        </div>
-        <p class="warning-text">It takes courage to admit what's not working. You're taking the first step toward real change.</p>
-    </div>
-</div>
-
-<!-- Results -->
-<div class="step" id="results">
-    <div class="quiz-card">
-        <div class="results-card">
-            <div class="completion-icon">🎉</div>
-            <h2 class="results-title">Your Personal Abundance Code Is...</h2>
-            <div class="code-display" id="finalCode">374</div>
-            <div class="code-meaning" id="codeMeaning">Financial Mastery • Unlimited Abundance • Freedom Code</div>
-            <p>This 3-digit code is your unique frequency signature for attracting abundance. When this number appears in your life, it's a signal that your manifestation power is activating.</p>
-            <div class="results-actions">
-                <a href="oto1-new.html" class="action-btn primary">Get My Complete Abundance System →</a>
-                <a href="#" onclick="startOver()" class="action-btn secondary">Take Assessment Again</a>
-            </div>
-        </div>
-    </div>
-</div>
-
-<script>
-let currentStep = 'landing';
-let answers = {};
-let totalSteps = 8;
-
-function startAssessment() {
-    document.getElementById('landingPage').classList.add('hidden');
-    document.getElementById('progressBar').classList.add('active');
-    currentStep = 1;
-    document.getElementById('step1').classList.add('active');
-    updateProgress();
-}
-
-function updateProgress() {
-    if (currentStep === 'landing') return;
-    const progress = (currentStep / totalSteps) * 100;
-    document.getElementById('progressFill').style.width = progress + '%';
-}
-
-function selectAnswer(value) {
-    answers[`step${currentStep}`] = value;
-    document.querySelectorAll('.option').forEach(el => el.classList.remove('selected'));
-    event.target.closest('.option').classList.add('selected');
-    
-    setTimeout(() => {
-        // Simple progression for demo
-        if (currentStep < 8) {
-            document.getElementById(`step${currentStep}`).classList.remove('active');
-            currentStep++;
-            if (currentStep === 6) {
-                document.getElementById('step6').classList.add('active');
-            } else if (currentStep === 8) {
-                document.getElementById('results').classList.add('active');
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                        serif: ['Cinzel', 'serif'],
+                    },
+                    colors: {
+                        cosmic: {
+                            950: '#06010D',
+                            900: '#0E0320',
+                            800: '#1A063C',
+                            700: '#2A0A5E'
+                        },
+                        gold: {
+                            200: '#FEF0C7',
+                            300: '#FDE08B',
+                            400: '#F6C358',
+                            500: '#D99B28',
+                            600: '#B2761A'
+                        },
+                        mystic: {
+                            glow: '#9D4EDD',
+                            teal: '#2DD4BF'
+                        }
+                    },
+                    animation: {
+                        'slow-pan': 'pan 20s linear infinite',
+                        'float': 'float 8s ease-in-out infinite',
+                        'float-delayed': 'float 8s ease-in-out 4s infinite',
+                        'float-fast': 'float 6s ease-in-out 2s infinite',
+                        'pulse-glow': 'pulse-glow 4s ease-in-out infinite',
+                        'shimmer': 'shimmer 3s infinite',
+                        'spin-slow': 'spin 40s linear infinite',
+                        'spin-slow-reverse': 'spin 50s linear infinite reverse',
+                        'fade-in-out': 'fadeInOut 6s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        pan: {
+                            '0%': { transform: 'scale(1) translate(0px, 0px)' },
+                            '50%': { transform: 'scale(1.05) translate(20px, -20px)' },
+                            '100%': { transform: 'scale(1) translate(0px, 0px)' }
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        'pulse-glow': {
+                            '0%, 100%': { opacity: 0.4, transform: 'scale(1)' },
+                            '50%': { opacity: 0.7, transform: 'scale(1.1)' },
+                        },
+                        shimmer: {
+                            '100%': { transform: 'translateX(100%)' }
+                        },
+                        fadeInOut: {
+                            '0%, 100%': { opacity: 0.1, transform: 'scale(0.95)' },
+                            '50%': { opacity: 0.4, transform: 'scale(1)' },
+                        }
+                    }
+                }
             }
-            updateProgress();
         }
-    }, 800);
-}
+    </script>
 
-function startOver() {
-    document.querySelectorAll('.step').forEach(step => step.classList.remove('active'));
-    document.getElementById('progressBar').classList.remove('active');
-    document.getElementById('landingPage').classList.remove('hidden');
+    <style>
+        body {
+            background-color: #06010D;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        .noise-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 50;
+            opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .bg-gradient-gold {
+            background: linear-gradient(135deg, #FDE08B 0%, #D99B28 50%, #B2761A 100%);
+        }
+
+        .mystical-glow {
+            box-shadow: 0 0 30px rgba(157, 78, 221, 0.3), 0 0 60px rgba(157, 78, 221, 0.1);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #FDE08B 0%, #D99B28 50%, #B2761A 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn-primary:hover::before {
+            left: 100%;
+        }
+    </style>
+</head>
+<body class="bg-cosmic-950 text-white">
+    <!-- Noise Overlay -->
+    <div class="noise-overlay"></div>
     
-    currentStep = 'landing';
-    answers = {};
-    document.querySelectorAll('.option').forEach(el => el.classList.remove('selected'));
-}
+    <!-- Animated Background -->
+    <div class="fixed inset-0 overflow-hidden z-0">
+        <!-- Cosmic orbs -->
+        <div class="absolute top-20 left-10 w-32 h-32 bg-mystic-glow opacity-10 rounded-full blur-xl animate-float"></div>
+        <div class="absolute top-40 right-20 w-24 h-24 bg-gold-400 opacity-15 rounded-full blur-lg animate-float-delayed"></div>
+        <div class="absolute bottom-32 left-1/4 w-20 h-20 bg-mystic-teal opacity-20 rounded-full blur-md animate-float-fast"></div>
+        
+        <!-- Floating geometric shapes -->
+        <div class="absolute top-1/3 right-1/3 w-6 h-6 border border-gold-300 opacity-30 rotate-45 animate-spin-slow"></div>
+        <div class="absolute bottom-1/4 right-1/4 w-4 h-4 border border-mystic-glow opacity-20 animate-spin-slow-reverse"></div>
+    </div>
 
-// Ensure CTA is visible above fold on mobile
-window.addEventListener('load', function() {
-    const cta = document.querySelector('.main-cta');
-    const viewportHeight = window.innerHeight;
-    const ctaPosition = cta.getBoundingClientRect().top;
-    
-    // Log for debugging
-    console.log('Viewport height:', viewportHeight);
-    console.log('CTA position:', ctaPosition);
-    console.log('CTA above fold:', ctaPosition < viewportHeight);
-});
-</script>
+    <!-- Main Content -->
+    <div class="relative z-10">
+        <!-- Header -->
+        <header class="relative pt-8 pb-4">
+            <div class="container mx-auto px-6">
+                <div class="flex items-center justify-center">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-8 h-8 border-2 border-gold-300 rotate-45 mystical-glow"></div>
+                        <span class="font-serif font-bold text-xl tracking-wide text-gold-300">THE ABUNDANCE CODE</span>
+                    </div>
+                </div>
+            </div>
+        </header>
 
+        <!-- Hero Section -->
+        <section class="relative py-16 px-6">
+            <div class="container mx-auto max-w-4xl text-center">
+                <!-- Badge -->
+                <div class="inline-flex items-center space-x-2 bg-gold-300/10 border border-gold-300/20 rounded-full px-4 py-2 mb-8">
+                    <i data-lucide="sparkles" class="w-4 h-4 text-gold-300"></i>
+                    <span class="text-sm font-medium text-gold-300 tracking-wide">FREE ABUNDANCE ANALYSIS</span>
+                </div>
+
+                <!-- Main Headline -->
+                <h1 class="font-serif font-bold text-5xl md:text-6xl lg:text-7xl leading-tight mb-6 mystical-glow">
+                    Discover <span class="text-gold-300">Why</span> You Haven't<br>
+                    Attracted Abundance Yet
+                </h1>
+
+                <!-- Subheadline -->
+                <p class="text-xl md:text-2xl text-gray-300 mb-8 max-w-3xl mx-auto">
+                    Take this 2-minute quantum frequency assessment to uncover<br>
+                    your personal 3-digit abundance code.
+                </p>
+
+                <!-- Description -->
+                <p class="text-lg text-gray-400 mb-12 max-w-3xl mx-auto leading-relaxed">
+                    Based on breakthrough quantum field research and validated with over 50,000 practitioners worldwide, 
+                    this precision assessment reveals the exact energetic frequency blocking your prosperity flow—and 
+                    the personalized activation code that will unlock it.
+                </p>
+
+                <!-- CTA Button -->
+                <a href="quiz-step-1.html" class="inline-block btn-primary text-black font-bold text-lg px-8 py-4 rounded-lg hover:transform hover:scale-105 transition-all duration-300 mystical-glow">
+                    Start My Free Assessment →
+                </a>
+
+                <!-- Social Proof -->
+                <div class="flex items-center justify-center space-x-1 mt-6">
+                    <div class="flex space-x-1">
+                        <i data-lucide="star" class="w-5 h-5 text-gold-300 fill-current"></i>
+                        <i data-lucide="star" class="w-5 h-5 text-gold-300 fill-current"></i>
+                        <i data-lucide="star" class="w-5 h-5 text-gold-300 fill-current"></i>
+                        <i data-lucide="star" class="w-5 h-5 text-gold-300 fill-current"></i>
+                        <i data-lucide="star" class="w-5 h-5 text-gold-300 fill-current"></i>
+                    </div>
+                    <span class="text-gray-400 text-sm ml-2">Validated by 50,000+ practitioners</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- The Science Section -->
+        <section class="relative py-16 px-6">
+            <div class="container mx-auto max-w-4xl">
+                <div class="glass-panel rounded-3xl p-8 md:p-12">
+                    <div class="flex items-start space-x-6">
+                        <div class="flex-shrink-0">
+                            <div class="w-16 h-16 rounded-full border-2 border-gold-300 flex items-center justify-center mystical-glow">
+                                <i data-lucide="waves" class="w-8 h-8 text-gold-300"></i>
+                            </div>
+                        </div>
+                        <div>
+                            <h2 class="font-serif text-3xl md:text-4xl font-bold mb-4">
+                                The Science of <span class="text-gold-300">Vibrational Alignment</span>
+                            </h2>
+                            <p class="text-lg text-gray-300 mb-6 leading-relaxed">
+                                Based on breakthrough quantum field research and validated with over <strong class="text-gold-300">50,000 
+                                practitioners worldwide</strong>, this precision assessment reveals the exact energetic 
+                                frequency blocking your prosperity flow.
+                            </p>
+                            <p class="text-lg text-gray-300 leading-relaxed">
+                                Once identified, we provide your personalized activation code to permanently unlock 
+                                your manifestation potential.
+                            </p>
+                            <div class="mt-8">
+                                <a href="quiz-step-1.html" class="inline-flex items-center space-x-2 text-gold-300 hover:text-gold-200 transition-colors">
+                                    <span class="font-medium">Begin the assessment</span>
+                                    <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- What You'll Discover -->
+        <section class="relative py-16 px-6">
+            <div class="container mx-auto max-w-4xl">
+                <h3 class="font-serif text-3xl font-bold text-center mb-12 mystical-glow">You'll Discover:</h3>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="glass-panel rounded-xl p-6">
+                        <div class="flex items-center space-x-4 mb-4">
+                            <div class="text-2xl">🔢</div>
+                            <h4 class="font-semibold text-lg">Your Personal 3-Digit Code</h4>
+                        </div>
+                        <p class="text-gray-300">The exact abundance frequency signature unique to your energetic blueprint.</p>
+                    </div>
+                    <div class="glass-panel rounded-xl p-6">
+                        <div class="flex items-center space-x-4 mb-4">
+                            <div class="text-2xl">🚫</div>
+                            <h4 class="font-semibold text-lg">Hidden Energetic Blocks</h4>
+                        </div>
+                        <p class="text-gray-300">The subconscious patterns and frequencies limiting your prosperity flow.</p>
+                    </div>
+                    <div class="glass-panel rounded-xl p-6">
+                        <div class="flex items-center space-x-4 mb-4">
+                            <div class="text-2xl">⚡</div>
+                            <h4 class="font-semibold text-lg">Precise Activation Techniques</h4>
+                        </div>
+                        <p class="text-gray-300">Personalized methods calibrated specifically for your unique frequency.</p>
+                    </div>
+                    <div class="glass-panel rounded-xl p-6">
+                        <div class="flex items-center space-x-4 mb-4">
+                            <div class="text-2xl">🎯</div>
+                            <h4 class="font-semibold text-lg">Manifestation Timeline</h4>
+                        </div>
+                        <p class="text-gray-300">When and how your abundance will begin to manifest in the physical realm.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Urgency Banner -->
+        <section class="relative py-8 px-6">
+            <div class="container mx-auto max-w-2xl">
+                <div class="glass-panel border-l-4 border-l-gold-300 rounded-lg p-6 text-center">
+                    <div class="flex items-center justify-center space-x-2 text-gold-300 mb-2">
+                        <i data-lucide="alert-triangle" class="w-5 h-5"></i>
+                        <span class="font-bold text-sm tracking-wide">LIMITED TIME</span>
+                        <i data-lucide="alert-triangle" class="w-5 h-5"></i>
+                    </div>
+                    <p class="text-gray-300">This comprehensive analysis is temporarily free — normally $197</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Initialize Lucide Icons -->
+    <script>
+        lucide.createIcons();
+    </script>
 </body>
 </html>
