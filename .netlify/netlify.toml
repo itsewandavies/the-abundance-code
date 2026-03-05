@@ -7,7 +7,7 @@ redirects = []
 [functions."*"]
 
 [build]
-publish = "/Users/ewan/.openclaw/workspace/the-abundance-code"
+publish = "/Users/ewan/.openclaw/workspace-funnelfactory/the-abundance-code"
 publishOrigin = "default"
 
 [build.environment]

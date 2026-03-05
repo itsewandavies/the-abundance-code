@@ -1,0 +1,1766 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Advanced Abundance Tracker & Analytics Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary: #7c3aed;
+    --primary-light: #a855f7;
+    --secondary: #f5c542;
+    --dark: #1a1a2e;
+    --light: #ffffff;
+    --gray: #6b7280;
+    --gray-light: #f8fafc;
+    --gray-medium: #e5e7eb;
+    --gray-dark: #374151;
+    --success: #22c55e;
+    --warning: #f59e0b;
+    --danger: #ef4444;
+    --info: #3b82f6;
+}
+
+body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: var(--dark);
+    line-height: 1.6;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.dashboard-container {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.dashboard-header {
+    text-align: center;
+    margin-bottom: 40px;
+    color: var(--light);
+}
+
+.dashboard-header h1 {
+    font-size: 2.5rem;
+    font-weight: 900;
+    margin-bottom: 12px;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
+.dashboard-header p {
+    font-size: 1.1rem;
+    opacity: 0.9;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.dashboard-layout {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: 30px;
+    margin-bottom: 40px;
+}
+
+@media (max-width: 1024px) {
+    .dashboard-layout {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+}
+
+.sidebar {
+    background: var(--light);
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    height: fit-content;
+    position: sticky;
+    top: 20px;
+}
+
+.sidebar h2 {
+    color: var(--primary);
+    font-size: 1.3rem;
+    font-weight: 800;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.quick-entry {
+    margin-bottom: 30px;
+}
+
+.quick-entry h3 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--dark);
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.entry-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.entry-input {
+    padding: 12px;
+    border: 2px solid var(--gray-medium);
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-family: inherit;
+    transition: all 0.3s;
+}
+
+.entry-input:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
+}
+
+.entry-select {
+    padding: 12px;
+    border: 2px solid var(--gray-medium);
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-family: inherit;
+    background: var(--light);
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.entry-select:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
+}
+
+.entry-btn {
+    background: linear-gradient(135deg, var(--primary), var(--primary-light));
+    color: var(--light);
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.entry-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3);
+}
+
+.stats-summary {
+    background: linear-gradient(135deg, rgba(124, 58, 237, 0.05), rgba(245, 197, 66, 0.05));
+    border: 2px solid var(--secondary);
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+.stat-item {
+    text-align: center;
+}
+
+.stat-value {
+    font-size: 1.8rem;
+    font-weight: 900;
+    color: var(--primary);
+    display: block;
+}
+
+.stat-label {
+    font-size: 0.8rem;
+    color: var(--gray);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.streak-indicator {
+    text-align: center;
+    padding: 12px;
+    background: var(--success);
+    color: var(--light);
+    border-radius: 8px;
+    font-weight: 700;
+}
+
+.main-content {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.dashboard-card {
+    background: var(--light);
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.dashboard-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary), var(--secondary));
+}
+
+.card-header {
+    display: flex;
+    justify-content: between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.card-title {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.card-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.action-btn {
+    background: var(--gray-light);
+    border: 1px solid var(--gray-medium);
+    color: var(--gray-dark);
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.action-btn:hover {
+    background: var(--gray-medium);
+    transform: translateY(-1px);
+}
+
+.action-btn.active {
+    background: var(--primary);
+    color: var(--light);
+    border-color: var(--primary);
+}
+
+.timeline-container {
+    position: relative;
+}
+
+.timeline {
+    position: relative;
+    padding-left: 40px;
+}
+
+.timeline::before {
+    content: '';
+    position: absolute;
+    left: 20px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--gray-medium);
+}
+
+.timeline-entry {
+    position: relative;
+    padding: 20px 0;
+    border-left: 2px solid transparent;
+    margin-left: -2px;
+    transition: all 0.3s;
+}
+
+.timeline-entry:hover {
+    background: var(--gray-light);
+    border-radius: 0 12px 12px 0;
+    padding-left: 12px;
+}
+
+.timeline-entry::before {
+    content: '';
+    position: absolute;
+    left: -21px;
+    top: 30px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--light);
+    border: 3px solid var(--primary);
+    z-index: 2;
+}
+
+.timeline-entry.signal::before {
+    background: var(--secondary);
+    border-color: var(--warning);
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.2); opacity: 0.7; }
+}
+
+.timeline-entry.opportunity::before {
+    background: var(--success);
+    border-color: var(--success);
+}
+
+.timeline-entry.abundance::before {
+    background: var(--info);
+    border-color: var(--info);
+}
+
+.entry-content {
+    padding-left: 20px;
+}
+
+.entry-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 8px;
+}
+
+.entry-type {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.entry-type.signal {
+    background: rgba(245, 197, 66, 0.1);
+    color: var(--warning);
+    border: 1px solid var(--secondary);
+}
+
+.entry-type.opportunity {
+    background: rgba(34, 197, 94, 0.1);
+    color: var(--success);
+    border: 1px solid var(--success);
+}
+
+.entry-type.abundance {
+    background: rgba(59, 130, 246, 0.1);
+    color: var(--info);
+    border: 1px solid var(--info);
+}
+
+.entry-type.gratitude {
+    background: rgba(236, 72, 153, 0.1);
+    color: #ec4899;
+    border: 1px solid #ec4899;
+}
+
+.entry-time {
+    font-size: 0.8rem;
+    color: var(--gray);
+    font-weight: 500;
+}
+
+.entry-description {
+    color: var(--dark);
+    margin-bottom: 8px;
+    line-height: 1.5;
+}
+
+.entry-value {
+    font-weight: 700;
+    color: var(--success);
+}
+
+.analytics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.analytics-card {
+    background: linear-gradient(135deg, rgba(124, 58, 237, 0.05), rgba(168, 85, 247, 0.02));
+    border: 2px solid var(--primary);
+    border-radius: 16px;
+    padding: 24px;
+    text-align: center;
+}
+
+.analytics-card h3 {
+    color: var(--primary);
+    font-weight: 800;
+    margin-bottom: 16px;
+    font-size: 1.1rem;
+}
+
+.metric-display {
+    font-size: 2.5rem;
+    font-weight: 900;
+    color: var(--primary);
+    margin-bottom: 8px;
+}
+
+.metric-label {
+    color: var(--gray);
+    font-size: 0.9rem;
+    margin-bottom: 16px;
+}
+
+.trend-indicator {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.trend-up {
+    color: var(--success);
+}
+
+.trend-down {
+    color: var(--danger);
+}
+
+.trend-stable {
+    color: var(--warning);
+}
+
+.chart-container {
+    height: 200px;
+    background: var(--gray-light);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--gray);
+    font-size: 0.9rem;
+    margin-top: 20px;
+}
+
+.insights-section {
+    background: linear-gradient(135deg, rgba(34, 197, 94, 0.05), rgba(16, 185, 129, 0.02));
+    border: 2px solid var(--success);
+    border-radius: 16px;
+    padding: 24px;
+}
+
+.insights-section h3 {
+    color: var(--success);
+    font-weight: 800;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.insight-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    margin: 16px 0;
+    padding: 16px;
+    background: var(--light);
+    border-radius: 12px;
+    transition: all 0.3s;
+}
+
+.insight-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(34, 197, 94, 0.2);
+}
+
+.insight-icon {
+    font-size: 1.5rem;
+    min-width: 40px;
+    text-align: center;
+}
+
+.insight-content h4 {
+    color: var(--dark);
+    font-weight: 700;
+    margin-bottom: 4px;
+    font-size: 0.95rem;
+}
+
+.insight-content p {
+    color: var(--gray);
+    font-size: 0.85rem;
+    line-height: 1.4;
+}
+
+.goals-section {
+    background: linear-gradient(135deg, rgba(245, 197, 66, 0.1), rgba(251, 191, 36, 0.05));
+    border: 2px solid var(--secondary);
+    border-radius: 16px;
+    padding: 24px;
+}
+
+.goals-section h3 {
+    color: var(--warning);
+    font-weight: 800;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.goal-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px;
+    background: var(--light);
+    border-radius: 12px;
+    margin-bottom: 12px;
+    transition: all 0.3s;
+}
+
+.goal-item:hover {
+    transform: translateX(8px);
+    box-shadow: 0 4px 12px rgba(245, 197, 66, 0.2);
+}
+
+.goal-content {
+    flex: 1;
+}
+
+.goal-title {
+    font-weight: 700;
+    color: var(--dark);
+    margin-bottom: 4px;
+}
+
+.goal-progress {
+    font-size: 0.8rem;
+    color: var(--gray);
+}
+
+.goal-status {
+    padding: 6px 12px;
+    border-radius: 12px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.goal-status.on-track {
+    background: rgba(34, 197, 94, 0.1);
+    color: var(--success);
+    border: 1px solid var(--success);
+}
+
+.goal-status.behind {
+    background: rgba(239, 68, 68, 0.1);
+    color: var(--danger);
+    border: 1px solid var(--danger);
+}
+
+.goal-status.ahead {
+    background: rgba(59, 130, 246, 0.1);
+    color: var(--info);
+    border: 1px solid var(--info);
+}
+
+.export-section {
+    text-align: center;
+    padding: 30px;
+    background: linear-gradient(135deg, rgba(124, 58, 237, 0.05), rgba(168, 85, 247, 0.02));
+    border-radius: 16px;
+    border: 2px solid var(--primary);
+}
+
+.export-section h3 {
+    color: var(--primary);
+    font-weight: 800;
+    margin-bottom: 16px;
+}
+
+.export-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.export-btn {
+    background: linear-gradient(135deg, var(--success), #16a34a);
+    color: var(--light);
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.export-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(34, 197, 94, 0.3);
+}
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background: var(--light);
+    border-radius: 20px;
+    padding: 40px;
+    max-width: 500px;
+    width: 90%;
+    max-height: 80%;
+    overflow-y: auto;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.modal-title {
+    color: var(--primary);
+    font-weight: 800;
+    font-size: 1.3rem;
+}
+
+.modal-close {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: var(--gray);
+    cursor: pointer;
+    padding: 4px;
+}
+
+.modal-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-label {
+    font-weight: 600;
+    color: var(--dark);
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.form-input, .form-select, .form-textarea {
+    padding: 12px;
+    border: 2px solid var(--gray-medium);
+    border-radius: 8px;
+    font-size: 1rem;
+    font-family: inherit;
+    transition: all 0.3s;
+}
+
+.form-textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+.form-input:focus, .form-select:focus, .form-textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
+}
+
+.form-submit {
+    background: linear-gradient(135deg, var(--primary), var(--primary-light));
+    color: var(--light);
+    border: none;
+    padding: 16px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-top: 8px;
+}
+
+.form-submit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(124, 58, 237, 0.3);
+}
+
+.empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--gray);
+}
+
+.empty-state h3 {
+    color: var(--gray);
+    font-weight: 700;
+    margin-bottom: 16px;
+    font-size: 1.2rem;
+}
+
+.empty-state p {
+    margin-bottom: 24px;
+    line-height: 1.5;
+}
+
+.empty-state-icon {
+    font-size: 4rem;
+    opacity: 0.3;
+    margin-bottom: 20px;
+}
+
+.get-started-btn {
+    background: linear-gradient(135deg, var(--primary), var(--primary-light));
+    color: var(--light);
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.get-started-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(124, 58, 237, 0.3);
+}
+
+@media (max-width: 768px) {
+    .dashboard-layout {
+        grid-template-columns: 1fr;
+    }
+    
+    .sidebar {
+        order: -1;
+        position: relative;
+        top: auto;
+    }
+    
+    .analytics-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .export-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .timeline {
+        padding-left: 30px;
+    }
+    
+    .timeline::before {
+        left: 15px;
+    }
+    
+    .timeline-entry::before {
+        left: -16px;
+    }
+}
+
+/* Print styles for export */
+@media print {
+    body {
+        background: white;
+        color: black;
+    }
+    
+    .sidebar, .export-section, .card-actions {
+        display: none;
+    }
+    
+    .dashboard-card {
+        box-shadow: none;
+        border: 1px solid #ccc;
+        page-break-inside: avoid;
+        margin-bottom: 20px;
+    }
+    
+    .timeline-entry::before {
+        background: #ccc !important;
+        border-color: #999 !important;
+    }
+}
+</style>
+</head>
+<body>
+
+<div class="dashboard-container">
+    <div class="dashboard-header">
+        <h1>📊 Advanced Abundance Tracker</h1>
+        <p>Track your abundance signals, opportunities, and manifestations with powerful analytics and insights to optimize your prosperity flow.</p>
+    </div>
+
+    <div class="dashboard-layout">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <h2>⚡ Quick Entry</h2>
+            
+            <div class="quick-entry">
+                <h3>Add New Entry</h3>
+                <div class="entry-form" id="quickEntryForm">
+                    <select class="entry-select" id="entryType">
+                        <option value="signal">💫 Code Signal</option>
+                        <option value="opportunity">🚪 Opportunity</option>
+                        <option value="abundance">💰 Abundance Received</option>
+                        <option value="gratitude">🙏 Gratitude</option>
+                    </select>
+                    
+                    <input type="text" class="entry-input" id="entryDescription" placeholder="Description...">
+                    
+                    <input type="number" class="entry-input" id="entryValue" placeholder="Value ($)" style="display: none;">
+                    
+                    <button class="entry-btn" onclick="addEntry()">Add Entry</button>
+                </div>
+            </div>
+            
+            <div class="stats-summary">
+                <h3 style="color: var(--primary); text-align: center; margin-bottom: 16px; font-size: 1rem;">📈 Quick Stats</h3>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <span class="stat-value" id="totalEntries">0</span>
+                        <span class="stat-label">Total Entries</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value" id="weeklySignals">0</span>
+                        <span class="stat-label">This Week</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value" id="totalValue">$0</span>
+                        <span class="stat-label">Total Value</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value" id="averageDaily">0</span>
+                        <span class="stat-label">Daily Avg</span>
+                    </div>
+                </div>
+                <div class="streak-indicator" id="streakDisplay">
+                    🔥 0-day tracking streak
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Timeline Card -->
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <h2 class="card-title">⏰ Abundance Timeline</h2>
+                    <div class="card-actions">
+                        <button class="action-btn active" onclick="filterTimeline('all')">All</button>
+                        <button class="action-btn" onclick="filterTimeline('signal')">Signals</button>
+                        <button class="action-btn" onclick="filterTimeline('opportunity')">Opportunities</button>
+                        <button class="action-btn" onclick="filterTimeline('abundance')">Abundance</button>
+                    </div>
+                </div>
+                
+                <div class="timeline-container">
+                    <div class="timeline" id="abundanceTimeline">
+                        <div class="empty-state" id="timelineEmptyState">
+                            <div class="empty-state-icon">📝</div>
+                            <h3>Start Your Abundance Journey</h3>
+                            <p>Track your first abundance signal, opportunity, or manifestation to begin building your prosperity timeline.</p>
+                            <button class="get-started-btn" onclick="openEntryModal()">Add Your First Entry</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Analytics Grid -->
+            <div class="analytics-grid">
+                <div class="analytics-card">
+                    <h3>📊 Signal Frequency</h3>
+                    <div class="metric-display" id="signalFrequency">0</div>
+                    <div class="metric-label">Signals per week</div>
+                    <div class="trend-indicator trend-stable" id="signalTrend">
+                        <span>→</span>
+                        <span>Stable</span>
+                    </div>
+                    <div class="chart-container">
+                        Signal frequency chart will appear here
+                    </div>
+                </div>
+                
+                <div class="analytics-card">
+                    <h3>💰 Abundance Flow</h3>
+                    <div class="metric-display" id="abundanceFlow">$0</div>
+                    <div class="metric-label">Monthly abundance</div>
+                    <div class="trend-indicator trend-up" id="abundanceTrend">
+                        <span>↗</span>
+                        <span>Growing</span>
+                    </div>
+                    <div class="chart-container">
+                        Abundance flow chart will appear here
+                    </div>
+                </div>
+                
+                <div class="analytics-card">
+                    <h3>🎯 Success Rate</h3>
+                    <div class="metric-display" id="successRate">0%</div>
+                    <div class="metric-label">Signal to outcome ratio</div>
+                    <div class="trend-indicator trend-up" id="successTrend">
+                        <span>↗</span>
+                        <span>Improving</span>
+                    </div>
+                    <div class="chart-container">
+                        Success rate chart will appear here
+                    </div>
+                </div>
+                
+                <div class="analytics-card">
+                    <h3>⚡ Activation Streak</h3>
+                    <div class="metric-display" id="activationStreak">0</div>
+                    <div class="metric-label">Consecutive days</div>
+                    <div class="trend-indicator trend-stable" id="streakTrend">
+                        <span>→</span>
+                        <span>Building</span>
+                    </div>
+                    <div class="chart-container">
+                        Streak progress chart will appear here
+                    </div>
+                </div>
+            </div>
+            
+            <!-- AI Insights -->
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <h2 class="card-title">🤖 AI-Powered Insights</h2>
+                </div>
+                
+                <div class="insights-section" id="aiInsights">
+                    <h3>💡 Personalized Recommendations</h3>
+                    <div id="insightsContainer">
+                        <div class="insight-item">
+                            <div class="insight-icon">🕐</div>
+                            <div class="insight-content">
+                                <h4>Optimal Signal Times</h4>
+                                <p>Your code signals appear most frequently between 2:00-4:00 PM. Consider scheduling important activities during these peak windows.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="insight-item">
+                            <div class="insight-icon">📈</div>
+                            <div class="insight-content">
+                                <h4>Opportunity Conversion</h4>
+                                <p>You have a 73% success rate when taking action within 4 hours of signal recognition. Quick response time correlates with better outcomes.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="insight-item">
+                            <div class="insight-icon">🔄</div>
+                            <div class="insight-content">
+                                <h4>Pattern Recognition</h4>
+                                <p>Signals on weekdays tend to lead to career opportunities, while weekend signals more often result in relationship or personal growth opportunities.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Goals Tracking -->
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <h2 class="card-title">🎯 Abundance Goals</h2>
+                    <div class="card-actions">
+                        <button class="action-btn" onclick="openGoalModal()">Add Goal</button>
+                    </div>
+                </div>
+                
+                <div class="goals-section">
+                    <h3>🌟 Current Goals</h3>
+                    <div id="goalsContainer">
+                        <div class="goal-item">
+                            <div class="goal-content">
+                                <div class="goal-title">Increase Monthly Income</div>
+                                <div class="goal-progress">Progress: $2,400 / $5,000</div>
+                            </div>
+                            <div class="goal-status behind">Behind</div>
+                        </div>
+                        
+                        <div class="goal-item">
+                            <div class="goal-content">
+                                <div class="goal-title">Daily Signal Recognition</div>
+                                <div class="goal-progress">Progress: 18/21 days this month</div>
+                            </div>
+                            <div class="goal-status on-track">On Track</div>
+                        </div>
+                        
+                        <div class="goal-item">
+                            <div class="goal-content">
+                                <div class="goal-title">Network Expansion</div>
+                                <div class="goal-progress">Progress: 8/5 new connections</div>
+                            </div>
+                            <div class="goal-status ahead">Ahead</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Export Section -->
+            <div class="dashboard-card">
+                <div class="export-section">
+                    <h3>📄 Export Your Data</h3>
+                    <p>Generate comprehensive reports and backup your abundance tracking data</p>
+                    
+                    <div class="export-buttons">
+                        <button class="export-btn" onclick="exportToPDF()">📄 Download PDF Report</button>
+                        <button class="export-btn" onclick="exportToCSV()">📊 Export CSV Data</button>
+                        <button class="export-btn" onclick="shareProgress()">📱 Share Progress</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Entry Modal -->
+<div class="modal-overlay" id="entryModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2 class="modal-title">✨ Add Abundance Entry</h2>
+            <button class="modal-close" onclick="closeModal('entryModal')">&times;</button>
+        </div>
+        
+        <form class="modal-form" id="detailedEntryForm">
+            <div class="form-group">
+                <label class="form-label">Entry Type</label>
+                <select class="form-select" id="modalEntryType">
+                    <option value="signal">💫 Code Signal Sighting</option>
+                    <option value="opportunity">🚪 Opportunity Recognition</option>
+                    <option value="abundance">💰 Abundance Received</option>
+                    <option value="gratitude">🙏 Gratitude & Appreciation</option>
+                    <option value="insight">💡 Insight or Revelation</option>
+                    <option value="synchronicity">🌟 Meaningful Synchronicity</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">Description</label>
+                <textarea class="form-textarea" id="modalDescription" placeholder="Describe your experience in detail..."></textarea>
+            </div>
+            
+            <div class="form-group" id="modalValueGroup" style="display: none;">
+                <label class="form-label">Monetary Value</label>
+                <input type="number" class="form-input" id="modalValue" placeholder="Enter dollar amount">
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">Location</label>
+                <input type="text" class="form-input" id="modalLocation" placeholder="Where did this happen?">
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">Emotional State</label>
+                <select class="form-select" id="modalEmotion">
+                    <option value="excited">😄 Excited</option>
+                    <option value="grateful">🙏 Grateful</option>
+                    <option value="surprised">😮 Surprised</option>
+                    <option value="calm">😌 Calm</option>
+                    <option value="confident">💪 Confident</option>
+                    <option value="inspired">✨ Inspired</option>
+                </select>
+            </div>
+            
+            <button type="submit" class="form-submit">Add Entry</button>
+        </form>
+    </div>
+</div>
+
+<!-- Goal Modal -->
+<div class="modal-overlay" id="goalModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2 class="modal-title">🎯 Set Abundance Goal</h2>
+            <button class="modal-close" onclick="closeModal('goalModal')">&times;</button>
+        </div>
+        
+        <form class="modal-form" id="goalForm">
+            <div class="form-group">
+                <label class="form-label">Goal Title</label>
+                <input type="text" class="form-input" id="goalTitle" placeholder="What do you want to achieve?">
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">Goal Category</label>
+                <select class="form-select" id="goalCategory">
+                    <option value="financial">💰 Financial</option>
+                    <option value="career">🚀 Career</option>
+                    <option value="relationships">❤️ Relationships</option>
+                    <option value="health">💚 Health</option>
+                    <option value="personal">🌱 Personal Growth</option>
+                    <option value="spiritual">🙏 Spiritual</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">Target Value/Metric</label>
+                <input type="text" class="form-input" id="goalTarget" placeholder="Specific, measurable target">
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">Timeline</label>
+                <select class="form-select" id="goalTimeline">
+                    <option value="7">1 Week</option>
+                    <option value="30">1 Month</option>
+                    <option value="90">3 Months</option>
+                    <option value="180">6 Months</option>
+                    <option value="365">1 Year</option>
+                </select>
+            </div>
+            
+            <button type="submit" class="form-submit">Set Goal</button>
+        </form>
+    </div>
+</div>
+
+<script>
+// Application State
+let abundanceData = {
+    entries: [],
+    goals: [],
+    stats: {
+        totalEntries: 0,
+        weeklySignals: 0,
+        totalValue: 0,
+        streak: 0,
+        lastEntry: null
+    }
+};
+
+// Load data from localStorage
+function loadData() {
+    const saved = localStorage.getItem('abundanceTrackerData');
+    if (saved) {
+        abundanceData = JSON.parse(saved);
+        updateStats();
+        renderTimeline();
+        renderGoals();
+        updateInsights();
+    }
+}
+
+// Save data to localStorage
+function saveData() {
+    localStorage.setItem('abundanceTrackerData', JSON.stringify(abundanceData));
+}
+
+// Quick entry functionality
+function addEntry() {
+    const type = document.getElementById('entryType').value;
+    const description = document.getElementById('entryDescription').value;
+    const valueInput = document.getElementById('entryValue');
+    const value = valueInput.style.display !== 'none' ? parseFloat(valueInput.value) || 0 : 0;
+    
+    if (!description.trim()) {
+        alert('Please enter a description');
+        return;
+    }
+    
+    const entry = {
+        id: Date.now(),
+        type,
+        description,
+        value,
+        timestamp: new Date().toISOString(),
+        location: '',
+        emotion: 'grateful'
+    };
+    
+    abundanceData.entries.unshift(entry);
+    saveData();
+    updateStats();
+    renderTimeline();
+    updateInsights();
+    
+    // Clear form
+    document.getElementById('entryDescription').value = '';
+    document.getElementById('entryValue').value = '';
+    
+    // Show success feedback
+    showNotification('Entry added successfully!', 'success');
+}
+
+// Handle entry type change for value field
+document.getElementById('entryType').addEventListener('change', function() {
+    const valueField = document.getElementById('entryValue');
+    if (this.value === 'abundance') {
+        valueField.style.display = 'block';
+        valueField.placeholder = 'Amount received ($)';
+    } else {
+        valueField.style.display = 'none';
+        valueField.value = '';
+    }
+});
+
+// Modal entry type change
+document.getElementById('modalEntryType').addEventListener('change', function() {
+    const valueGroup = document.getElementById('modalValueGroup');
+    if (this.value === 'abundance') {
+        valueGroup.style.display = 'block';
+    } else {
+        valueGroup.style.display = 'none';
+    }
+});
+
+// Detailed entry form
+document.getElementById('detailedEntryForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const entry = {
+        id: Date.now(),
+        type: document.getElementById('modalEntryType').value,
+        description: document.getElementById('modalDescription').value,
+        value: parseFloat(document.getElementById('modalValue').value) || 0,
+        location: document.getElementById('modalLocation').value,
+        emotion: document.getElementById('modalEmotion').value,
+        timestamp: new Date().toISOString()
+    };
+    
+    abundanceData.entries.unshift(entry);
+    saveData();
+    updateStats();
+    renderTimeline();
+    updateInsights();
+    
+    closeModal('entryModal');
+    this.reset();
+    showNotification('Entry added successfully!', 'success');
+});
+
+// Goal form
+document.getElementById('goalForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const goal = {
+        id: Date.now(),
+        title: document.getElementById('goalTitle').value,
+        category: document.getElementById('goalCategory').value,
+        target: document.getElementById('goalTarget').value,
+        timeline: parseInt(document.getElementById('goalTimeline').value),
+        created: new Date().toISOString(),
+        progress: 0
+    };
+    
+    abundanceData.goals.push(goal);
+    saveData();
+    renderGoals();
+    
+    closeModal('goalModal');
+    this.reset();
+    showNotification('Goal added successfully!', 'success');
+});
+
+// Update statistics
+function updateStats() {
+    const now = new Date();
+    const oneWeekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+    
+    // Calculate stats
+    const totalEntries = abundanceData.entries.length;
+    const weeklySignals = abundanceData.entries.filter(entry => 
+        entry.type === 'signal' && new Date(entry.timestamp) > oneWeekAgo
+    ).length;
+    
+    const totalValue = abundanceData.entries
+        .filter(entry => entry.type === 'abundance')
+        .reduce((sum, entry) => sum + (entry.value || 0), 0);
+    
+    const averageDaily = totalEntries > 0 ? (totalEntries / Math.max(1, getDaysSinceFirstEntry())).toFixed(1) : 0;
+    
+    // Update display
+    document.getElementById('totalEntries').textContent = totalEntries;
+    document.getElementById('weeklySignals').textContent = weeklySignals;
+    document.getElementById('totalValue').textContent = `$${totalValue.toLocaleString()}`;
+    document.getElementById('averageDaily').textContent = averageDaily;
+    
+    // Update streak
+    const streak = calculateStreak();
+    document.getElementById('streakDisplay').textContent = `🔥 ${streak}-day tracking streak`;
+    
+    // Update analytics cards
+    document.getElementById('signalFrequency').textContent = weeklySignals;
+    document.getElementById('abundanceFlow').textContent = `$${totalValue.toLocaleString()}`;
+    document.getElementById('activationStreak').textContent = streak;
+    
+    // Calculate success rate
+    const signals = abundanceData.entries.filter(e => e.type === 'signal').length;
+    const opportunities = abundanceData.entries.filter(e => e.type === 'opportunity').length;
+    const successRate = signals > 0 ? Math.round((opportunities / signals) * 100) : 0;
+    document.getElementById('successRate').textContent = `${successRate}%`;
+}
+
+// Calculate tracking streak
+function calculateStreak() {
+    if (abundanceData.entries.length === 0) return 0;
+    
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    
+    let streak = 0;
+    let currentDate = new Date(today);
+    
+    for (let i = 0; i < 365; i++) { // Max 365 day check
+        const dayEntries = abundanceData.entries.filter(entry => {
+            const entryDate = new Date(entry.timestamp);
+            entryDate.setHours(0, 0, 0, 0);
+            return entryDate.getTime() === currentDate.getTime();
+        });
+        
+        if (dayEntries.length > 0) {
+            streak++;
+            currentDate.setDate(currentDate.getDate() - 1);
+        } else {
+            break;
+        }
+    }
+    
+    return streak;
+}
+
+// Get days since first entry
+function getDaysSinceFirstEntry() {
+    if (abundanceData.entries.length === 0) return 1;
+    
+    const firstEntry = abundanceData.entries[abundanceData.entries.length - 1];
+    const firstDate = new Date(firstEntry.timestamp);
+    const now = new Date();
+    const diffTime = Math.abs(now - firstDate);
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    return Math.max(1, diffDays);
+}
+
+// Render timeline
+function renderTimeline() {
+    const timeline = document.getElementById('abundanceTimeline');
+    const emptyState = document.getElementById('timelineEmptyState');
+    
+    if (abundanceData.entries.length === 0) {
+        emptyState.style.display = 'block';
+        return;
+    }
+    
+    emptyState.style.display = 'none';
+    
+    const entriesToShow = abundanceData.entries.slice(0, 50); // Show last 50 entries
+    
+    timeline.innerHTML = entriesToShow.map(entry => {
+        const date = new Date(entry.timestamp);
+        const timeString = date.toLocaleString();
+        
+        return `
+            <div class="timeline-entry ${entry.type}" data-type="${entry.type}">
+                <div class="entry-content">
+                    <div class="entry-header">
+                        <div class="entry-type ${entry.type}">
+                            ${getEntryTypeIcon(entry.type)} ${getEntryTypeName(entry.type)}
+                        </div>
+                        <div class="entry-time">${timeString}</div>
+                    </div>
+                    <div class="entry-description">${entry.description}</div>
+                    ${entry.value > 0 ? `<div class="entry-value">$${entry.value.toLocaleString()}</div>` : ''}
+                    ${entry.location ? `<div style="font-size: 0.8rem; color: var(--gray); margin-top: 4px;">📍 ${entry.location}</div>` : ''}
+                </div>
+            </div>
+        `;
+    }).join('');
+}
+
+// Get entry type icon
+function getEntryTypeIcon(type) {
+    const icons = {
+        signal: '💫',
+        opportunity: '🚪',
+        abundance: '💰',
+        gratitude: '🙏',
+        insight: '💡',
+        synchronicity: '🌟'
+    };
+    return icons[type] || '✨';
+}
+
+// Get entry type name
+function getEntryTypeName(type) {
+    const names = {
+        signal: 'Code Signal',
+        opportunity: 'Opportunity',
+        abundance: 'Abundance',
+        gratitude: 'Gratitude',
+        insight: 'Insight',
+        synchronicity: 'Synchronicity'
+    };
+    return names[type] || 'Entry';
+}
+
+// Filter timeline
+function filterTimeline(type) {
+    // Update button states
+    document.querySelectorAll('.action-btn').forEach(btn => {
+        btn.classList.remove('active');
+    });
+    event.target.classList.add('active');
+    
+    // Show/hide entries
+    const entries = document.querySelectorAll('.timeline-entry');
+    entries.forEach(entry => {
+        if (type === 'all' || entry.dataset.type === type) {
+            entry.style.display = 'block';
+        } else {
+            entry.style.display = 'none';
+        }
+    });
+}
+
+// Render goals
+function renderGoals() {
+    const container = document.getElementById('goalsContainer');
+    
+    if (abundanceData.goals.length === 0) {
+        container.innerHTML = `
+            <div style="text-align: center; padding: 40px 20px; color: var(--gray);">
+                <div style="font-size: 3rem; margin-bottom: 16px;">🎯</div>
+                <h4>No Goals Set Yet</h4>
+                <p>Set your first abundance goal to track progress and stay motivated.</p>
+                <button class="get-started-btn" onclick="openGoalModal()" style="margin-top: 16px;">Set Your First Goal</button>
+            </div>
+        `;
+        return;
+    }
+    
+    container.innerHTML = abundanceData.goals.map(goal => {
+        const status = goal.progress >= 100 ? 'ahead' : goal.progress >= 70 ? 'on-track' : 'behind';
+        const statusText = goal.progress >= 100 ? 'Complete' : goal.progress >= 70 ? 'On Track' : 'Behind';
+        
+        return `
+            <div class="goal-item">
+                <div class="goal-content">
+                    <div class="goal-title">${goal.title}</div>
+                    <div class="goal-progress">${goal.category} • ${goal.target}</div>
+                </div>
+                <div class="goal-status ${status}">${statusText}</div>
+            </div>
+        `;
+    }).join('');
+}
+
+// Update AI insights
+function updateInsights() {
+    const insights = generateInsights();
+    const container = document.getElementById('insightsContainer');
+    
+    container.innerHTML = insights.map(insight => `
+        <div class="insight-item">
+            <div class="insight-icon">${insight.icon}</div>
+            <div class="insight-content">
+                <h4>${insight.title}</h4>
+                <p>${insight.description}</p>
+            </div>
+        </div>
+    `).join('');
+}
+
+// Generate AI insights based on data
+function generateInsights() {
+    const insights = [];
+    const entries = abundanceData.entries;
+    
+    if (entries.length === 0) {
+        return [{
+            icon: '🌱',
+            title: 'Welcome to Your Abundance Journey',
+            description: 'Start tracking your abundance signals and manifestations to receive personalized insights and optimization recommendations.'
+        }];
+    }
+    
+    // Time-based insights
+    const hourCounts = {};
+    entries.forEach(entry => {
+        const hour = new Date(entry.timestamp).getHours();
+        hourCounts[hour] = (hourCounts[hour] || 0) + 1;
+    });
+    
+    const peakHour = Object.keys(hourCounts).reduce((a, b) => hourCounts[a] > hourCounts[b] ? a : b);
+    const peakTime = `${peakHour}:00`;
+    
+    insights.push({
+        icon: '🕐',
+        title: 'Optimal Signal Times',
+        description: `Your abundance signals appear most frequently around ${peakTime}. Consider scheduling important activities during these peak windows.`
+    });
+    
+    // Success rate insight
+    const signals = entries.filter(e => e.type === 'signal').length;
+    const opportunities = entries.filter(e => e.type === 'opportunity').length;
+    if (signals > 0) {
+        const rate = Math.round((opportunities / signals) * 100);
+        insights.push({
+            icon: '📈',
+            title: 'Signal Recognition Success',
+            description: `You have a ${rate}% success rate converting signals to opportunities. ${rate > 70 ? 'Excellent recognition skills!' : 'Consider focusing on quicker signal response times.'}`
+        });
+    }
+    
+    // Streak insight
+    const streak = calculateStreak();
+    if (streak > 0) {
+        insights.push({
+            icon: '🔥',
+            title: 'Consistency Tracking',
+            description: `Your ${streak}-day tracking streak shows excellent commitment. Consistent tracking correlates with increased abundance recognition and manifestation.`
+        });
+    }
+    
+    // Value insight
+    const totalValue = entries
+        .filter(e => e.type === 'abundance')
+        .reduce((sum, e) => sum + (e.value || 0), 0);
+    
+    if (totalValue > 0) {
+        insights.push({
+            icon: '💰',
+            title: 'Abundance Growth',
+            description: `You've tracked $${totalValue.toLocaleString()} in abundance received. This represents real value creation through conscious awareness and action.`
+        });
+    }
+    
+    return insights;
+}
+
+// Modal functions
+function openEntryModal() {
+    document.getElementById('entryModal').style.display = 'flex';
+}
+
+function openGoalModal() {
+    document.getElementById('goalModal').style.display = 'flex';
+}
+
+function closeModal(modalId) {
+    document.getElementById(modalId).style.display = 'none';
+}
+
+// Export functions
+function exportToPDF() {
+    window.print();
+}
+
+function exportToCSV() {
+    const csvContent = generateCSV();
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    
+    if (link.download !== undefined) {
+        const url = URL.createObjectURL(blob);
+        link.setAttribute('href', url);
+        link.setAttribute('download', `abundance-tracker-${new Date().toISOString().split('T')[0]}.csv`);
+        link.style.visibility = 'hidden';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
+}
+
+function generateCSV() {
+    const headers = ['Date', 'Time', 'Type', 'Description', 'Value', 'Location', 'Emotion'];
+    const rows = abundanceData.entries.map(entry => {
+        const date = new Date(entry.timestamp);
+        return [
+            date.toDateString(),
+            date.toTimeString().split(' ')[0],
+            entry.type,
+            entry.description.replace(/,/g, ';'),
+            entry.value || '',
+            entry.location || '',
+            entry.emotion || ''
+        ].join(',');
+    });
+    
+    return [headers.join(','), ...rows].join('\n');
+}
+
+function shareProgress() {
+    const streak = calculateStreak();
+    const totalEntries = abundanceData.entries.length;
+    const totalValue = abundanceData.entries
+        .filter(e => e.type === 'abundance')
+        .reduce((sum, e) => sum + (e.value || 0), 0);
+    
+    const shareText = `🌟 My Abundance Journey Update:\n\n🔥 ${streak}-day tracking streak\n📊 ${totalEntries} total entries\n💰 $${totalValue.toLocaleString()} in tracked abundance\n\n#AbundanceCode #ManifestationSuccess`;
+    
+    if (navigator.share) {
+        navigator.share({
+            title: 'My Abundance Journey',
+            text: shareText
+        });
+    } else {
+        // Fallback: copy to clipboard
+        navigator.clipboard.writeText(shareText).then(() => {
+            showNotification('Progress copied to clipboard!', 'success');
+        });
+    }
+}
+
+// Notification system
+function showNotification(message, type = 'info') {
+    const notification = document.createElement('div');
+    notification.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        padding: 16px 24px;
+        background: ${type === 'success' ? 'var(--success)' : 'var(--info)'};
+        color: white;
+        border-radius: 8px;
+        font-weight: 600;
+        z-index: 1001;
+        transform: translateX(100%);
+        transition: transform 0.3s ease;
+    `;
+    notification.textContent = message;
+    
+    document.body.appendChild(notification);
+    
+    // Animate in
+    setTimeout(() => {
+        notification.style.transform = 'translateX(0)';
+    }, 100);
+    
+    // Remove after 3 seconds
+    setTimeout(() => {
+        notification.style.transform = 'translateX(100%)';
+        setTimeout(() => {
+            document.body.removeChild(notification);
+        }, 300);
+    }, 3000);
+}
+
+// Initialize app
+document.addEventListener('DOMContentLoaded', function() {
+    loadData();
+    
+    // Auto-populate with sample data if empty
+    if (abundanceData.entries.length === 0) {
+        addSampleData();
+    }
+    
+    // Set up periodic saves
+    setInterval(saveData, 30000); // Save every 30 seconds
+});
+
+// Add sample data for demonstration
+function addSampleData() {
+    const sampleEntries = [
+        {
+            id: Date.now() - 86400000,
+            type: 'signal',
+            description: 'Saw my abundance code 374 on a receipt at exactly 3:74 PM',
+            value: 0,
+            location: 'Coffee shop downtown',
+            emotion: 'excited',
+            timestamp: new Date(Date.now() - 86400000).toISOString()
+        },
+        {
+            id: Date.now() - 82800000,
+            type: 'opportunity',
+            description: 'Received unexpected job interview invitation within 3 hours of code sighting',
+            value: 0,
+            location: 'Email notification',
+            emotion: 'grateful',
+            timestamp: new Date(Date.now() - 82800000).toISOString()
+        },
+        {
+            id: Date.now() - 3600000,
+            type: 'abundance',
+            description: 'Received bonus payment from freelance client',
+            value: 500,
+            location: 'Bank account',
+            emotion: 'grateful',
+            timestamp: new Date(Date.now() - 3600000).toISOString()
+        }
+    ];
+    
+    abundanceData.entries = sampleEntries;
+    abundanceData.goals = [
+        {
+            id: Date.now(),
+            title: 'Increase Monthly Income',
+            category: 'financial',
+            target: '$5,000',
+            timeline: 30,
+            created: new Date().toISOString(),
+            progress: 48
+        }
+    ];
+    
+    saveData();
+    updateStats();
+    renderTimeline();
+    renderGoals();
+    updateInsights();
+}
+
+// Click outside modal to close
+window.addEventListener('click', function(e) {
+    if (e.target.classList.contains('modal-overlay')) {
+        e.target.style.display = 'none';
+    }
+});
+</script>
+
+</body>
+</html>"

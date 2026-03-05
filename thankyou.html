@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Welcome to Your Abundance Journey - Access Your System</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary: #7c3aed;
+    --primary-light: #a855f7;
+    --secondary: #f5c542;
+    --dark: #1a1a2e;
+    --light: #ffffff;
+    --gray: #6b7280;
+    --gray-light: #f8fafc;
+    --gray-medium: #e5e7eb;
+    --success: #22c55e;
+    --warning: #f59e0b;
+    --danger: #ef4444;
+    --info: #3b82f6;
+}
+
+body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: var(--dark);
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+.success-header {
+    text-align: center;
+    margin-bottom: 40px;
+    color: var(--light);
+}
+
+.success-icon {
+    font-size: 4rem;
+    margin-bottom: 20px;
+    animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+.success-title {
+    font-size: 2.5rem;
+    font-weight: 900;
+    margin-bottom: 16px;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
+.success-subtitle {
+    font-size: 1.2rem;
+    opacity: 0.9;
+    font-weight: 600;
+}
+
+.order-confirmation {
+    background: var(--light);
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+    margin-bottom: 40px;
+    border: 3px solid var(--success);
+}
+
+.order-confirmation h2 {
+    color: var(--success);
+    font-size: 1.6rem;
+    font-weight: 800;
+    margin-bottom: 20px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+}
+
+.confirmation-details {
+    background: var(--gray-light);
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 24px;
+}
+
+.order-summary {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+.order-item {
+    font-weight: 600;
+}
+
+.order-price {
+    font-weight: 800;
+    color: var(--success);
+}
+
+.order-total {
+    border-top: 2px solid var(--gray-medium);
+    padding-top: 16px;
+    margin-top: 16px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+}
+
+.total-label {
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: var(--dark);
+}
+
+.total-amount {
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: var(--success);
+}
+
+.access-section {
+    background: var(--light);
+    border-radius: 20px;
+    padding: 40px 30px;
+    box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+    margin-bottom: 30px;
+    position: relative;
+    overflow: hidden;
+}
+
+.access-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary), var(--secondary));
+}
+
+.access-section h2 {
+    color: var(--primary);
+    font-size: 2rem;
+    font-weight: 900;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+    margin-bottom: 40px;
+}
+
+.product-card {
+    background: linear-gradient(135deg, rgba(124, 58, 237, 0.05), rgba(168, 85, 247, 0.02));
+    border: 2px solid var(--primary);
+    border-radius: 16px;
+    padding: 24px;
+    text-align: center;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+}
+
+.product-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(124, 58, 237, 0.1), transparent);
+    transition: left 0.6s;
+}
+
+.product-card:hover::before {
+    left: 100%;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(124, 58, 237, 0.2);
+}
+
+.product-icon {
+    font-size: 2.5rem;
+    margin-bottom: 16px;
+    display: block;
+}
+
+.product-title {
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: var(--primary);
+    margin-bottom: 12px;
+    position: relative;
+}
+
+.product-description {
+    color: var(--gray);
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin-bottom: 20px;
+}
+
+.access-button {
+    background: linear-gradient(135deg, var(--primary), var(--primary-light));
+    color: var(--light);
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-decoration: none;
+    display: inline-block;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    position: relative;
+}
+
+.access-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(124, 58, 237, 0.3);
+}
+
+.quick-start-section {
+    background: linear-gradient(135deg, rgba(245, 197, 66, 0.1), rgba(251, 191, 36, 0.05));
+    border: 3px solid var(--secondary);
+    border-radius: 20px;
+    padding: 30px;
+    margin-bottom: 40px;
+}
+
+.quick-start-section h2 {
+    color: var(--warning);
+    font-size: 1.6rem;
+    font-weight: 800;
+    text-align: center;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+}
+
+.steps-list {
+    display: grid;
+    gap: 20px;
+    margin-bottom: 24px;
+}
+
+.step-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 20px;
+    background: var(--light);
+    border-radius: 12px;
+    transition: all 0.3s;
+}
+
+.step-item:hover {
+    transform: translateX(8px);
+    box-shadow: 0 8px 25px rgba(245, 197, 66, 0.2);
+}
+
+.step-number {
+    background: var(--warning);
+    color: var(--light);
+    font-weight: 900;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+    min-width: 32px;
+    margin-top: 4px;
+}
+
+.step-content h4 {
+    color: var(--dark);
+    font-weight: 700;
+    margin-bottom: 8px;
+    font-size: 1rem;
+}
+
+.step-content p {
+    color: var(--gray);
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+.support-section {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.05), rgba(37, 99, 235, 0.02));
+    border: 2px solid var(--info);
+    border-radius: 16px;
+    padding: 30px;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.support-section h3 {
+    color: var(--info);
+    font-size: 1.4rem;
+    font-weight: 800;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+}
+
+.contact-info {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin-top: 20px;
+}
+
+.contact-method {
+    background: var(--light);
+    padding: 16px;
+    border-radius: 8px;
+    border: 1px solid var(--gray-medium);
+}
+
+.contact-method h4 {
+    color: var(--dark);
+    font-weight: 700;
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+}
+
+.contact-method p {
+    color: var(--gray);
+    font-size: 0.85rem;
+}
+
+.bookmark-reminder {
+    background: linear-gradient(135deg, rgba(34, 197, 94, 0.05), rgba(16, 185, 129, 0.02));
+    border: 2px solid var(--success);
+    border-radius: 16px;
+    padding: 24px;
+    text-align: center;
+}
+
+.bookmark-reminder h3 {
+    color: var(--success);
+    font-size: 1.3rem;
+    font-weight: 800;
+    margin-bottom: 12px;
+}
+
+.bookmark-btn {
+    background: var(--success);
+    color: var(--light);
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-top: 16px;
+}
+
+.bookmark-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(34, 197, 94, 0.3);
+}
+
+.social-share {
+    text-align: center;
+    margin-top: 40px;
+    padding: 30px;
+    background: var(--gray-light);
+    border-radius: 16px;
+}
+
+.social-share h3 {
+    color: var(--dark);
+    font-weight: 800;
+    margin-bottom: 20px;
+}
+
+.share-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.share-btn {
+    background: var(--gray-medium);
+    color: var(--dark);
+    border: none;
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.share-btn:hover {
+    transform: translateY(-1px);
+    background: var(--gray);
+    color: var(--light);
+}
+
+@media (max-width: 768px) {
+    .success-title {
+        font-size: 2rem;
+    }
+    
+    .products-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .order-summary {
+        grid-template-columns: 1fr;
+        gap: 8px;
+    }
+    
+    .order-total {
+        grid-template-columns: 1fr;
+        gap: 8px;
+        text-align: center;
+    }
+    
+    .contact-info {
+        grid-template-columns: 1fr;
+    }
+    
+    .share-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Success Header -->
+    <div class="success-header">
+        <div class="success-icon">🎉</div>
+        <h1 class="success-title">Welcome to Your Abundance Journey!</h1>
+        <p class="success-subtitle">Your order has been confirmed and your abundance system is ready</p>
+    </div>
+
+    <!-- Order Confirmation -->
+    <div class="order-confirmation">
+        <h2>✅ Order Confirmation</h2>
+        <div class="confirmation-details">
+            <div class="order-summary">
+                <div class="order-item">The Abundance Code System</div>
+                <div class="order-price">$47.00</div>
+            </div>
+            
+            <div class="order-summary" id="orderBumpSummary" style="display: none;">
+                <div class="order-item">Personal Code Deep-Dive Analysis</div>
+                <div class="order-price">$37.00</div>
+            </div>
+            
+            <div class="order-summary" id="oto1Summary" style="display: none;">
+                <div class="order-item">Complete Abundance Mastery System</div>
+                <div class="order-price">$197.00</div>
+            </div>
+            
+            <div class="order-summary" id="oto2Summary" style="display: none;">
+                <div class="order-item">Abundance Accelerator Toolkit</div>
+                <div class="order-price">$97.00</div>
+            </div>
+            
+            <div class="order-total">
+                <div class="total-label">Total Investment:</div>
+                <div class="total-amount" id="totalAmount">$47.00</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Access Section -->
+    <div class="access-section">
+        <h2>🚀 Access Your Complete Abundance System</h2>
+        
+        <div class="products-grid">
+            <div class="product-card">
+                <div class="product-icon">📖</div>
+                <div class="product-title">Core Abundance Guide</div>
+                <div class="product-description">Complete 45-page system with your personal code calculation and activation protocols</div>
+                <a href="core-guide-v2.html" class="access-button" target="_blank">Access Guide →</a>
+            </div>
+            
+            <div class="product-card">
+                <div class="product-icon">🧮</div>
+                <div class="product-title">Personal Code Calculator</div>
+                <div class="product-description">Advanced interactive calculator to discover and analyze your unique 3-digit abundance code</div>
+                <a href="calculator-v2.html" class="access-button" target="_blank">Calculate Code →</a>
+            </div>
+            
+            <div class="product-card">
+                <div class="product-icon">📊</div>
+                <div class="product-title">Life Path Analyzer</div>
+                <div class="product-description">Comprehensive analysis tool generating detailed reports about your abundance path and potential</div>
+                <a href="life-path-v2.html" class="access-button" target="_blank">Analyze Path →</a>
+            </div>
+            
+            <div class="product-card">
+                <div class="product-icon">📈</div>
+                <div class="product-title">Abundance Tracker</div>
+                <div class="product-description">Advanced tracking dashboard to monitor signals, opportunities, and abundance manifestations</div>
+                <a href="abundance-tracker-v2.html" class="access-button" target="_blank">Start Tracking →</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Start Guide -->
+    <div class="quick-start-section">
+        <h2>🚀 Quick Start Guide</h2>
+        
+        <div class="steps-list">
+            <div class="step-item">
+                <div class="step-number">1</div>
+                <div class="step-content">
+                    <h4>Calculate Your Personal Code</h4>
+                    <p>Start with the Personal Code Calculator to discover your unique 3-digit abundance frequency. This is the foundation of everything.</p>
+                </div>
+            </div>
+            
+            <div class="step-item">
+                <div class="step-number">2</div>
+                <div class="step-content">
+                    <h4>Read Your Core Guide</h4>
+                    <p>Study the Complete Abundance Guide to understand how your code works and learn the proven activation techniques.</p>
+                </div>
+            </div>
+            
+            <div class="step-item">
+                <div class="step-number">3</div>
+                <div class="step-content">
+                    <h4>Set Up Your Tracker</h4>
+                    <p>Use the Abundance Tracker to monitor your signals and opportunities. This helps optimize your results over time.</p>
+                </div>
+            </div>
+            
+            <div class="step-item">
+                <div class="step-number">4</div>
+                <div class="step-content">
+                    <h4>Begin Daily Practice</h4>
+                    <p>Follow the 7-minute daily activation ritual outlined in your guide. Consistency is the key to unlocking your abundance.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Support Section -->
+    <div class="support-section">
+        <h3>💬 Need Help? We're Here for You</h3>
+        <p>Our support team is ready to help you succeed with your abundance journey</p>
+        
+        <div class="contact-info">
+            <div class="contact-method">
+                <h4>📧 Email Support</h4>
+                <p>support@abundancecode.com<br>Response within 24 hours</p>
+            </div>
+            
+            <div class="contact-method">
+                <h4>📱 Live Chat</h4>
+                <p>Available Monday-Friday<br>9 AM - 6 PM EST</p>
+            </div>
+            
+            <div class="contact-method">
+                <h4>📚 Help Center</h4>
+                <p>Comprehensive tutorials<br>and troubleshooting guides</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bookmark Reminder -->
+    <div class="bookmark-reminder">
+        <h3>📌 Important: Bookmark This Page</h3>
+        <p>You can always return here to access your complete abundance system</p>
+        <button class="bookmark-btn" onclick="bookmarkPage()">📌 Bookmark Now</button>
+    </div>
+
+    <!-- Social Share -->
+    <div class="social-share">
+        <h3>Share Your Abundance Journey</h3>
+        <div class="share-buttons">
+            <a href="#" class="share-btn" onclick="shareOnFacebook()">📘 Facebook</a>
+            <a href="#" class="share-btn" onclick="shareOnTwitter()">🐦 Twitter</a>
+            <a href="#" class="share-btn" onclick="shareOnLinkedIn()">💼 LinkedIn</a>
+            <a href="#" class="share-btn" onclick="copyLink()">🔗 Copy Link</a>
+        </div>
+    </div>
+</div>
+
+<script>
+// Calculate and display order total on page load
+document.addEventListener('DOMContentLoaded', function() {
+    calculateOrderTotal();
+    showPurchasedComponents();
+});
+
+function calculateOrderTotal() {
+    let total = 47; // Base price
+    
+    // Check for order bump
+    const orderBump = localStorage.getItem('orderBump');
+    if (orderBump === 'true') {
+        document.getElementById('orderBumpSummary').style.display = 'grid';
+        total += 37;
+    }
+    
+    // Check for OTO1 upgrade
+    const oto1Selected = localStorage.getItem('upgradeSelected');
+    if (oto1Selected) {
+        document.getElementById('oto1Summary').style.display = 'grid';
+        total += 197;
+    }
+    
+    // Check for OTO2 toolkit
+    const oto2Selected = localStorage.getItem('toolkitSelected');
+    if (oto2Selected === 'true') {
+        document.getElementById('oto2Summary').style.display = 'grid';
+        total += 97;
+    }
+    
+    // Update total display
+    document.getElementById('totalAmount').textContent = `$${total}.00`;
+}
+
+function showPurchasedComponents() {
+    // All customers get base products
+    // Additional products would be shown based on localStorage flags
+    
+    // For demo purposes, show all products
+    // In production, you'd conditionally show based on purchase level
+}
+
+function bookmarkPage() {
+    if (window.sidebar && window.sidebar.addPanel) {
+        // Firefox
+        window.sidebar.addPanel(document.title, window.location.href, '');
+    } else if (window.external && ('AddFavorite' in window.external)) {
+        // Internet Explorer
+        window.external.AddFavorite(window.location.href, document.title);
+    } else {
+        // Other browsers
+        alert('Please bookmark this page using Ctrl+D (Cmd+D on Mac) so you can easily return to access your abundance system!');
+    }
+}
+
+function shareOnFacebook() {
+    const url = encodeURIComponent(window.location.href);
+    const text = encodeURIComponent('I just discovered my personal abundance code! This system is amazing.');
+    window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}&quote=${text}`, '_blank');
+}
+
+function shareOnTwitter() {
+    const url = encodeURIComponent(window.location.href);
+    const text = encodeURIComponent('Just discovered my personal abundance code! 🌟 This system is incredible. #AbundanceCode #Manifestation');
+    window.open(`https://twitter.com/intent/tweet?text=${text}&url=${url}`, '_blank');
+}
+
+function shareOnLinkedIn() {
+    const url = encodeURIComponent(window.location.href);
+    window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${url}`, '_blank');
+}
+
+function copyLink() {
+    navigator.clipboard.writeText(window.location.href).then(function() {
+        alert('Link copied to clipboard! You can now paste it anywhere to share your abundance system.');
+    }, function(err) {
+        console.error('Could not copy text: ', err);
+    });
+}
+
+// Track page analytics
+if (typeof gtag !== 'undefined') {
+    gtag('event', 'purchase_complete', {
+        event_category: 'ecommerce',
+        event_label: 'abundance_code_system',
+        value: 47
+    });
+    
+    gtag('event', 'page_view', {
+        page_title: 'Thank You - Order Complete',
+        page_location: window.location.href
+    });
+}
+
+// Auto-redirect after extended time (optional)
+setTimeout(() => {
+    // Could redirect to a specific starting point after 5 minutes
+    // window.location.href = 'calculator-v2.html';
+}, 300000); // 5 minutes
+
+// Show welcome message
+setTimeout(() => {
+    if (confirm('🎉 Congratulations! Would you like to calculate your personal abundance code right now to get started?')) {
+        window.open('calculator-v2.html', '_blank');
+    }
+}, 3000); // 3 seconds after page load
+</script>
+
+</body>
+</html>"
