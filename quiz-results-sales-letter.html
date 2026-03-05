@@ -26,10 +26,12 @@
         }
         
         .locked-code {
-            filter: blur(25px) brightness(0.3);
+            filter: blur(35px) brightness(0.1) contrast(0.3);
             user-select: none;
             pointer-events: none;
-            opacity: 0.4;
+            opacity: 0.3;
+            color: transparent !important;
+            text-shadow: 0 0 60px rgba(255,255,255,0.2);
         }
         
         .cta-button {
@@ -107,21 +109,29 @@
 
         <!-- Locked Code Image -->
         <div class="text-center mb-12">
-            <div class="bg-gray-900 text-white p-8 rounded-lg inline-block">
+            <div class="bg-gray-900 text-white p-8 rounded-lg inline-block shadow-2xl border-2 border-yellow-400/30">
                 <h3 class="text-2xl font-bold mb-4">YOUR PERSONAL ABUNDANCE CODE</h3>
-                <div class="relative">
+                <div class="relative mb-4">
                     <div class="text-6xl font-black locked-code text-yellow-400" id="lockedCode">###</div>
                     <div class="absolute inset-0 flex items-center justify-center">
-                        <div class="bg-black/80 text-yellow-400 px-6 py-3 rounded-lg border-2 border-yellow-400">
-                            <div class="flex items-center space-x-2">
-                                <span>🔒</span>
-                                <span class="font-bold">LOCKED</span>
+                        <div class="bg-black/90 text-yellow-400 px-8 py-4 rounded-xl border-3 border-yellow-400 shadow-lg backdrop-blur">
+                            <div class="flex items-center space-x-3">
+                                <span class="text-2xl">🔒</span>
+                                <span class="font-bold text-lg">ENCRYPTED</span>
                             </div>
                         </div>
                     </div>
                 </div>
-                <p class="text-gray-300 mt-4">Your code is encrypted until you unlock your complete analysis</p>
+                <div class="w-full bg-gray-800 rounded-full h-2 mb-4">
+                    <div class="bg-yellow-400 h-2 rounded-full" style="width: 0%"></div>
+                </div>
+                <p class="text-gray-300">🔐 Your code is encrypted until you unlock your complete analysis</p>
             </div>
+        </div>
+        
+        <!-- Visual Separator -->
+        <div class="text-center mb-12">
+            <div class="w-24 h-1 bg-gradient-to-r from-yellow-400 to-red-500 mx-auto rounded-full"></div>
         </div>
 
         <!-- Personal Analysis -->
@@ -145,6 +155,15 @@
                 <p class="text-xl text-gray-700 leading-relaxed">
                     <strong>The good news?</strong> Once you know your exact frequency signature (your 3-digit code), these blocks can be cleared quickly and permanently.
                 </p>
+            </div>
+        </div>
+
+        <!-- Visual Break -->
+        <div class="text-center mb-8">
+            <div class="inline-flex items-center space-x-4 bg-red-50 px-8 py-4 rounded-full">
+                <span class="text-3xl">⚠️</span>
+                <span class="font-bold text-red-700 text-lg">THE HIDDEN PROBLEM</span>
+                <span class="text-3xl">⚠️</span>
             </div>
         </div>
 
@@ -177,6 +196,15 @@
             </div>
         </div>
 
+        <!-- Visual Break -->
+        <div class="text-center mb-8">
+            <div class="inline-flex items-center space-x-4 bg-green-50 px-8 py-4 rounded-full">
+                <span class="text-3xl">✨</span>
+                <span class="font-bold text-green-700 text-lg">THE BREAKTHROUGH</span>
+                <span class="text-3xl">✨</span>
+            </div>
+        </div>
+
         <!-- The Solution -->
         <div class="mb-12">
             <h2 class="text-3xl font-bold text-gray-900 mb-6 serif">Your 3-Digit Code Changes Everything</h2>
@@ -197,12 +225,36 @@
                 </p>
                 
                 <div class="bg-green-50 border-l-4 border-green-400 p-6 my-8">
-                    <ul class="text-green-800 space-y-3">
-                        <li><strong>Week 1:</strong> You start noticing your code appearing in unexpected places (receipts, timestamps, license plates) - this is the universe confirming your alignment</li>
-                        <li><strong>Week 2-3:</strong> Unexpected money opportunities begin flowing (refunds, bonuses, side income, gifts)</li>
-                        <li><strong>Week 4-8:</strong> Larger abundance manifestations start appearing (promotions, business opportunities, investment gains)</li>
-                        <li><strong>Beyond 8 weeks:</strong> Abundance becomes your new normal as your frequency fully stabilizes</li>
-                    </ul>
+                    <div class="space-y-6">
+                        <div class="flex items-start space-x-4">
+                            <div class="w-12 h-12 bg-green-500 text-white rounded-full flex items-center justify-center font-bold">1</div>
+                            <div>
+                                <h4 class="font-bold text-green-800 mb-1">Week 1: Signs & Confirmation</h4>
+                                <p class="text-green-700">You start noticing your code appearing everywhere (receipts, timestamps, license plates) - the universe confirming your alignment</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-4">
+                            <div class="w-12 h-12 bg-green-600 text-white rounded-full flex items-center justify-center font-bold">2</div>
+                            <div>
+                                <h4 class="font-bold text-green-800 mb-1">Week 2-3: Small Money Flows</h4>
+                                <p class="text-green-700">Unexpected money opportunities begin flowing (refunds, bonuses, side income, gifts)</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-4">
+                            <div class="w-12 h-12 bg-green-700 text-white rounded-full flex items-center justify-center font-bold">3</div>
+                            <div>
+                                <h4 class="font-bold text-green-800 mb-1">Week 4-8: Major Breakthroughs</h4>
+                                <p class="text-green-700">Larger abundance manifestations appear (promotions, business opportunities, investment gains)</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-4">
+                            <div class="w-12 h-12 bg-green-800 text-white rounded-full flex items-center justify-center font-bold">∞</div>
+                            <div>
+                                <h4 class="font-bold text-green-800 mb-1">Beyond 8 weeks: New Normal</h4>
+                                <p class="text-green-700">Abundance becomes your new reality as your frequency fully stabilizes</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -409,8 +461,8 @@
         const storedCode = sessionStorage.getItem('abundanceCode') || '374';
         const storedAnswers = JSON.parse(sessionStorage.getItem('quizAnswers') || '{}');
 
-        // Set locked code display
-        document.getElementById('lockedCode').textContent = storedCode;
+        // Set locked code display (completely unreadable)
+        document.getElementById('lockedCode').textContent = "XXX";
 
         // Generate personalized analysis
         function generatePersonalAnalysis() {

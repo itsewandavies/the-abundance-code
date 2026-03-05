@@ -152,9 +152,11 @@
         }
 
         .blur-code {
-            filter: blur(20px) brightness(0.3);
+            filter: blur(30px) brightness(0.1) contrast(0.5);
             user-select: none;
             pointer-events: none;
+            color: transparent !important;
+            text-shadow: 0 0 50px rgba(255,255,255,0.3);
         }
     </style>
 </head>
@@ -794,10 +796,11 @@
                     
                     // Mark current analysis step as complete
                     const currentAnalysis = document.getElementById(`step${stepIndex + 1}-analysis`);
-                    if (currentAnalysis && stepIndex < steps.length) {
+                    if (currentAnalysis && stepIndex >= 0 && stepIndex < steps.length) {
+                        const stepText = steps[stepIndex] || "Finalizing analysis...";
                         setTimeout(() => {
                             currentAnalysis.innerHTML = `
-                                <span class="text-sm text-slate-300">${steps[stepIndex]}</span>
+                                <span class="text-sm text-slate-300">${stepText}</span>
                                 <i data-lucide="check" class="w-4 h-4 text-green-400"></i>
                             `;
                             lucide.createIcons();
@@ -810,7 +813,7 @@
                     // Analysis complete - show blurred code and redirect
                     setTimeout(() => {
                         const generatedCode = generatePersonalCode();
-                        document.getElementById('blurredCode').textContent = generatedCode;
+                        document.getElementById('blurredCode').textContent = "888";
                         document.getElementById('analysisProgress').textContent = 'Analysis complete! Your code is ready...';
                         
                         // Store code for results page
