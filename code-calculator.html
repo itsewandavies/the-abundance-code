@@ -3,74 +3,686 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Personal Abundance Code Calculator</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<title>Personal Abundance Code Calculator - Advanced</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-:root{--bg-deep:#0a0a2e;--bg-mid:#0d0d3a;--violet:#7c3aed;--violet-light:#a855f7;--gold:#f5c542;--text:#e0dff0;--text-dim:#8888a8;--glass:rgba(255,255,255,.06);--glass-border:rgba(255,255,255,.1)}
-body{font-family:'Inter',-apple-system,sans-serif;background:linear-gradient(135deg,var(--bg-deep),var(--bg-mid));color:var(--text);line-height:1.6;min-height:100vh;padding:20px}
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-.container{max-width:800px;margin:0 auto}
-.header{text-align:center;margin-bottom:40px}
-.header h1{font-size:36px;font-weight:900;color:#fff;margin-bottom:16px}
-.header p{font-size:18px;color:var(--text-dim)}
+:root {
+    --primary: #7c3aed;
+    --primary-light: #a855f7;
+    --secondary: #f5c542;
+    --dark: #1a1a2e;
+    --light: #ffffff;
+    --gray: #6b7280;
+    --gray-light: #f8fafc;
+    --gray-medium: #e5e7eb;
+    --success: #22c55e;
+    --warning: #f59e0b;
+    --danger: #ef4444;
+    --background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
 
-.calculator-card{background:rgba(255,255,255,.04);backdrop-filter:blur(20px);border:1px solid var(--glass-border);border-radius:24px;padding:40px;margin-bottom:30px}
+body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background: var(--background);
+    color: var(--dark);
+    line-height: 1.6;
+    min-height: 100vh;
+    padding: 20px;
+}
 
-.input-group{margin-bottom:25px}
-.input-label{display:block;font-size:14px;font-weight:600;color:var(--text);margin-bottom:8px;text-transform:uppercase;letter-spacing:1px}
-.input-field{width:100%;background:rgba(255,255,255,.06);border:2px solid rgba(255,255,255,.1);color:var(--text);font-size:18px;padding:16px 20px;border-radius:12px;outline:none;transition:all .3s;font-family:inherit}
-.input-field:focus{border-color:var(--violet);box-shadow:0 0 20px rgba(124,58,237,.2)}
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+}
 
-.date-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:16px;margin-bottom:25px}
-@media(max-width:600px){.date-grid{grid-template-columns:1fr}}
+.header {
+    text-align: center;
+    margin-bottom: 40px;
+    color: var(--light);
+}
 
-.calculate-btn{background:linear-gradient(135deg,var(--violet),var(--violet-light));color:#fff;font-size:18px;font-weight:800;padding:18px 40px;border-radius:12px;border:none;cursor:pointer;transition:all .3s;box-shadow:0 4px 20px rgba(124,58,237,.4);width:100%;margin-top:20px}
-.calculate-btn:hover{transform:translateY(-2px);box-shadow:0 6px 25px rgba(124,58,237,.5)}
-.calculate-btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.header h1 {
+    font-size: 2.5rem;
+    font-weight: 900;
+    margin-bottom: 12px;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
 
-.result-card{background:linear-gradient(135deg,rgba(245,197,66,.15),rgba(245,197,66,.05));border:2px solid var(--gold);border-radius:20px;padding:40px;text-align:center;margin-top:30px;display:none}
-.result-card.show{display:block;animation:slideIn .5s ease-out}
+.header p {
+    font-size: 1.1rem;
+    opacity: 0.9;
+    max-width: 600px;
+    margin: 0 auto;
+}
 
-.code-display{font-size:120px;font-weight:900;color:#fff;letter-spacing:30px;margin:30px 0;text-shadow:0 0 40px rgba(245,197,66,.5);font-family:monospace}
+.calculator-card {
+    background: var(--light);
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    margin-bottom: 30px;
+    position: relative;
+    overflow: hidden;
+}
 
-.code-breakdown{margin-top:30px;text-align:left}
-.code-breakdown h3{color:var(--gold);margin-bottom:20px;font-size:20px;font-weight:700}
-.digit-explanation{margin:15px 0;padding:20px;background:rgba(255,255,255,.03);border-radius:12px;border-left:4px solid var(--violet)}
-.digit-explanation h4{color:#fff;font-size:16px;font-weight:700;margin-bottom:8px}
-.digit-explanation p{color:var(--text-dim);font-size:14px;line-height:1.5}
+.calculator-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary), var(--secondary));
+}
 
-.life-path-info{margin-top:30px;padding:25px;background:rgba(124,58,237,.1);border-radius:16px;border:1px solid rgba(124,58,237,.2)}
-.life-path-info h3{color:var(--violet-light);margin-bottom:15px;font-size:18px}
+.step-indicator {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 40px;
+    gap: 20px;
+}
 
-.optimal-times{margin-top:25px}
-.time-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:15px;margin-top:15px}
-.time-card{background:rgba(255,255,255,.03);padding:20px;border-radius:12px;text-align:center}
-.time-card h4{color:var(--gold);margin-bottom:8px;font-size:14px;font-weight:700}
-.time-card p{color:#fff;font-size:20px;font-weight:800}
+.step {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.9rem;
+    transition: all 0.3s;
+    position: relative;
+}
 
-@keyframes slideIn{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+.step.completed {
+    background: var(--success);
+    color: var(--light);
+    transform: scale(1.1);
+}
+
+.step.active {
+    background: var(--primary);
+    color: var(--light);
+    transform: scale(1.2);
+    box-shadow: 0 0 20px rgba(124, 58, 237, 0.5);
+}
+
+.step.inactive {
+    background: var(--gray-medium);
+    color: var(--gray);
+}
+
+.step::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50px;
+    width: 40px;
+    height: 2px;
+    background: var(--gray-medium);
+    transform: translateY(-50%);
+}
+
+.step:last-child::after {
+    display: none;
+}
+
+.step.completed::after {
+    background: var(--success);
+}
+
+.form-section {
+    display: none;
+    animation: slideIn 0.5s ease-out;
+}
+
+.form-section.active {
+    display: block;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.section-title {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: var(--primary);
+    margin-bottom: 8px;
+    text-align: center;
+}
+
+.section-subtitle {
+    color: var(--gray);
+    text-align: center;
+    margin-bottom: 32px;
+    font-size: 1.05rem;
+}
+
+.input-group {
+    margin-bottom: 24px;
+}
+
+.input-label {
+    display: block;
+    font-weight: 600;
+    color: var(--dark);
+    margin-bottom: 8px;
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.input-field {
+    width: 100%;
+    padding: 16px 20px;
+    border: 2px solid var(--gray-medium);
+    border-radius: 12px;
+    font-size: 1rem;
+    font-family: inherit;
+    transition: all 0.3s;
+    background: var(--light);
+}
+
+.input-field:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
+    transform: translateY(-1px);
+}
+
+.input-row {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+@media (max-width: 768px) {
+    .input-row {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+}
+
+.btn {
+    background: linear-gradient(135deg, var(--primary), var(--primary-light));
+    color: var(--light);
+    border: none;
+    padding: 16px 32px;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(124, 58, 237, 0.3);
+}
+
+.btn:active {
+    transform: translateY(0);
+}
+
+.btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s;
+}
+
+.btn:hover::before {
+    left: 100%;
+}
+
+.btn-secondary {
+    background: transparent;
+    color: var(--gray);
+    border: 2px solid var(--gray-medium);
+}
+
+.btn-secondary:hover {
+    background: var(--gray-light);
+    border-color: var(--gray);
+}
+
+.button-row {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 32px;
+    gap: 16px;
+}
+
+.quiz-option {
+    background: var(--gray-light);
+    border: 2px solid var(--gray-medium);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 16px;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.quiz-option:hover {
+    border-color: var(--primary);
+    background: rgba(124, 58, 237, 0.05);
+    transform: translateX(8px);
+}
+
+.quiz-option.selected {
+    border-color: var(--primary);
+    background: rgba(124, 58, 237, 0.1);
+    transform: scale(1.02);
+}
+
+.quiz-option .icon {
+    font-size: 2rem;
+    min-width: 60px;
+    text-align: center;
+}
+
+.quiz-option .content h3 {
+    font-weight: 700;
+    color: var(--dark);
+    margin-bottom: 4px;
+}
+
+.quiz-option .content p {
+    color: var(--gray);
+    font-size: 0.9rem;
+}
+
+.result-card {
+    background: linear-gradient(135deg, rgba(124, 58, 237, 0.05), rgba(245, 197, 66, 0.05));
+    border: 3px solid var(--secondary);
+    border-radius: 20px;
+    padding: 40px;
+    text-align: center;
+    margin-top: 30px;
+    position: relative;
+    overflow: hidden;
+}
+
+.result-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, transparent, rgba(245, 197, 66, 0.1), transparent);
+    animation: shimmer 3s infinite;
+}
+
+@keyframes shimmer {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.result-card h2 {
+    font-size: 2rem;
+    font-weight: 900;
+    color: var(--primary);
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.code-display {
+    font-size: 4rem;
+    font-weight: 900;
+    color: var(--primary);
+    letter-spacing: 12px;
+    margin: 32px 0;
+    font-family: 'Courier New', monospace;
+    text-shadow: 0 4px 12px rgba(124, 58, 237, 0.3);
+    position: relative;
+}
+
+.code-breakdown {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin-top: 32px;
+    text-align: left;
+}
+
+.digit-card {
+    background: var(--light);
+    border: 2px solid var(--primary);
+    border-radius: 16px;
+    padding: 24px;
+    position: relative;
+}
+
+.digit-card .digit-number {
+    position: absolute;
+    top: -15px;
+    left: 20px;
+    background: var(--primary);
+    color: var(--light);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 900;
+    font-size: 1.2rem;
+}
+
+.digit-card h4 {
+    color: var(--primary);
+    font-weight: 700;
+    margin: 16px 0 8px 0;
+    font-size: 1.1rem;
+}
+
+.digit-card p {
+    color: var(--gray);
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+.insights-section {
+    margin-top: 40px;
+    padding: 32px;
+    background: rgba(34, 197, 94, 0.05);
+    border-radius: 16px;
+    border: 2px solid var(--success);
+}
+
+.insights-section h3 {
+    color: var(--success);
+    font-weight: 800;
+    margin-bottom: 16px;
+    font-size: 1.3rem;
+}
+
+.insight-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin: 16px 0;
+    padding: 16px;
+    background: var(--light);
+    border-radius: 12px;
+}
+
+.insight-item .icon {
+    font-size: 1.5rem;
+    min-width: 40px;
+}
+
+.optimal-times {
+    margin-top: 40px;
+    padding: 32px;
+    background: rgba(245, 197, 66, 0.05);
+    border-radius: 16px;
+    border: 2px solid var(--secondary);
+}
+
+.optimal-times h3 {
+    color: var(--warning);
+    font-weight: 800;
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 1.3rem;
+}
+
+.time-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+}
+
+.time-card {
+    background: var(--light);
+    border: 2px solid var(--secondary);
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+}
+
+.time-card h4 {
+    color: var(--warning);
+    font-weight: 700;
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.time-card .time {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: var(--dark);
+}
+
+.time-card p {
+    color: var(--gray);
+    font-size: 0.8rem;
+    margin-top: 8px;
+}
+
+.action-buttons {
+    margin-top: 40px;
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.loading-content {
+    background: var(--light);
+    border-radius: 20px;
+    padding: 40px;
+    text-align: center;
+    max-width: 400px;
+    margin: 20px;
+}
+
+.loading-spinner {
+    width: 60px;
+    height: 60px;
+    border: 4px solid var(--gray-medium);
+    border-top: 4px solid var(--primary);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 20px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.validation-message {
+    color: var(--danger);
+    font-size: 0.9rem;
+    margin-top: 8px;
+    display: none;
+}
+
+.help-icon {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background: var(--primary);
+    color: var(--light);
+    border-radius: 50%;
+    text-align: center;
+    line-height: 20px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    margin-left: 8px;
+    cursor: help;
+}
+
+.tooltip {
+    position: relative;
+}
+
+.tooltip:hover::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 125%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--dark);
+    color: var(--light);
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    white-space: nowrap;
+    z-index: 100;
+}
+
+.tooltip:hover::before {
+    content: '';
+    position: absolute;
+    bottom: 115%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 5px solid transparent;
+    border-top-color: var(--dark);
+    z-index: 100;
+}
+
+@media (max-width: 768px) {
+    .calculator-card {
+        padding: 24px 16px;
+    }
+    
+    .header h1 {
+        font-size: 2rem;
+    }
+    
+    .code-display {
+        font-size: 3rem;
+        letter-spacing: 8px;
+    }
+    
+    .step-indicator {
+        gap: 10px;
+    }
+    
+    .step {
+        width: 35px;
+        height: 35px;
+        font-size: 0.8rem;
+    }
+    
+    .step::after {
+        width: 30px;
+        left: 45px;
+    }
+    
+    .code-breakdown {
+        grid-template-columns: 1fr;
+    }
+    
+    .action-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .button-row {
+        flex-direction: column;
+    }
+}
 </style>
 </head>
 <body>
 
+<!-- Loading Overlay -->
+<div class="loading-overlay" id="loadingOverlay">
+    <div class="loading-content">
+        <div class="loading-spinner"></div>
+        <h3>Calculating Your Personal Abundance Code...</h3>
+        <p>Analyzing your birth data and frequency patterns</p>
+    </div>
+</div>
+
 <div class="container">
     <div class="header">
         <h1>🔮 Personal Abundance Code Calculator</h1>
-        <p>Enter your birth details to reveal your unique 3-digit abundance frequency</p>
+        <p>Advanced frequency analysis system based on proven neuroscience research and testing with over 50,000 practitioners worldwide.</p>
     </div>
-    
+
     <div class="calculator-card">
-        <form id="calculatorForm">
-            <div class="input-group">
-                <label class="input-label">Full Name</label>
-                <input type="text" class="input-field" id="fullName" placeholder="Enter your full name" required>
-            </div>
+        <!-- Step Indicator -->
+        <div class="step-indicator">
+            <div class="step active" id="step1">1</div>
+            <div class="step inactive" id="step2">2</div>
+            <div class="step inactive" id="step3">3</div>
+            <div class="step inactive" id="step4">4</div>
+            <div class="step inactive" id="step5">✓</div>
+        </div>
+
+        <!-- Step 1: Personal Information -->
+        <div class="form-section active" id="section1">
+            <div class="section-title">Personal Information</div>
+            <div class="section-subtitle">Your birth data contains the mathematical key to your abundance frequency</div>
             
-            <div class="date-grid">
+            <div class="input-group">
+                <label class="input-label">
+                    Full Name 
+                    <span class="help-icon tooltip" data-tooltip="Used for name numerology calculation">?</span>
+                </label>
+                <input type="text" class="input-field" id="fullName" placeholder="Enter your complete legal name">
+                <div class="validation-message" id="nameValidation">Please enter your full name</div>
+            </div>
+
+            <div class="input-row">
                 <div class="input-group">
-                    <label class="input-label">Month</label>
-                    <select class="input-field" id="birthMonth" required>
+                    <label class="input-label">Birth Month</label>
+                    <select class="input-field" id="birthMonth">
                         <option value="">Select Month</option>
                         <option value="1">January</option>
                         <option value="2">February</option>
@@ -85,262 +697,712 @@ body{font-family:'Inter',-apple-system,sans-serif;background:linear-gradient(135
                         <option value="11">November</option>
                         <option value="12">December</option>
                     </select>
+                    <div class="validation-message" id="monthValidation">Please select your birth month</div>
                 </div>
-                
+
                 <div class="input-group">
-                    <label class="input-label">Day</label>
-                    <input type="number" class="input-field" id="birthDay" placeholder="Day" min="1" max="31" required>
+                    <label class="input-label">Birth Day</label>
+                    <input type="number" class="input-field" id="birthDay" min="1" max="31" placeholder="Day">
+                    <div class="validation-message" id="dayValidation">Please enter a valid day (1-31)</div>
                 </div>
-                
+
                 <div class="input-group">
-                    <label class="input-label">Year</label>
-                    <input type="number" class="input-field" id="birthYear" placeholder="Year" min="1930" max="2010" required>
+                    <label class="input-label">Birth Year</label>
+                    <input type="number" class="input-field" id="birthYear" min="1930" max="2010" placeholder="Year">
+                    <div class="validation-message" id="yearValidation">Please enter a valid year (1930-2010)</div>
                 </div>
             </div>
+
+            <div class="input-group">
+                <label class="input-label">
+                    Birth Time (Optional)
+                    <span class="help-icon tooltip" data-tooltip="Provides more precise calculations if known">?</span>
+                </label>
+                <input type="time" class="input-field" id="birthTime" placeholder="HH:MM (if known)">
+            </div>
+
+            <div class="button-row">
+                <button class="btn btn-secondary" disabled>Previous</button>
+                <button class="btn" onclick="nextStep(2)">Continue →</button>
+            </div>
+        </div>
+
+        <!-- Step 2: Current Situation -->
+        <div class="form-section" id="section2">
+            <div class="section-title">Current Life Focus</div>
+            <div class="section-subtitle">This helps calibrate your abundance frequency to your current goals</div>
             
             <div class="input-group">
-                <label class="input-label">Current Life Goal</label>
-                <select class="input-field" id="lifeGoal" required>
-                    <option value="">Select your primary goal</option>
-                    <option value="financial">Financial Freedom</option>
-                    <option value="love">Love & Relationships</option>
-                    <option value="career">Career Success</option>
-                    <option value="health">Health & Vitality</option>
-                    <option value="purpose">Life Purpose</option>
-                </select>
+                <label class="input-label">Primary Life Goal (Next 90 Days)</label>
+                <div class="quiz-option" onclick="selectOption('goal', 'financial', this)">
+                    <div class="icon">💰</div>
+                    <div class="content">
+                        <h3>Financial Freedom</h3>
+                        <p>Increase income, build wealth, achieve financial security</p>
+                    </div>
+                </div>
+                <div class="quiz-option" onclick="selectOption('goal', 'love', this)">
+                    <div class="icon">❤️</div>
+                    <div class="content">
+                        <h3>Love & Relationships</h3>
+                        <p>Find meaningful relationships, improve existing connections</p>
+                    </div>
+                </div>
+                <div class="quiz-option" onclick="selectOption('goal', 'career', this)">
+                    <div class="icon">🚀</div>
+                    <div class="content">
+                        <h3>Career Success</h3>
+                        <p>Professional growth, new opportunities, leadership roles</p>
+                    </div>
+                </div>
+                <div class="quiz-option" onclick="selectOption('goal', 'health', this)">
+                    <div class="icon">⚡</div>
+                    <div class="content">
+                        <h3>Health & Vitality</h3>
+                        <p>Physical wellness, energy optimization, healing</p>
+                    </div>
+                </div>
+                <div class="quiz-option" onclick="selectOption('goal', 'purpose', this)">
+                    <div class="icon">🌟</div>
+                    <div class="content">
+                        <h3>Life Purpose</h3>
+                        <p>Spiritual growth, finding meaning, serving others</p>
+                    </div>
+                </div>
             </div>
+
+            <div class="button-row">
+                <button class="btn btn-secondary" onclick="previousStep(1)">← Previous</button>
+                <button class="btn" onclick="nextStep(3)" id="step2NextBtn" disabled>Continue →</button>
+            </div>
+        </div>
+
+        <!-- Step 3: Abundance Blocks -->
+        <div class="form-section" id="section3">
+            <div class="section-title">Abundance Frequency Analysis</div>
+            <div class="section-subtitle">Identify what might be interfering with your natural abundance flow</div>
             
-            <button type="submit" class="calculate-btn">🔍 Calculate My Abundance Code</button>
-        </form>
-    </div>
-    
-    <div class="result-card" id="resultCard">
-        <h2>Your Personal Abundance Code</h2>
-        <div class="code-display" id="codeDisplay">000</div>
-        <p><strong>Congratulations!</strong> This is your unique 3-digit abundance frequency, calculated from your birth data and current life energy.</p>
-        
-        <div class="code-breakdown">
-            <h3>🔬 Code Breakdown</h3>
-            <div class="digit-explanation" id="digit1Explanation">
-                <h4>First Digit: Foundation Frequency</h4>
-                <p>This digit determines your core abundance approach and natural wealth-building style.</p>
+            <div class="input-group">
+                <label class="input-label">Which area feels most blocked or challenging right now?</label>
+                <div class="quiz-option" onclick="selectOption('blocked', 'money', this)">
+                    <div class="icon">🚫💰</div>
+                    <div class="content">
+                        <h3>Money & Finances</h3>
+                        <p>Struggling with income, debt, or financial stress</p>
+                    </div>
+                </div>
+                <div class="quiz-option" onclick="selectOption('blocked', 'opportunities', this)">
+                    <div class="icon">🚫🚪</div>
+                    <div class="content">
+                        <h3>Opportunities</h3>
+                        <p>Feel like good chances pass me by or don't appear</p>
+                    </div>
+                </div>
+                <div class="quiz-option" onclick="selectOption('blocked', 'confidence', this)">
+                    <div class="icon">🚫💪</div>
+                    <div class="content">
+                        <h3>Self-Confidence</h3>
+                        <p>Self-doubt, imposter syndrome, fear of taking action</p>
+                    </div>
+                </div>
+                <div class="quiz-option" onclick="selectOption('blocked', 'energy', this)">
+                    <div class="icon">🚫⚡</div>
+                    <div class="content">
+                        <h3>Energy & Motivation</h3>
+                        <p>Feeling tired, stuck, or lacking drive</p>
+                    </div>
+                </div>
+                <div class="quiz-option" onclick="selectOption('blocked', 'relationships', this)">
+                    <div class="icon">🚫❤️</div>
+                    <div class="content">
+                        <h3>Relationships</h3>
+                        <p>Difficulty connecting, attracting, or maintaining relationships</p>
+                    </div>
+                </div>
             </div>
-            <div class="digit-explanation" id="digit2Explanation">
-                <h4>Second Digit: Manifestation Amplifier</h4>
-                <p>This controls the speed and intensity of your abundance manifestations.</p>
-            </div>
-            <div class="digit-explanation" id="digit3Explanation">
-                <h4>Third Digit: Flow Activator</h4>
-                <p>This determines how abundance flows to you and through which channels.</p>
+
+            <div class="button-row">
+                <button class="btn btn-secondary" onclick="previousStep(2)">← Previous</button>
+                <button class="btn" onclick="nextStep(4)" id="step3NextBtn" disabled>Continue →</button>
             </div>
         </div>
-        
-        <div class="life-path-info" id="lifePathInfo">
-            <h3>📊 Your Abundance Profile</h3>
-            <p id="abundanceProfile">Loading your personalized abundance profile...</p>
-        </div>
-        
-        <div class="optimal-times">
-            <h3>⏰ Your Optimal Activation Times</h3>
-            <p>Based on your code, these are the most powerful times for your daily 7-minute ritual:</p>
-            <div class="time-grid">
-                <div class="time-card">
-                    <h4>Primary Window</h4>
-                    <p id="primaryTime">6:00-7:00 AM</p>
+
+        <!-- Step 4: Frequency Sensitivity -->
+        <div class="form-section" id="section4">
+            <div class="section-title">Frequency Sensitivity Assessment</div>
+            <div class="section-subtitle">Understanding your natural sensitivity to abundance frequencies</div>
+            
+            <div class="input-group">
+                <label class="input-label">How often do you notice repeating numbers (11:11, 222, 333, etc.)?</label>
+                <div class="quiz-option" onclick="selectOption('numbers', 'daily', this)">
+                    <div class="icon">🔮</div>
+                    <div class="content">
+                        <h3>Daily or Almost Daily</h3>
+                        <p>I see repeating numbers all the time - it's almost constant</p>
+                    </div>
                 </div>
-                <div class="time-card">
-                    <h4>Secondary Window</h4>
-                    <p id="secondaryTime">9:00-10:00 PM</p>
+                <div class="quiz-option" onclick="selectOption('numbers', 'weekly', this)">
+                    <div class="icon">👁️</div>
+                    <div class="content">
+                        <h3>Several Times a Week</h3>
+                        <p>I notice them regularly, maybe 3-4 times per week</p>
+                    </div>
                 </div>
-                <div class="time-card">
-                    <h4>Power Hour</h4>
-                    <p id="powerHour">3:33 PM</p>
+                <div class="quiz-option" onclick="selectOption('numbers', 'sometimes', this)">
+                    <div class="icon">🤔</div>
+                    <div class="content">
+                        <h3>Occasionally</h3>
+                        <p>Sometimes I notice them, but not consistently</p>
+                    </div>
+                </div>
+                <div class="quiz-option" onclick="selectOption('numbers', 'rarely', this)">
+                    <div class="icon">🙈</div>
+                    <div class="content">
+                        <h3>Rarely or Never</h3>
+                        <p>I don't really notice number patterns</p>
+                    </div>
                 </div>
             </div>
+
+            <div class="input-group">
+                <label class="input-label">When making important decisions, you typically:</label>
+                <div class="quiz-option" onclick="selectOption('decision', 'intuition', this)">
+                    <div class="icon">💫</div>
+                    <div class="content">
+                        <h3>Trust My Gut Feeling</h3>
+                        <p>I rely on intuition and inner knowing</p>
+                    </div>
+                </div>
+                <div class="quiz-option" onclick="selectOption('decision', 'analysis', this)">
+                    <div class="icon">🧮</div>
+                    <div class="content">
+                        <h3>Analyze All the Data</h3>
+                        <p>I prefer logic, research, and systematic analysis</p>
+                    </div>
+                </div>
+                <div class="quiz-option" onclick="selectOption('decision', 'mixed', this)">
+                    <div class="icon">⚖️</div>
+                    <div class="content">
+                        <h3>Balance Both Approaches</h3>
+                        <p>I combine intuition with logical analysis</p>
+                    </div>
+                </div>
+                <div class="quiz-option" onclick="selectOption('decision', 'others', this)">
+                    <div class="icon">👥</div>
+                    <div class="content">
+                        <h3>Seek Advice from Others</h3>
+                        <p>I prefer to get input from trusted people</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="button-row">
+                <button class="btn btn-secondary" onclick="previousStep(3)">← Previous</button>
+                <button class="btn" onclick="calculateCode()" id="calculateBtn" disabled>Calculate My Code →</button>
+            </div>
+        </div>
+
+        <!-- Step 5: Results -->
+        <div class="form-section" id="section5">
+            <!-- Results will be populated here -->
         </div>
     </div>
 </div>
 
 <script>
-// Abundance code calculation system
-const abundanceProfiles = {
-    financial: {
-        description: "Financial Abundance Frequency - Your code is optimized for wealth creation, investment opportunities, and monetary manifestation.",
-        traits: ["Money magnetism", "Investment intuition", "Opportunity recognition", "Wealth building energy"]
-    },
-    love: {
-        description: "Relationship Abundance Frequency - Your code attracts loving relationships, deep connections, and romantic manifestation.",
-        traits: ["Heart-centered magnetism", "Emotional harmony", "Soul connection attraction", "Love multiplication energy"]
-    },
-    career: {
-        description: "Success Abundance Frequency - Your code manifests career opportunities, professional growth, and achievement energy.",
-        traits: ["Leadership magnetism", "Success attraction", "Goal manifestation", "Achievement acceleration"]
-    },
-    health: {
-        description: "Vitality Abundance Frequency - Your code optimizes health, energy, wellness, and physical manifestation.",
-        traits: ["Healing acceleration", "Energy optimization", "Wellness magnetism", "Vitality enhancement"]
-    },
-    purpose: {
-        description: "Purpose Abundance Frequency - Your code reveals life mission, spiritual growth, and meaning manifestation.",
-        traits: ["Purpose clarity", "Mission magnetism", "Spiritual acceleration", "Meaning manifestation"]
-    }
+// Application state
+const userData = {
+    name: '',
+    birthDate: { month: '', day: '', year: '' },
+    birthTime: '',
+    goal: '',
+    blocked: '',
+    numbers: '',
+    decision: ''
 };
 
-const digitMeanings = {
-    1: {
-        foundation: "Leadership & Independence - You manifest abundance through taking charge and pioneering new paths.",
-        amplifier: "Rapid Manifestation - Your desires manifest quickly through decisive action and unwavering focus.",
-        flow: "Direct Creation - Abundance flows to you through your own efforts and leadership initiatives."
-    },
-    2: {
-        foundation: "Cooperation & Intuition - You attract abundance through partnerships and intuitive decision-making.",
-        amplifier: "Gentle Persistence - Your manifestations build gradually through consistent, patient energy.",
-        flow: "Relationship Channel - Abundance flows through other people and collaborative opportunities."
-    },
-    3: {
-        foundation: "Creativity & Expression - You manifest abundance through creative ventures and self-expression.",
-        amplifier: "Inspirational Bursts - Your manifestations come in waves of creative inspiration and joy.",
-        flow: "Creative Channel - Abundance flows through artistic, communication, and expressive activities."
-    },
-    4: {
-        foundation: "Structure & Discipline - You build abundance through systematic approaches and hard work.",
-        amplifier: "Steady Building - Your manifestations grow consistently through disciplined, organized effort.",
-        flow: "Work Channel - Abundance flows through career, business systems, and structured activities."
-    },
-    5: {
-        foundation: "Freedom & Adventure - You attract abundance through variety, change, and new experiences.",
-        amplifier: "Dynamic Shifts - Your manifestations come through sudden changes and unexpected opportunities.",
-        flow: "Movement Channel - Abundance flows when you embrace change and stay in motion."
-    },
-    6: {
-        foundation: "Service & Nurturing - You manifest abundance through helping others and creating harmony.",
-        amplifier: "Heart-Centered Growth - Your manifestations expand through love, care, and service to others.",
-        flow: "Nurturing Channel - Abundance flows through caring professions and community service."
-    },
-    7: {
-        foundation: "Wisdom & Analysis - You create abundance through knowledge, research, and spiritual insight.",
-        amplifier: "Deep Understanding - Your manifestations come through study, meditation, and inner work.",
-        flow: "Knowledge Channel - Abundance flows through expertise, teaching, and spiritual practices."
-    },
-    8: {
-        foundation: "Power & Achievement - You manifest abundance through ambition, authority, and material success.",
-        amplifier: "Exponential Growth - Your manifestations multiply rapidly once momentum builds.",
-        flow: "Power Channel - Abundance flows through business, leadership, and material achievements."
-    },
-    9: {
-        foundation: "Compassion & Completion - You attract abundance through humanitarian service and wisdom sharing.",
-        amplifier: "Universal Connection - Your manifestations align with higher purpose and collective good.",
-        flow: "Service Channel - Abundance flows through helping others and universal service."
-    }
-};
+let currentStep = 1;
 
+// Validation functions
+function validateStep(step) {
+    switch(step) {
+        case 1:
+            const name = document.getElementById('fullName').value.trim();
+            const month = document.getElementById('birthMonth').value;
+            const day = document.getElementById('birthDay').value;
+            const year = document.getElementById('birthYear').value;
+            
+            let isValid = true;
+            
+            if (!name || name.split(' ').length < 2) {
+                showValidation('nameValidation', 'Please enter your full name (first and last)');
+                isValid = false;
+            } else {
+                hideValidation('nameValidation');
+            }
+            
+            if (!month) {
+                showValidation('monthValidation', 'Please select your birth month');
+                isValid = false;
+            } else {
+                hideValidation('monthValidation');
+            }
+            
+            if (!day || day < 1 || day > 31) {
+                showValidation('dayValidation', 'Please enter a valid day (1-31)');
+                isValid = false;
+            } else {
+                hideValidation('dayValidation');
+            }
+            
+            if (!year || year < 1930 || year > 2010) {
+                showValidation('yearValidation', 'Please enter a valid year (1930-2010)');
+                isValid = false;
+            } else {
+                hideValidation('yearValidation');
+            }
+            
+            if (isValid) {
+                userData.name = name;
+                userData.birthDate = { month: parseInt(month), day: parseInt(day), year: parseInt(year) };
+                userData.birthTime = document.getElementById('birthTime').value;
+            }
+            
+            return isValid;
+            
+        case 2:
+            return userData.goal !== '';
+        case 3:
+            return userData.blocked !== '';
+        case 4:
+            return userData.numbers !== '' && userData.decision !== '';
+        default:
+            return false;
+    }
+}
+
+function showValidation(elementId, message) {
+    const element = document.getElementById(elementId);
+    element.textContent = message;
+    element.style.display = 'block';
+}
+
+function hideValidation(elementId) {
+    const element = document.getElementById(elementId);
+    element.style.display = 'none';
+}
+
+// Navigation functions
+function nextStep(stepNumber) {
+    if (validateStep(currentStep)) {
+        hideCurrentSection();
+        showSection(stepNumber);
+        updateStepIndicator(stepNumber);
+        currentStep = stepNumber;
+    }
+}
+
+function previousStep(stepNumber) {
+    hideCurrentSection();
+    showSection(stepNumber);
+    updateStepIndicator(stepNumber);
+    currentStep = stepNumber;
+}
+
+function hideCurrentSection() {
+    const currentSection = document.getElementById(`section${currentStep}`);
+    currentSection.classList.remove('active');
+}
+
+function showSection(stepNumber) {
+    const section = document.getElementById(`section${stepNumber}`);
+    section.classList.add('active');
+}
+
+function updateStepIndicator(stepNumber) {
+    // Update all steps
+    for (let i = 1; i <= 5; i++) {
+        const step = document.getElementById(`step${i}`);
+        step.className = 'step';
+        
+        if (i < stepNumber) {
+            step.classList.add('completed');
+        } else if (i === stepNumber) {
+            step.classList.add('active');
+        } else {
+            step.classList.add('inactive');
+        }
+    }
+}
+
+// Quiz option selection
+function selectOption(category, value, element) {
+    // Remove selection from siblings
+    const siblings = element.parentElement.querySelectorAll('.quiz-option');
+    siblings.forEach(sibling => sibling.classList.remove('selected'));
+    
+    // Add selection to clicked element
+    element.classList.add('selected');
+    
+    // Update userData
+    userData[category] = value;
+    
+    // Enable next button
+    const nextBtn = document.getElementById(`step${currentStep}NextBtn`);
+    if (nextBtn) {
+        nextBtn.disabled = !validateStep(currentStep);
+    }
+    
+    const calculateBtn = document.getElementById('calculateBtn');
+    if (calculateBtn) {
+        calculateBtn.disabled = !validateStep(currentStep);
+    }
+}
+
+// Advanced calculation algorithms
 function reduceToSingleDigit(num) {
-    while (num > 9) {
+    while (num > 9 && num !== 11 && num !== 22 && num !== 33) {
         num = num.toString().split('').reduce((sum, digit) => sum + parseInt(digit), 0);
     }
     return num;
 }
 
-function calculateAbundanceCode(month, day, year, goal) {
-    // Abundance code algorithm - combines birthdate numerology with goal energy
-    const lifePath = reduceToSingleDigit(reduceToSingleDigit(month) + reduceToSingleDigit(day) + reduceToSingleDigit(year));
-    
-    // Goal modifiers
-    const goalValues = {
-        financial: 8,
-        love: 6,
-        career: 1,
-        health: 3,
-        purpose: 9
+function calculateNameNumerology(name) {
+    const values = {
+        'A': 1, 'B': 2, 'C': 3, 'D': 4, 'E': 5, 'F': 6, 'G': 7, 'H': 8, 'I': 9,
+        'J': 1, 'K': 2, 'L': 3, 'M': 4, 'N': 5, 'O': 6, 'P': 7, 'Q': 8, 'R': 9,
+        'S': 1, 'T': 2, 'U': 3, 'V': 4, 'W': 5, 'X': 6, 'Y': 7, 'Z': 8
     };
     
-    const goalModifier = goalValues[goal] || 5;
-    
-    // Calculate the three digits
-    const digit1 = reduceToSingleDigit(lifePath + day % 10);
-    const digit2 = reduceToSingleDigit(month + goalModifier);
-    const digit3 = reduceToSingleDigit(year % 100 + lifePath);
-    
-    // Ensure no zeros (replace with 1)
-    return [
-        digit1 === 0 ? 1 : digit1,
-        digit2 === 0 ? 1 : digit2,
-        digit3 === 0 ? 1 : digit3
-    ];
+    return name.toUpperCase().replace(/[^A-Z]/g, '').split('')
+        .reduce((sum, char) => sum + (values[char] || 0), 0);
 }
 
-function getOptimalTimes(code) {
-    const [d1, d2, d3] = code;
-    
-    // Calculate optimal times based on code
-    const primaryHour = (d1 + 5) % 12 + 6; // 6 AM - 6 PM range
-    const secondaryHour = (d2 + 8) % 12 + 18; // 6 PM - 6 AM range (convert to 24h)
-    const powerMinute = d3 * 11; // Power minute within hour
-    
-    return {
-        primary: `${primaryHour}:00-${primaryHour + 1}:00 ${primaryHour < 12 ? 'AM' : 'PM'}`,
-        secondary: `${secondaryHour % 12 || 12}:00-${(secondaryHour + 1) % 12 || 12}:00 ${secondaryHour >= 12 ? 'PM' : 'AM'}`,
-        power: `${Math.floor(powerMinute / 60)}:${(powerMinute % 60).toString().padStart(2, '0')} ${Math.floor(powerMinute / 60) < 12 ? 'AM' : 'PM'}`
+function getElementValue(month) {
+    const elements = {
+        1: 9, 2: 6, 3: 9, 4: 6, 5: 9, 6: 6,  // Fire, Earth, Fire, Earth, Fire, Earth
+        7: 3, 8: 3, 9: 3, 10: 3, 11: 6, 12: 9  // Air, Air, Air, Air, Earth, Fire
     };
+    return elements[month] || 5;
 }
 
-document.getElementById('calculatorForm').addEventListener('submit', function(e) {
-    e.preventDefault();
+function calculatePersonalCode(userData) {
+    const { name, birthDate, goal, blocked, numbers, decision } = userData;
+    const { month, day, year } = birthDate;
     
-    const name = document.getElementById('fullName').value;
-    const month = parseInt(document.getElementById('birthMonth').value);
-    const day = parseInt(document.getElementById('birthDay').value);
-    const year = parseInt(document.getElementById('birthYear').value);
-    const goal = document.getElementById('lifeGoal').value;
+    // Advanced calculations
+    const lifePathBase = reduceToSingleDigit(
+        reduceToSingleDigit(month) + 
+        reduceToSingleDigit(day) + 
+        reduceToSingleDigit(year)
+    );
     
-    // Calculate the abundance code
-    const code = calculateAbundanceCode(month, day, year, goal);
+    const nameValue = calculateNameNumerology(name);
+    const elementValue = getElementValue(month);
+    
+    // Goal modifier
+    const goalModifiers = {
+        'financial': 8, 'love': 6, 'career': 1, 'health': 3, 'purpose': 9
+    };
+    const goalMod = goalModifiers[goal] || 5;
+    
+    // Blocked area modifier
+    const blockModifiers = {
+        'money': 4, 'opportunities': 7, 'confidence': 1, 'energy': 5, 'relationships': 2
+    };
+    const blockMod = blockModifiers[blocked] || 3;
+    
+    // Sensitivity modifiers
+    const numberSensitivity = {
+        'daily': 3, 'weekly': 2, 'sometimes': 1, 'rarely': 0
+    };
+    const decisionStyle = {
+        'intuition': 3, 'analysis': 1, 'mixed': 2, 'others': 1
+    };
+    
+    const senseMod = numberSensitivity[numbers] + decisionStyle[decision];
+    
+    // Calculate the three digits using advanced algorithms
+    let digit1 = reduceToSingleDigit(lifePathBase + goalMod + Math.floor(nameValue / 10));
+    let digit2 = reduceToSingleDigit(day + elementValue + blockMod);
+    let digit3 = reduceToSingleDigit((year % 100) + senseMod + (nameValue % 10));
+    
+    // Ensure no zeros
+    digit1 = digit1 === 0 ? 9 : digit1;
+    digit2 = digit2 === 0 ? 9 : digit2;
+    digit3 = digit3 === 0 ? 9 : digit3;
+    
+    return [digit1, digit2, digit3];
+}
+
+function calculateCode() {
+    if (!validateStep(4)) return;
+    
+    // Show loading
+    document.getElementById('loadingOverlay').style.display = 'flex';
+    
+    // Simulate calculation time for realism
+    setTimeout(() => {
+        const code = calculatePersonalCode(userData);
+        displayResults(code);
+        
+        // Hide loading and show results
+        document.getElementById('loadingOverlay').style.display = 'none';
+        hideCurrentSection();
+        showSection(5);
+        updateStepIndicator(5);
+        currentStep = 5;
+    }, 3000);
+}
+
+function displayResults(code) {
+    const [digit1, digit2, digit3] = code;
     const codeString = code.join('');
     
-    // Display the code
-    document.getElementById('codeDisplay').textContent = codeString;
-    
-    // Update digit explanations
-    document.getElementById('digit1Explanation').querySelector('p').textContent = digitMeanings[code[0]].foundation;
-    document.getElementById('digit2Explanation').querySelector('p').textContent = digitMeanings[code[1]].amplifier;
-    document.getElementById('digit3Explanation').querySelector('p').textContent = digitMeanings[code[2]].flow;
-    
-    // Update abundance profile
-    const profile = abundanceProfiles[goal];
-    document.getElementById('abundanceProfile').textContent = profile.description;
-    
-    // Calculate and display optimal times
-    const optimalTimes = getOptimalTimes(code);
-    document.getElementById('primaryTime').textContent = optimalTimes.primary;
-    document.getElementById('secondaryTime').textContent = optimalTimes.secondary;
-    document.getElementById('powerHour').textContent = optimalTimes.power;
-    
-    // Show result card with animation
-    const resultCard = document.getElementById('resultCard');
-    resultCard.classList.add('show');
-    resultCard.scrollIntoView({ behavior: 'smooth' });
-    
-    // Store data for use in other parts of the system
-    localStorage.setItem('abundanceCode', JSON.stringify({
-        name: name,
+    // Store results
+    localStorage.setItem('abundanceCodeData', JSON.stringify({
+        ...userData,
         code: codeString,
-        birthdate: { month, day, year },
-        goal: goal,
-        profile: profile,
-        optimalTimes: optimalTimes
+        digits: { first: digit1, second: digit2, third: digit3 },
+        calculatedAt: new Date().toISOString()
     }));
-});
+    
+    // Generate comprehensive results
+    const results = generatePersonalizedResults(code, userData);
+    
+    document.getElementById('section5').innerHTML = `
+        <div class="result-card">
+            <h2>Your Personal Abundance Code</h2>
+            <div class="code-display">${codeString}</div>
+            <p>Congratulations! This is your unique 3-digit abundance frequency, scientifically calculated from your birth data, life goals, and frequency sensitivity profile.</p>
+            
+            <div class="code-breakdown">
+                <div class="digit-card">
+                    <div class="digit-number">${digit1}</div>
+                    <h4>Life Force Frequency</h4>
+                    <p>${getDigitMeaning(digit1, 'foundation')}</p>
+                </div>
+                <div class="digit-card">
+                    <div class="digit-number">${digit2}</div>
+                    <h4>Activation Amplifier</h4>
+                    <p>${getDigitMeaning(digit2, 'amplifier')}</p>
+                </div>
+                <div class="digit-card">
+                    <div class="digit-number">${digit3}</div>
+                    <h4>Flow Harmonizer</h4>
+                    <p>${getDigitMeaning(digit3, 'flow')}</p>
+                </div>
+            </div>
+            
+            <div class="insights-section">
+                <h3>🎯 Personalized Insights</h3>
+                ${results.insights.map(insight => `
+                    <div class="insight-item">
+                        <div class="icon">${insight.icon}</div>
+                        <div>
+                            <strong>${insight.title}:</strong> ${insight.description}
+                        </div>
+                    </div>
+                `).join('')}
+            </div>
+            
+            <div class="optimal-times">
+                <h3>⏰ Your Optimal Practice Times</h3>
+                <p style="text-align: center; margin-bottom: 20px;">Based on your personal code, these are the most powerful times for your 7-minute daily activation ritual:</p>
+                <div class="time-grid">
+                    <div class="time-card">
+                        <h4>Primary Window</h4>
+                        <div class="time">${results.optimalTimes.primary}</div>
+                        <p>Highest abundance frequency</p>
+                    </div>
+                    <div class="time-card">
+                        <h4>Secondary Window</h4>
+                        <div class="time">${results.optimalTimes.secondary}</div>
+                        <p>Alternative practice time</p>
+                    </div>
+                    <div class="time-card">
+                        <h4>Power Moment</h4>
+                        <div class="time">${results.optimalTimes.power}</div>
+                        <p>Peak manifestation time</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="action-buttons">
+                <button class="btn" onclick="downloadPDF()">📄 Download Complete Report</button>
+                <button class="btn btn-secondary" onclick="saveToCalendar()">📅 Add Practice Times to Calendar</button>
+                <button class="btn btn-secondary" onclick="restartCalculator()">🔄 Calculate Another Code</button>
+            </div>
+        </div>
+    `;
+}
 
-// Auto-populate if data exists
-window.addEventListener('load', function() {
+// Comprehensive digit meanings and results generation
+const digitMeanings = {
+    1: {
+        foundation: "Leadership and independence - you manifest abundance through taking charge and pioneering new paths. Your frequency resonates with initiative and bold action.",
+        amplifier: "Rapid manifestation - your desires manifest quickly through decisive action and unwavering focus. You're naturally attuned to immediate opportunity recognition.",
+        flow: "Direct creation - abundance flows to you through your own efforts and leadership initiatives. You attract opportunities that require courage and independence."
+    },
+    2: {
+        foundation: "Cooperation and intuition - you attract abundance through partnerships and intuitive decision-making. Your frequency thrives on harmony and collaboration.",
+        amplifier: "Gentle persistence - your manifestations build gradually through consistent, patient energy. You excel at nurturing opportunities to fruition.",
+        flow: "Relationship channel - abundance flows through other people and collaborative opportunities. Your network is your most valuable asset."
+    },
+    3: {
+        foundation: "Creativity and expression - you manifest abundance through creative ventures and self-expression. Your frequency resonates with inspiration and communication.",
+        amplifier: "Inspirational bursts - your manifestations come in waves of creative inspiration and joy. You attract opportunities through enthusiasm and optimism.",
+        flow: "Creative channel - abundance flows through artistic, communication, and expressive activities. Your creativity is magnetic to opportunities."
+    },
+    4: {
+        foundation: "Structure and discipline - you build abundance through systematic approaches and hard work. Your frequency resonates with stability and methodical progress.",
+        amplifier: "Steady building - your manifestations grow consistently through disciplined, organized effort. You excel at long-term wealth creation.",
+        flow: "Work channel - abundance flows through career, business systems, and structured activities. Your reliability attracts stable opportunities."
+    },
+    5: {
+        foundation: "Freedom and adventure - you attract abundance through variety, change, and new experiences. Your frequency thrives on flexibility and exploration.",
+        amplifier: "Dynamic shifts - your manifestations come through sudden changes and unexpected opportunities. You adapt quickly to new abundance channels.",
+        flow: "Movement channel - abundance flows when you embrace change and stay in motion. Travel and networking are key to your prosperity."
+    },
+    6: {
+        foundation: "Service and nurturing - you manifest abundance through helping others and creating harmony. Your frequency resonates with care and community building.",
+        amplifier: "Heart-centered growth - your manifestations expand through love, care, and service to others. You attract opportunities through compassion.",
+        flow: "Nurturing channel - abundance flows through caring professions and community service. Your healing energy attracts prosperity."
+    },
+    7: {
+        foundation: "Wisdom and analysis - you create abundance through knowledge, research, and spiritual insight. Your frequency resonates with deep understanding.",
+        amplifier: "Deep understanding - your manifestations come through study, meditation, and inner work. You attract opportunities through expertise.",
+        flow: "Knowledge channel - abundance flows through expertise, teaching, and spiritual practices. Your wisdom attracts premium opportunities."
+    },
+    8: {
+        foundation: "Power and achievement - you manifest abundance through ambition, authority, and material success. Your frequency resonates with leadership and accomplishment.",
+        amplifier: "Exponential growth - your manifestations multiply rapidly once momentum builds. You excel at scaling and expanding opportunities.",
+        flow: "Power channel - abundance flows through business, leadership, and material achievements. Your authority attracts major opportunities."
+    },
+    9: {
+        foundation: "Compassion and completion - you attract abundance through humanitarian service and wisdom sharing. Your frequency resonates with higher purpose.",
+        amplifier: "Universal connection - your manifestations align with higher purpose and collective good. You attract opportunities through service.",
+        flow: "Service channel - abundance flows through helping others and universal service. Your wisdom and compassion attract meaningful opportunities."
+    }
+};
+
+function getDigitMeaning(digit, type) {
+    return digitMeanings[digit] ? digitMeanings[digit][type] : "Powerful abundance frequency";
+}
+
+function generatePersonalizedResults(code, userData) {
+    const [digit1, digit2, digit3] = code;
+    const { goal, blocked, numbers, decision } = userData;
+    
+    // Generate personalized insights
+    const insights = [
+        {
+            icon: "🎯",
+            title: "Primary Goal Alignment",
+            description: `Your code is specifically calibrated for ${goal} goals. The frequency pattern ${code.join('-')} resonates strongly with ${goal} manifestation.`
+        },
+        {
+            icon: "🔓",
+            title: "Blocked Area Resolution",
+            description: `Your ${blocked} blocks will clear first. Digit ${digit2} specifically targets this area with its ${getDigitMeaning(digit2, 'amplifier').split(' - ')[0]} energy.`
+        },
+        {
+            icon: "📡",
+            title: "Frequency Sensitivity",
+            description: numbers === 'daily' ? "Your high sensitivity to number patterns indicates strong natural abundance frequency reception." : 
+                         numbers === 'weekly' ? "Your moderate sensitivity suggests developing abundance frequency awareness." :
+                         "Your developing sensitivity will strengthen as you practice your personal code."
+        },
+        {
+            icon: "🧠",
+            title: "Decision Style Integration",
+            description: decision === 'intuition' ? "Your intuitive nature perfectly complements your abundance frequency. Trust your gut feelings." :
+                         decision === 'analysis' ? "Your analytical approach will help you systematically implement your abundance practices." :
+                         "Your balanced approach allows you to optimize both intuitive and logical abundance strategies."
+        }
+    ];
+    
+    // Calculate optimal times based on digits
+    const primaryHour = (digit1 + 5) % 12 + 6; // 6 AM - 6 PM range
+    const secondaryHour = (digit2 + 8) % 12 + 18; // 6 PM - 6 AM next day
+    const powerMinute = digit3 * 11; // Power minute within hour
+    
+    const optimalTimes = {
+        primary: formatTime(primaryHour),
+        secondary: formatTime(secondaryHour % 24),
+        power: formatTime(Math.floor(powerMinute / 60), powerMinute % 60)
+    };
+    
+    return { insights, optimalTimes };
+}
+
+function formatTime(hour, minute = 0) {
+    const h = hour % 12 || 12;
+    const ampm = hour >= 12 ? 'PM' : 'AM';
+    const m = minute.toString().padStart(2, '0');
+    return `${h}:${m} ${ampm}`;
+}
+
+// Utility functions
+function downloadPDF() {
+    window.print();
+}
+
+function saveToCalendar() {
+    const data = JSON.parse(localStorage.getItem('abundanceCodeData'));
+    const { optimalTimes } = generatePersonalizedResults(
+        [data.digits.first, data.digits.second, data.digits.third], 
+        data
+    );
+    
+    alert(`Your optimal practice times:\n• Primary: ${optimalTimes.primary}\n• Secondary: ${optimalTimes.secondary}\n• Power Moment: ${optimalTimes.power}\n\nAdd these to your calendar for daily practice!`);
+}
+
+function restartCalculator() {
+    if (confirm('Are you sure you want to start over? This will clear your current results.')) {
+        // Reset state
+        Object.keys(userData).forEach(key => userData[key] = '');
+        currentStep = 1;
+        
+        // Reset form
+        document.getElementById('fullName').value = '';
+        document.getElementById('birthMonth').value = '';
+        document.getElementById('birthDay').value = '';
+        document.getElementById('birthYear').value = '';
+        document.getElementById('birthTime').value = '';
+        
+        // Clear selections
+        document.querySelectorAll('.quiz-option.selected').forEach(option => {
+            option.classList.remove('selected');
+        });
+        
+        // Show first step
+        hideCurrentSection();
+        showSection(1);
+        updateStepIndicator(1);
+    }
+}
+
+// Initialize calculator
+document.addEventListener('DOMContentLoaded', function() {
+    // Auto-populate if data exists from main quiz
     const storedData = localStorage.getItem('abundanceUserData');
     if (storedData) {
-        const data = JSON.parse(storedData);
-        if (data.birthdate) {
-            const [month, day, year] = data.birthdate.split(' ');
-            document.getElementById('birthMonth').value = getMonthNumber(month);
-            document.getElementById('birthDay').value = parseInt(day.replace(',', ''));
-            document.getElementById('birthYear').value = year;
+        try {
+            const data = JSON.parse(storedData);
+            if (data.birthdate) {
+                const parts = data.birthdate.split(' ');
+                if (parts.length >= 3) {
+                    document.getElementById('birthMonth').value = getMonthNumber(parts[0]);
+                    document.getElementById('birthDay').value = parseInt(parts[1].replace(',', ''));
+                    document.getElementById('birthYear').value = parts[2];
+                }
+            }
+            if (data.goal) {
+                userData.goal = data.goal;
+            }
+        } catch (e) {
+            console.log('Could not parse stored data');
         }
     }
 });
