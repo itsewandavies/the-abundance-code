@@ -62,6 +62,14 @@
             border-radius: 4px;
         }
         
+        .personal-insight-box {
+            background: #f0f9ff;
+            border-left: 4px solid #0ea5e9;
+            padding: 20px;
+            margin: 24px 0;
+            border-radius: 4px;
+        }
+        
         .testimonial-box {
             background: #f9fafb;
             border: 1px solid #e5e7eb;
@@ -84,6 +92,25 @@
             0%, 100% { opacity: 1; }
             50% { opacity: 0.9; }
         }
+
+        .mind-reader-section {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            border: 2px solid #cbd5e1;
+            border-radius: 12px;
+            padding: 32px;
+            margin: 32px 0;
+            position: relative;
+        }
+
+        .mind-reader-section::before {
+            content: '🔮';
+            position: absolute;
+            top: -15px;
+            left: 24px;
+            background: white;
+            padding: 0 8px;
+            font-size: 24px;
+        }
     </style>
 </head>
 <body>
@@ -100,10 +127,10 @@
         <!-- Headline -->
         <div class="text-center mb-12">
             <h1 class="text-4xl md:text-5xl font-black text-gray-900 mb-6 leading-tight serif">
-                Your Personal Abundance Analysis Is Complete...
+                I Know Exactly Why You're Here...
             </h1>
             <h2 class="text-2xl md:text-3xl text-gray-700 mb-8 serif">
-                Here's What We Discovered About Your Unique Energy Signature
+                And What's Really Going On Beneath The Surface
             </h2>
         </div>
 
@@ -128,33 +155,13 @@
                 <p class="text-gray-300">🔐 Your code is encrypted until you unlock your complete analysis</p>
             </div>
         </div>
-        
-        <!-- Visual Separator -->
-        <div class="text-center mb-12">
-            <div class="w-24 h-1 bg-gradient-to-r from-yellow-400 to-red-500 mx-auto rounded-full"></div>
-        </div>
 
-        <!-- Personal Analysis -->
-        <div class="mb-12">
-            <h2 class="text-3xl font-bold text-gray-900 mb-6 serif">Let Me Share Something Personal With You...</h2>
+        <!-- Mind Reader Section -->
+        <div class="mind-reader-section">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6 serif">Let Me Tell You Exactly What's Going On With You...</h2>
             
-            <div class="prose prose-lg max-w-none">
-                <p class="text-xl text-gray-700 leading-relaxed mb-6">
-                    Based on your responses, I can see something very clearly about you...
-                </p>
-                
-                <div id="personalAnalysis" class="space-y-6">
-                    <!-- Dynamic content will be inserted here -->
-                </div>
-                
-                <div class="highlight-box">
-                    <p class="font-semibold text-gray-900 mb-2">🎯 Here's what this means:</p>
-                    <p class="text-gray-800">You have MASSIVE abundance potential that's currently being suppressed by specific energetic blocks. These aren't your fault - they're the result of programming you picked up along the way.</p>
-                </div>
-                
-                <p class="text-xl text-gray-700 leading-relaxed">
-                    <strong>The good news?</strong> Once you know your exact frequency signature (your 3-digit code), these blocks can be cleared quickly and permanently.
-                </p>
+            <div id="personalAnalysis" class="prose prose-lg max-w-none">
+                <!-- Dynamic content will be inserted here -->
             </div>
         </div>
 
@@ -162,38 +169,15 @@
         <div class="text-center mb-8">
             <div class="inline-flex items-center space-x-4 bg-red-50 px-8 py-4 rounded-full">
                 <span class="text-3xl">⚠️</span>
-                <span class="font-bold text-red-700 text-lg">THE HIDDEN PROBLEM</span>
+                <span class="font-bold text-red-700 text-lg">HERE'S THE REAL PROBLEM</span>
                 <span class="text-3xl">⚠️</span>
             </div>
         </div>
 
         <!-- The Problem -->
-        <div class="mb-12">
-            <h2 class="text-3xl font-bold text-gray-900 mb-6 serif">But Here's The Problem Most People Face...</h2>
-            
-            <div class="prose prose-lg max-w-none">
-                <p class="text-xl text-gray-700 leading-relaxed mb-6">
-                    They try to manifest abundance using "one-size-fits-all" techniques that weren't designed for their unique energy signature.
-                </p>
-                
-                <p class="text-lg text-gray-700 leading-relaxed mb-6">
-                    It's like trying to tune into a specific radio station without knowing the frequency. You might pick up some static, maybe even catch a few words here and there... but you'll never get the clear, strong signal you're looking for.
-                </p>
-                
-                <div class="bg-red-50 border-l-4 border-red-400 p-6 my-8">
-                    <p class="text-red-800 font-semibold mb-2">❌ This is why most abundance techniques fail:</p>
-                    <ul class="text-red-700 space-y-2">
-                        <li>• Generic affirmations that don't match your personal frequency</li>
-                        <li>• Visualization exercises that aren't aligned with your abundance style</li>
-                        <li>• Law of Attraction methods that ignore your specific energetic blocks</li>
-                        <li>• "Fake it till you make it" approaches that create internal resistance</li>
-                    </ul>
-                </div>
-                
-                <p class="text-xl text-gray-700 leading-relaxed">
-                    <strong>No wonder you've felt frustrated!</strong> You've been trying to unlock a door with the wrong key.
-                </p>
-            </div>
+        <div class="mb-12" id="problemSection">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6 serif">But Here's What's Actually Blocking You...</h2>
+            <!-- Dynamic problem content will be inserted here -->
         </div>
 
         <!-- Visual Break -->
@@ -263,39 +247,8 @@
         <div class="mb-12">
             <h2 class="text-3xl font-bold text-gray-900 mb-8 serif">Here's What Others Are Saying...</h2>
             
-            <div class="space-y-8">
-                <div class="testimonial-box">
-                    <div class="flex items-start space-x-4">
-                        <div class="w-16 h-16 bg-purple-500 rounded-full flex items-center justify-center text-white font-bold text-xl">M</div>
-                        <div>
-                            <div class="font-bold text-gray-900 mb-2">Maria S. - Code 582</div>
-                            <p class="text-gray-700 italic mb-3">"I was skeptical at first, but within 3 days of using my code, I received an unexpected $2,400 tax refund I had completely forgotten about. Two weeks later, my boss offered me a promotion I never even applied for. This stuff actually works."</p>
-                            <div class="text-yellow-400">★★★★★</div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="testimonial-box">
-                    <div class="flex items-start space-x-4">
-                        <div class="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold text-xl">J</div>
-                        <div>
-                            <div class="font-bold text-gray-900 mb-2">James T. - Code 374</div>
-                            <p class="text-gray-700 italic mb-3">"My code started appearing EVERYWHERE. Then my side business exploded - $15K in sales in one month when I'd been struggling to make $1K before. My wife thinks I'm magic now 😂"</p>
-                            <div class="text-yellow-400">★★★★★</div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="testimonial-box">
-                    <div class="flex items-start space-x-4">
-                        <div class="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center text-white font-bold text-xl">S</div>
-                        <div>
-                            <div class="font-bold text-gray-900 mb-2">Sarah L. - Code 639</div>
-                            <p class="text-gray-700 italic mb-3">"I paid off $8,000 in credit card debt in 6 weeks using my frequency. Money started flowing from places I never expected - old clients paying overdue invoices, finding money I'd forgotten about, even winning a small lottery prize. It's like my code opened up the floodgates."</p>
-                            <div class="text-yellow-400">★★★★★</div>
-                        </div>
-                    </div>
-                </div>
+            <div class="space-y-8" id="testimonialSection">
+                <!-- Dynamic testimonials will be inserted here -->
             </div>
             
             <div class="text-center mt-8">
@@ -409,31 +362,8 @@
         </div>
 
         <!-- Final Push -->
-        <div class="mb-12">
-            <h2 class="text-3xl font-bold text-gray-900 mb-6 serif">One More Thing...</h2>
-            
-            <div class="prose prose-lg max-w-none">
-                <p class="text-lg text-gray-700 leading-relaxed mb-6">
-                    I want to be completely honest with you about something.
-                </p>
-                
-                <p class="text-lg text-gray-700 leading-relaxed mb-6">
-                    <strong>This isn't about getting rich quick.</strong> Your abundance code isn't a magic wand that will instantly make you a millionaire overnight.
-                </p>
-                
-                <p class="text-lg text-gray-700 leading-relaxed mb-6">
-                    What it IS, is a precise tool that aligns your energy with your natural abundance frequency. When that happens, opportunities start flowing more easily. Money shows up in unexpected ways. Your financial situation improves steadily and sustainably.
-                </p>
-                
-                <div class="highlight-box">
-                    <p class="font-semibold text-gray-900 mb-2">Think of it like this:</p>
-                    <p class="text-gray-800">Instead of swimming upstream against your natural flow, you'll finally be swimming WITH the current. Everything becomes easier when you're aligned with your true frequency.</p>
-                </div>
-                
-                <p class="text-xl text-gray-700 leading-relaxed font-semibold">
-                    The question is: Are you ready to stop struggling and start flowing?
-                </p>
-            </div>
+        <div class="mb-12" id="finalPushSection">
+            <!-- Dynamic final push content will be inserted here -->
         </div>
 
         <!-- Final CTA -->
@@ -464,33 +394,198 @@
         // Set locked code display (completely unreadable)
         document.getElementById('lockedCode').textContent = "XXX";
 
-        // Generate personalized analysis
+        // Generate spookily accurate personalized analysis
         function generatePersonalAnalysis() {
             const analysisDiv = document.getElementById('personalAnalysis');
-            let content = '';
+            const problemSection = document.getElementById('problemSection');
+            const testimonialSection = document.getElementById('testimonialSection');
+            const finalPushSection = document.getElementById('finalPushSection');
+            
+            let personalContent = '';
+            let problemContent = '';
+            let finalPushContent = '';
 
-            // Based on their desires (step 1)
+            // STEP 1 ANALYSIS - Primary Desire
             if (storedAnswers.step1 === 'wealth_freedom') {
-                content += `<p class="text-lg text-gray-700 leading-relaxed mb-4"><strong>You're driven by a deep need for financial security.</strong> This isn't about greed or materialism - it's about the peace of mind that comes with knowing you'll never have to worry about money again. You have a highly practical manifestation style that responds best to concrete, measurable results.</p>`;
+                personalContent += `<p class="text-xl text-gray-700 leading-relaxed mb-6"><strong>You chose "complete financial freedom and never worry about money again."</strong> This tells me something incredibly important about you - you're not just looking for "more money." You're looking for that deep, soul-level security that only comes when money completely stops being a concern.</p>`;
+                personalContent += `<p class="text-lg text-gray-700 leading-relaxed mb-4">I can sense that you've experienced financial stress before. Maybe not always, but enough times that your nervous system has developed a hypervigilance around money. You think about it more than you'd like to admit. You calculate and re-calculate. You worry about unexpected expenses.</p>`;
             } else if (storedAnswers.step1 === 'time_freedom') {
-                content += `<p class="text-lg text-gray-700 leading-relaxed mb-4"><strong>Your soul craves freedom above all else.</strong> You're not just looking for money - you want the time and space to pursue what truly lights you up. Your abundance flows most naturally when you're aligned with joy and passion rather than struggle and force.</p>`;
+                personalContent += `<p class="text-xl text-gray-700 leading-relaxed mb-6"><strong>You chose "unlimited time to do what brings joy and fulfillment."</strong> This tells me you're someone who feels deeply constrained by your current schedule and obligations. You have a rich inner world and specific things you love to do, but you feel like you never have enough time for them.</p>`;
+                personalContent += `<p class="text-lg text-gray-700 leading-relaxed mb-4">I can sense that you sometimes feel resentful about how much of your time is consumed by things that don't truly matter to you. You dream about having entire days with no agenda except following your curiosity and passion.</p>`;
             } else if (storedAnswers.step1 === 'impact_legacy') {
-                content += `<p class="text-lg text-gray-700 leading-relaxed mb-4"><strong>You're driven by purpose and meaning.</strong> Your abundance journey is deeply connected to making a positive impact in the world. You manifest most powerfully when your financial goals are aligned with service to others and creating lasting change.</p>`;
-            } else {
-                content += `<p class="text-lg text-gray-700 leading-relaxed mb-4"><strong>Love and connection are your primary drivers.</strong> Your financial flow is directly tied to your relationships and sense of belonging in the world. You manifest through heart-centered energy and authentic connection with others.</p>`;
+                personalContent += `<p class="text-xl text-gray-700 leading-relaxed mb-6"><strong>You chose "create a meaningful impact and leave a lasting legacy."</strong> This tells me you're someone driven by deeper purpose. Money for its own sake doesn't motivate you much - but money as a vehicle to create positive change in the world? That lights you up.</p>`;
+                personalContent += `<p class="text-lg text-gray-700 leading-relaxed mb-4">I can sense that you sometimes feel frustrated because you know you have valuable gifts to offer the world, but you haven't figured out how to turn that into sustainable abundance. You want to do good AND do well.</p>`;
+            } else if (storedAnswers.step1 === 'love_connection') {
+                personalContent += `<p class="text-xl text-gray-700 leading-relaxed mb-6"><strong>You chose "be surrounded by deep love and genuine connections."</strong> This tells me that relationships are your primary love language. You'd rather have genuine abundance of love and connection than all the money in the world - though you also know that financial stress can strain relationships.</p>`;
+                personalContent += `<p class="text-lg text-gray-700 leading-relaxed mb-4">I can sense that you're someone who gives a lot to others, sometimes at your own expense. You want financial abundance partly so you can be even more generous with the people you care about.</p>`;
             }
 
-            // Based on their struggles (step 6 & 7)
-            if (storedAnswers.step6 === 'money_stress' || storedAnswers.step7 === 'never_enough') {
-                content += `<p class="text-lg text-gray-700 leading-relaxed mb-4">You carry deep financial anxiety that's creating energetic resistance to receiving abundance. <strong>This is actually common among highly sensitive people</strong> - your nervous system is trying to protect you from disappointment, but it's also blocking your natural flow.</p>`;
+            // STEP 2 ANALYSIS - Identity Development
+            if (storedAnswers.step2 === 'growing_confident') {
+                personalContent += `<p class="text-lg text-gray-700 leading-relaxed mb-4">When you said you're "growing more confident in your ability to create the life you want," I could sense that confidence is something you've had to develop over time. It didn't come naturally. You've had to work for it, and you're still working on it.</p>`;
+            } else if (storedAnswers.step2 === 'opening_opportunities') {
+                personalContent += `<p class="text-lg text-gray-700 leading-relaxed mb-4">When you said you're "opening to receiving opportunities," I could sense that you've been someone who tries to control everything yourself. Learning to receive - to allow good things to flow TO you rather than forcing everything - is a relatively new concept for you.</p>`;
+            } else if (storedAnswers.step2 === 'trusting_process') {
+                personalContent += `<p class="text-lg text-gray-700 leading-relaxed mb-4">When you said you're "learning to trust the process," I could sense that trust is something you struggle with. You want guarantees. You want to know HOW things will work out before you commit. This is probably because you've been disappointed before.</p>`;
+            } else if (storedAnswers.step2 === 'claiming_power') {
+                personalContent += `<p class="text-lg text-gray-700 leading-relaxed mb-4">When you said you're "ready to claim your power," I could sense that you've been holding yourself back. There's a part of you that knows you're capable of much more than your current reality reflects. You're tired of playing small.</p>`;
+            }
+
+            // STEP 3 ANALYSIS - Biggest Dream
+            if (storedAnswers.step3 === 'financial_security') {
+                personalContent += `<p class="text-lg text-gray-700 leading-relaxed mb-4">Your biggest dream is to "never worry about bills or unexpected expenses." This tells me you've experienced the stress of not knowing if you'll have enough. Maybe you've had to choose between paying bills. Maybe you've lost sleep over money. You want that weight off your shoulders permanently.</p>`;
+            } else if (storedAnswers.step3 === 'dream_lifestyle') {
+                personalContent += `<p class="text-lg text-gray-700 leading-relaxed mb-4">Your biggest dream is to "travel, have freedom, and beautiful experiences." This tells me you have a vivid imagination about how you want to live. You see other people living this way and you know it's possible - but you haven't figured out how to make it your reality.</p>`;
+            } else if (storedAnswers.step3 === 'help_family') {
+                personalContent += `<p class="text-lg text-gray-700 leading-relaxed mb-4">Your biggest dream is to "give your loved ones everything they deserve." This tells me you're someone who puts others first. You probably feel guilty spending money on yourself while your family lacks things they need or want. You want to be the person who solves problems for everyone you care about.</p>`;
+            } else if (storedAnswers.step3 === 'make_difference') {
+                personalContent += `<p class="text-lg text-gray-700 leading-relaxed mb-4">Your biggest dream is to "use your gifts to positively impact the world." This tells me you feel like you have something important to contribute, but you're frustrated because you haven't figured out how to turn your gifts into sustainable abundance. You don't want to have to choose between doing good and doing well financially.</p>`;
+            }
+
+            // STEP 4 ANALYSIS - Current Patterns
+            if (storedAnswers.step4 === 'work_hard') {
+                personalContent += `<p class="text-lg text-gray-700 leading-relaxed mb-4">You said you "work incredibly hard but sometimes feel like you're not getting ahead." I can feel the frustration in that. You're someone who was taught that hard work equals results, but you're discovering that's not always true. You're working harder than most people around you but not seeing proportional rewards.</p>`;
+            } else if (storedAnswers.step4 === 'wait_timing') {
+                personalContent += `<p class="text-lg text-gray-700 leading-relaxed mb-4">You said you "wait for the right time or perfect circumstances." This tells me you're a careful planner, but also that you use planning as a form of self-protection. As long as you're waiting for the perfect moment, you don't have to risk failure. But you're also not risking success.</p>`;
+            } else if (storedAnswers.step4 === 'research_endlessly') {
+                personalContent += `<p class="text-lg text-gray-700 leading-relaxed mb-4">You said you "research and plan extensively before taking action." This tells me you're highly intelligent and thorough, but also that you use information-gathering as a way to avoid taking action. You want to be 100% sure before you move, but that level of certainty rarely exists.</p>`;
+            } else if (storedAnswers.step4 === 'hope_breakthrough') {
+                personalContent += `<p class="text-lg text-gray-700 leading-relaxed mb-4">You said you "hope for that one breakthrough that will change everything." This tells me you've been struggling for a while and you're tired. You want relief. You want someone to hand you the solution. The idea of having to figure everything out yourself feels overwhelming.</p>`;
+            }
+
+            // Add the universal insight
+            personalContent += `<div class="personal-insight-box">
+                <p class="text-lg text-gray-900 leading-relaxed font-semibold mb-2">🎯 Here's what I can see clearly about you:</p>
+                <p class="text-gray-800">You have tremendous manifesting potential that's currently being suppressed by specific frequency blocks. You're not broken, and you're not doing anything wrong. You just need the right key to unlock what's already inside you. Your soul chose this exact combination of desires and challenges because they're part of your unique abundance code.</p>
+            </div>`;
+
+            // PROBLEM SECTION - Based on Steps 6 & 7
+            let problemTitle = "But Here's What's Actually Blocking You...";
+            problemContent = `<div class="prose prose-lg max-w-none">`;
+
+            if (storedAnswers.step6 === 'money_stress') {
+                problemContent += `<p class="text-xl text-gray-700 leading-relaxed mb-6">You said you "struggle with constant money stress that keeps you up at night." I want you to know - this isn't your fault. This kind of chronic financial anxiety creates a very specific frequency pattern that actually repels abundance. Your nervous system is stuck in survival mode, which means it can't recognize opportunities even when they're right in front of you.</p>`;
+            } else if (storedAnswers.step6 === 'feeling_stuck') {
+                problemContent += `<p class="text-xl text-gray-700 leading-relaxed mb-6">You said you "struggle with feeling completely stuck in your current situation." This creates what I call "frequency paralysis" - your energy field becomes so focused on what you DON'T want that it can't tune into what you DO want. You're broadcasting a stuck frequency, so the universe sends you more of the same.</p>`;
             } else if (storedAnswers.step6 === 'self_sabotage') {
-                content += `<p class="text-lg text-gray-700 leading-relaxed mb-4">You have a pattern of unconsciously sabotaging your success just when things start going well. This usually stems from a subconscious belief that you don't deserve good things - but <strong>this pattern can be completely rewired once you know your exact frequency.</strong></p>`;
+                problemContent += `<p class="text-xl text-gray-700 leading-relaxed mb-6">You said you "struggle with sabotaging yourself just when things start going well." This is one of the most common abundance blocks, and it's actually a sign of high intelligence. Your subconscious mind is trying to protect you from disappointment by preventing success. But it's using outdated programming.</p>`;
+            } else if (storedAnswers.step6 === 'attracting_abundance') {
+                problemContent += `<p class="text-xl text-gray-700 leading-relaxed mb-6">You said you "struggle with attracting abundance no matter how hard you try." This is actually a frequency mismatch issue. You're trying to force manifestation through effort and willpower, but abundance flows through alignment and resonance. You're working against your natural frequency instead of with it.</p>`;
             }
 
-            // Universal insight
-            content += `<p class="text-lg text-gray-700 leading-relaxed mb-4">What I see clearly is that <strong>you have tremendous manifesting potential that's currently being suppressed</strong> by specific frequency blocks. You're not broken, and you're not doing anything wrong. You just need the right key to unlock what's already inside you.</p>`;
+            if (storedAnswers.step7 === 'afraid_never_enough') {
+                problemContent += `<p class="text-lg text-gray-700 leading-relaxed mb-6">And when you said you're "afraid that no matter what you do, it will never be enough" - I felt that in my soul. This is the core wound that's been driving everything else. This belief is creating a frequency pattern that ensures you always feel like you're falling short, no matter how much you actually achieve.</p>`;
+            } else if (storedAnswers.step7 === 'ashamed_failures') {
+                problemContent += `<p class="text-lg text-gray-700 leading-relaxed mb-6">And when you said you're "ashamed of your past failures and worried people will judge you" - I want you to know this is keeping you trapped in a low-frequency shame spiral. Every time you think about what didn't work before, you're reinforcing the neural pathways that created those outcomes in the first place.</p>`;
+            } else if (storedAnswers.step7 === 'exhausted_trying') {
+                problemContent += `<p class="text-lg text-gray-700 leading-relaxed mb-6">And when you said you're "exhausted from trying so hard with so little to show for it" - I could feel the bone-deep tiredness in that statement. You've been swimming upstream against your natural frequency for so long that you're depleted. Your energy reserves are running on empty.</p>`;
+            } else if (storedAnswers.step7 === 'terrified_staying_stuck') {
+                problemContent += `<p class="text-lg text-gray-700 leading-relaxed mb-6">And when you said you're "terrified that you'll be stuck like this forever" - that terror is actually creating the very thing you're afraid of. Fear has its own frequency, and when you're broadcasting fear of being stuck, the universe responds by creating more situations that feel stuck.</p>`;
+            }
 
-            analysisDiv.innerHTML = content;
+            problemContent += `<div class="bg-red-50 border-l-4 border-red-400 p-6 my-8">
+                <p class="text-red-800 font-semibold mb-2">❌ This is why most abundance techniques haven't worked for you:</p>
+                <ul class="text-red-700 space-y-2">
+                    <li>• They're trying to fix the symptoms instead of addressing your core frequency pattern</li>
+                    <li>• They use generic methods that don't match your specific energetic signature</li>
+                    <li>• They ignore the deep emotional blocks that are keeping you stuck</li>
+                    <li>• They assume your subconscious mind wants the same things your conscious mind wants</li>
+                </ul>
+            </div>
+
+            <p class="text-xl text-gray-700 leading-relaxed">
+                <strong>No wonder you've felt frustrated!</strong> You've been trying to tune into abundance using the wrong frequency.
+            </p>
+            </div>`;
+
+            // FINAL PUSH SECTION - Based on Step 8
+            finalPushContent = `<h2 class="text-3xl font-bold text-gray-900 mb-6 serif">This Is Your Moment Of Choice...</h2>
+            <div class="prose prose-lg max-w-none">`;
+
+            if (storedAnswers.step8 === 'financial_confidence') {
+                finalPushContent += `<p class="text-lg text-gray-700 leading-relaxed mb-6">You said you want "complete financial confidence and the ability to create money on demand." I can help you get there. But it requires more than just positive thinking - it requires aligning your entire energetic system with the frequency of financial mastery.</p>`;
+            } else if (storedAnswers.step8 === 'effortless_flow') {
+                finalPushContent += `<p class="text-lg text-gray-700 leading-relaxed mb-6">You said you want "effortless flow where opportunities and abundance come naturally." This is absolutely possible when you're operating at your correct frequency. But first, we need to clear the blocks that are preventing that natural flow.</p>`;
+            } else if (storedAnswers.step8 === 'inner_peace') {
+                finalPushContent += `<p class="text-lg text-gray-700 leading-relaxed mb-6">You said you want "deep inner peace knowing you're aligned with your highest purpose." This level of peace is only possible when your external reality matches your internal values. Your abundance code can help you create that alignment.</p>`;
+            } else if (storedAnswers.step8 === 'unlimited_potential') {
+                finalPushContent += `<p class="text-lg text-gray-700 leading-relaxed mb-6">You said you want "access to your unlimited potential and the power to manifest anything." You already have that potential - it's just being blocked by frequency interference. Your personal code can clear that interference permanently.</p>`;
+            }
+
+            finalPushContent += `<p class="text-lg text-gray-700 leading-relaxed mb-6">
+                <strong>This isn't about getting rich quick.</strong> Your abundance code isn't a magic wand that will instantly make you a millionaire overnight.
+            </p>
+            
+            <p class="text-lg text-gray-700 leading-relaxed mb-6">
+                What it IS, is a precise tool that aligns your energy with your natural abundance frequency. When that happens, opportunities start flowing more easily. Money shows up in unexpected ways. Your financial situation improves steadily and sustainably.
+            </p>
+            
+            <div class="highlight-box">
+                <p class="font-semibold text-gray-900 mb-2">Think of it like this:</p>
+                <p class="text-gray-800">Instead of swimming upstream against your natural flow, you'll finally be swimming WITH the current. Everything becomes easier when you're aligned with your true frequency.</p>
+            </div>
+            
+            <p class="text-xl text-gray-700 leading-relaxed font-semibold">
+                The question is: Are you ready to stop struggling and start flowing?
+            </p>
+            </div>`;
+
+            // Generate personalized testimonials
+            let testimonialContent = '';
+            if (storedAnswers.step1 === 'wealth_freedom') {
+                testimonialContent = `
+                <div class="testimonial-box">
+                    <div class="flex items-start space-x-4">
+                        <div class="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center text-white font-bold text-xl">S</div>
+                        <div>
+                            <div class="font-bold text-gray-900 mb-2">Sarah L. - Code 639</div>
+                            <p class="text-gray-700 italic mb-3">"Like you, I was obsessed with financial freedom. I paid off $8,000 in credit card debt in 6 weeks using my frequency. Money started flowing from places I never expected - old clients paying overdue invoices, finding money I'd forgotten about, even winning a small lottery prize. My code opened up the floodgates."</p>
+                            <div class="text-yellow-400">★★★★★</div>
+                        </div>
+                    </div>
+                </div>`;
+            } else if (storedAnswers.step1 === 'time_freedom') {
+                testimonialContent = `
+                <div class="testimonial-box">
+                    <div class="flex items-start space-x-4">
+                        <div class="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold text-xl">M</div>
+                        <div>
+                            <div class="font-bold text-gray-900 mb-2">Michael R. - Code 471</div>
+                            <p class="text-gray-700 italic mb-3">"I was working 60+ hours a week and desperate for time freedom. Within 2 months of using my code, I got offered a consulting contract that pays me double what I was making, but only requires 20 hours per week. Finally have time for my family and hobbies again."</p>
+                            <div class="text-yellow-400">★★★★★</div>
+                        </div>
+                    </div>
+                </div>`;
+            }
+
+            testimonialContent += `
+            <div class="testimonial-box">
+                <div class="flex items-start space-x-4">
+                    <div class="w-16 h-16 bg-purple-500 rounded-full flex items-center justify-center text-white font-bold text-xl">M</div>
+                    <div>
+                        <div class="font-bold text-gray-900 mb-2">Maria S. - Code 582</div>
+                        <p class="text-gray-700 italic mb-3">"I was skeptical at first, but within 3 days of using my code, I received an unexpected $2,400 tax refund I had completely forgotten about. Two weeks later, my boss offered me a promotion I never even applied for. This stuff actually works."</p>
+                        <div class="text-yellow-400">★★★★★</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="testimonial-box">
+                <div class="flex items-start space-x-4">
+                    <div class="w-16 h-16 bg-orange-500 rounded-full flex items-center justify-center text-white font-bold text-xl">J</div>
+                    <div>
+                        <div class="font-bold text-gray-900 mb-2">James T. - Code 374</div>
+                        <p class="text-gray-700 italic mb-3">"My code started appearing EVERYWHERE. Then my side business exploded - $15K in sales in one month when I'd been struggling to make $1K before. My wife thinks I'm magic now 😂"</p>
+                        <div class="text-yellow-400">★★★★★</div>
+                    </div>
+                </div>
+            </div>`;
+
+            // Insert all the content
+            analysisDiv.innerHTML = personalContent;
+            problemSection.innerHTML = problemTitle + problemContent;
+            testimonialSection.innerHTML = testimonialContent;
+            finalPushSection.innerHTML = finalPushContent;
         }
 
         // Initialize personalized content

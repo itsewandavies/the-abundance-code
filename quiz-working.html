@@ -296,9 +296,10 @@
                 
                 // For demo, we'll skip to results after step 1
                 if (currentStepNum === 2) {
-                    // Go to quiz results page instead of showing code
+                    // Store answers and go to sales letter page
+                    sessionStorage.setItem('quizAnswers', JSON.stringify(answers));
                     setTimeout(() => {
-                        window.location.href = 'quiz-results.html';
+                        window.location.href = 'quiz-results-sales-letter.html';
                     }, 500);
                     return;
                 }
